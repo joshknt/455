@@ -1,7 +1,9 @@
 package main
 
-import accounts "455/accounts"
-import "fmt"
+import (
+	accounts "455/accounts"
+	"fmt"
+)
 
 func main() {
 	var test = accounts.User{Username: "jkent1", Password: "unaj$0j/1111",

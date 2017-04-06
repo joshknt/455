@@ -1,95 +1,86 @@
 package main
 
-import "fmt"
-
-var totalHours uint8 = 0
-var seniorCollegeHours uint8 = 0
-var juniorSeniorHours uint8 = 0
-var gpa, qualityPoints float32 = 0, 0
+var TotalHours uint8 = 0
+var SeniorCollegeHours uint8 = 0
+var JuniorSeniorHours uint8 = 0
+var GPA, QualityPoints float32 = 0, 0
 
 //*****************************************
 // Functions dealing with gpa
 //*****************************************
-func validateGPA() bool {
-	return gpa >= 2.0
+func ValidateGPA() bool {
+	return GPA >= 2.0
 }
 
-func addtoQualityPoints(grade float32, hours float32) {
-	qualityPoints = qualityPoints + (grade * hours)
+func AddtoQualityPoints(grade float32, hours float32) {
+	QualityPoints = QualityPoints + (grade * hours)
 }
 
-func removeQualityPoints(grade float32, hours float32) {
-	qualityPoints = qualityPoints - (grade * hours)
+func RemoveQualityPoints(grade float32, hours float32) {
+	QualityPoints = QualityPoints - (grade * hours)
 }
 
-func updateGPA() {
-	gpa = qualityPoints / float32(totalHours)
+func UpdateGPA() {
+	GPA = QualityPoints / float32(TotalHours)
 }
 
-func getGPA() float32 {
-	return gpa
+func GetGPA() float32 {
+	return GPA
 }
 
 //*****************************************
 // Functions dealing with totalHours
 //*****************************************
-func validateTotalHours() bool {
-	return totalHours >= 120
+func ValidateTotalHours() bool {
+	return TotalHours >= 120
 }
 
-func addtoTotalHours(hours uint8) {
-		totalHours = totalHours + hours
+func AddtoTotalHours(hours uint8) {
+	TotalHours = TotalHours + hours
 }
 
-func removeTotalHours(hours uint8) {
-		totalHours = totalHours - hours
+func RemoveTotalHours(hours uint8) {
+	TotalHours = TotalHours - hours
 }
 
-func getTotalHours() uint8 {
-	return totalHours
+func GetTotalHours() uint8 {
+	return TotalHours
 }
 
 //*****************************************
 // Functions dealing with seniorCollegeHours
 //*****************************************
-func validateSeniorCollegeHours() bool {
-	return seniorCollegeHours >= 60
+func ValidateSeniorCollegeHours() bool {
+	return SeniorCollegeHours >= 60
 }
 
-func addtoSeniorCollegeHours(hours uint8) {
-		seniorCollegeHours = seniorCollegeHours + hours
+func AddtoSeniorCollegeHours(hours uint8) {
+	SeniorCollegeHours = SeniorCollegeHours + hours
 }
 
-func removeSeniorCollegeHours(hours uint8) {
-		seniorCollegeHours = seniorCollegeHours - hours
+func RemoveSeniorCollegeHours(hours uint8) {
+	SeniorCollegeHours = SeniorCollegeHours - hours
 }
 
 func getSeniorCollegeHours() uint8 {
-	return seniorCollegeHours
+	return SeniorCollegeHours
 }
 
 //*****************************************
 // Functions dealing with juniorSeniorHours
 //*****************************************
-func validateJuniorSeniorHours() bool {
-	return juniorSeniorHours >= 36
+func ValidateJuniorSeniorHours() bool {
+	return JuniorSeniorHours >= 36
 }
 
-func addtoJuniorSeniorHours(hours uint8) {
-		juniorSeniorHours = juniorSeniorHours + hours
+func AddtoJuniorSeniorHours(hours uint8) {
+	JuniorSeniorHours = JuniorSeniorHours + hours
 }
 
 func removeJuniorSeniorHours(hours uint8) {
-		juniorSeniorHours = juniorSeniorHours - hours
+	JuniorSeniorHours = JuniorSeniorHours - hours
 }
 
-func getJuniorSeniorHours() uint8 {
-	return juniorSeniorHours
-}
-
-//*****************************************
-// Main function
-//*****************************************
-func main() {
-	fmt.Println("Program is running")
+func GetJuniorSeniorHours() uint8 {
+	return JuniorSeniorHours
 }
