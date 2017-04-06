@@ -1,7 +1,7 @@
 package main
 
 import (
-	accounts "455/accounts"
+	accounts "455/Accounts"
 	"fmt"
 )
 
