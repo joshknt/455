@@ -21,7 +21,7 @@ func RemoveQualityPoints(grade float32, hours float32) {
 }
 
 func UpdateGPA() {
-	gpa = qualityPoints / float32(TotalHours)
+	gpa = qualityPoints / float32(totalHours)
 }
 
 func GetGPA() float32 {

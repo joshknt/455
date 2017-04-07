@@ -7,13 +7,13 @@ import (
 
 // User : Holds all of the user information
 type User struct {
-	username   string
-	password   string
-	department string
-	firstName  string
-	lastName   string
-	email      string
-	superuser  bool
+	Username   string
+	Password   string
+	Department string
+	FirstName  string
+	LastName   string
+	Email      string
+	Superuser  bool
 }
 
 //ValidateUsername : Checks whether the username is in the database

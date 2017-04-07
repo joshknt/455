@@ -15,5 +15,5 @@ func main() {
 	} else {
 		fmt.Println("Failed")
 	}
-	courses.
+
 }
