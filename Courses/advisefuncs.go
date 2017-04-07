@@ -1,86 +1,86 @@
-package main
+package courses
 
-var TotalHours uint8 = 0
-var SeniorCollegeHours uint8 = 0
-var JuniorSeniorHours uint8 = 0
-var GPA, QualityPoints float32 = 0, 0
+var totalHours uint8 = 0
+var seniorCollegeHours uint8 = 0
+var juniorSeniorHours uint8 = 0
+var gpa, qualityPoints float32 = 0, 0
 
 //*****************************************
 // Functions dealing with gpa
 //*****************************************
 func ValidateGPA() bool {
-	return GPA >= 2.0
+	return gpa >= 2.0
 }
 
 func AddtoQualityPoints(grade float32, hours float32) {
-	QualityPoints = QualityPoints + (grade * hours)
+	qualityPoints = qualityPoints + (grade * hours)
 }
 
 func RemoveQualityPoints(grade float32, hours float32) {
-	QualityPoints = QualityPoints - (grade * hours)
+	qualityPoints = qualityPoints - (grade * hours)
 }
 
 func UpdateGPA() {
-	GPA = QualityPoints / float32(TotalHours)
+	gpa = qualityPoints / float32(TotalHours)
 }
 
 func GetGPA() float32 {
-	return GPA
+	return gpa
 }
 
 //*****************************************
 // Functions dealing with totalHours
 //*****************************************
 func ValidateTotalHours() bool {
-	return TotalHours >= 120
+	return totalHours >= 120
 }
 
 func AddtoTotalHours(hours uint8) {
-	TotalHours = TotalHours + hours
+	totalHours = totalHours + hours
 }
 
 func RemoveTotalHours(hours uint8) {
-	TotalHours = TotalHours - hours
+	totalHours = totalHours - hours
 }
 
 func GetTotalHours() uint8 {
-	return TotalHours
+	return totalHours
 }
 
 //*****************************************
 // Functions dealing with seniorCollegeHours
 //*****************************************
 func ValidateSeniorCollegeHours() bool {
-	return SeniorCollegeHours >= 60
+	return seniorCollegeHours >= 60
 }
 
 func AddtoSeniorCollegeHours(hours uint8) {
-	SeniorCollegeHours = SeniorCollegeHours + hours
+	seniorCollegeHours = seniorCollegeHours + hours
 }
 
 func RemoveSeniorCollegeHours(hours uint8) {
-	SeniorCollegeHours = SeniorCollegeHours - hours
+	seniorCollegeHours = seniorCollegeHours - hours
 }
 
-func getSeniorCollegeHours() uint8 {
-	return SeniorCollegeHours
+func GetSeniorCollegeHours() uint8 {
+	return seniorCollegeHours
 }
 
 //*****************************************
 // Functions dealing with juniorSeniorHours
 //*****************************************
 func ValidateJuniorSeniorHours() bool {
-	return JuniorSeniorHours >= 36
+	return juniorSeniorHours >= 36
 }
 
 func AddtoJuniorSeniorHours(hours uint8) {
-	JuniorSeniorHours = JuniorSeniorHours + hours
+	juniorSeniorHours = juniorSeniorHours + hours
 }
 
-func removeJuniorSeniorHours(hours uint8) {
-	JuniorSeniorHours = JuniorSeniorHours - hours
+func RemoveJuniorSeniorHours(hours uint8) {
+	juniorSeniorHours = juniorSeniorHours - hours
 }
 
 func GetJuniorSeniorHours() uint8 {
-	return JuniorSeniorHours
+	return juniorSeniorHours
 }

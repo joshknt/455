@@ -1,4 +1,4 @@
-package main
+package courses
 
 //-----------------------------------------------------------------------------
 //	Course structure that contains an instance of a class

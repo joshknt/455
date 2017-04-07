@@ -2,6 +2,7 @@ package main
 
 import (
 	accounts "455/Accounts"
+	courses "455/Courses"
 	"fmt"
 )
 
@@ -14,5 +15,5 @@ func main() {
 	} else {
 		fmt.Println("Failed")
 	}
-
+	courses.
 }

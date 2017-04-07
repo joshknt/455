@@ -7,13 +7,13 @@ import (
 
 // User : Holds all of the user information
 type User struct {
-	Username   string
-	Password   string
-	Department string
-	FirstName  string
-	LastName   string
-	Email      string
-	Superuser  bool
+	username   string
+	password   string
+	department string
+	firstName  string
+	lastName   string
+	email      string
+	superuser  bool
 }
 
 //ValidateUsername : Checks whether the username is in the database
@@ -27,6 +27,7 @@ func ValidateUsername(un string) bool {
 }
 
 //ValidatePassword : Checks password based on the requirements
+//Author: Josh Kent
 func ValidatePassword(pass string) bool {
 	var numChars = "0123456789"
 	var validChars = ",.?$012345789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -66,8 +67,9 @@ func ValidatePassword(pass string) bool {
 }
 
 //CreateNewUser : Will save the user, if valid, to the database
+//Author: Josh Kent
 func CreateNewUser(u User) bool {
-	if ValidatePassword(u.Password) && ValidateUsername(u.Username) {
+	if ValidatePassword(u.password) && ValidateUsername(u.username) {
 		//database query to save user to database
 		return true
 	}
