@@ -6,17 +6,19 @@ import (
 )
 
 // User : Holds all of the user information
+//Author: Josh Kent
 type User struct {
-	username   string
-	password   string
-	department string
-	firstName  string
-	lastName   string
-	email      string
-	superuser  bool
+	Username   string
+	Password   string
+	Department string
+	FirstName  string
+	LastName   string
+	Email      string
+	Superuser  bool
 }
 
 //ValidateUsername : Checks whether the username is in the database
+//Author: Josh Kent
 func ValidateUsername(un string) bool {
 	//if username not in database{
 	return true
