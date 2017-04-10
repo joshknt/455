@@ -71,7 +71,7 @@ func ValidatePassword(pass string) bool {
 //CreateNewUser : Will save the user, if valid, to the database
 //Author: Josh Kent
 func CreateNewUser(u User) bool {
-	if ValidatePassword(u.password) && ValidateUsername(u.username) {
+	if ValidatePassword(u.Password) && ValidateUsername(u.Username) {
 		//database query to save user to database
 		return true
 	}
