@@ -1,19 +1,20 @@
 package main
 
 import (
-	accounts "455/Accounts"
-	courses "455/Courses"
+	//accounts "455/Accounts"
+	//courses "455/Courses"
 	"fmt"
+	//"github.com/gorilla/mux"
+	//"log"
+	"net/http"
 )
 
-func main() {
-	var test = accounts.User{Username: "jkent1", Password: "unaj$0j/1111",
-		Department: "CS", FirstName: "Josh", LastName: "Kent", Email: "jkent1@una.edu", Superuser: false}
+func sayhello(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello Josh you fuck")
+}
 
-	if accounts.CreateNewUser(test) {
-		fmt.Println("Created")
-	} else {
-		fmt.Println("Failed")
-	}
+func main() {
+	http.HandleFunc("/", sayhello)
+	http.ListenAndServe(":9090", nil)
 
 }
