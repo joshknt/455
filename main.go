@@ -44,13 +44,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("UN: ", r.Form["username"])
 	fmt.Println("Pass: ", r.Form["password"])
 
-	http.Redirect(w, r, "/admin", 302)
+	adminViewHandler(w, r)
 }
 
 func main() {
 	http.HandleFunc("/", defaultViewHandler)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/admin", adminViewHandler) //this is unsecure, fix
+
 	http.ListenAndServe(":9090", nil)
 
 }
