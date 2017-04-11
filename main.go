@@ -39,18 +39,18 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//un := r.Form["username"]
+	//un := r.Form["username"] //doesn't work, don't try []string == string
 	//pass := r.Form["password"]
 	fmt.Println("UN: ", r.Form["username"])
 	fmt.Println("Pass: ", r.Form["password"])
 
-	http.Redirect(w, r, "/login", 302)
+	http.Redirect(w, r, "/admin", 302)
 }
 
 func main() {
 	http.HandleFunc("/", defaultViewHandler)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/admin", adminViewHandler)
+	http.HandleFunc("/admin", adminViewHandler) //this is unsecure, fix
 	http.ListenAndServe(":9090", nil)
 
 }
