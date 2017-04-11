@@ -3,6 +3,7 @@ package main
 import (
 	//accounts "455/Accounts"
 	//courses "455/Courses"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"net/http"
@@ -29,8 +30,15 @@ func defaultHandler(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, p)
 }
 
+func login(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	fmt.Println("UN: ", r.Form["username"])
+	fmt.Println("Pass: ", r.Form["password"])
+}
+
 func main() {
 	http.HandleFunc("/", defaultHandler)
+	http.HandleFunc("/login", login)
 	http.ListenAndServe(":9090", nil)
 
 }
