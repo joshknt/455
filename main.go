@@ -26,14 +26,14 @@ func loadPage(title string) (*Page, error) {
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
-	t, _ := template.ParseFiles("DefaultView.html")
+	t, _ := template.ParseFiles("WebPages\\DefaultView.html")
 	t.Execute(w, p)
 }
 
 func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
-	t, _ := template.ParseFiles("AdminView.html")
+	t, _ := template.ParseFiles("WebPages\\AdminView.html")
 	t.Execute(w, p)
 }
 
