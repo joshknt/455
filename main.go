@@ -26,31 +26,31 @@ func loadPage(title string) (*Page, error) {
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
-	t, _ := template.ParseFiles("DefaultView.html")
+	t, _ := template.ParseFiles("WebPages\\DefaultView.html")
 	t.Execute(w, p)
 }
 
 func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
-	t, _ := template.ParseFiles("AdminView.html")
+	t, _ := template.ParseFiles("WebPages\\AdminView.html")
 	t.Execute(w, p)
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//un := r.Form["username"] //doesn't work, don't try []string == string
+	//un := r.Form["username"] //doesn't work,  []string != string
 	//pass := r.Form["password"]
 	fmt.Println("UN: ", r.Form["username"])
 	fmt.Println("Pass: ", r.Form["password"])
 
-	http.Redirect(w, r, "/admin", 302)
+	adminViewHandler(w, r)
 }
 
 func main() {
 	http.HandleFunc("/", defaultViewHandler)
 	http.HandleFunc("/login", login)
-	http.HandleFunc("/admin", adminViewHandler) //this is unsecure, fix
+
 	http.ListenAndServe(":9090", nil)
 
 }
