@@ -39,7 +39,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 
 func login(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//un := r.Form["username"] //doesn't work, don't try []string == string
+	//un := r.Form["username"] //doesn't work,  []string != string
 	//pass := r.Form["password"]
 	fmt.Println("UN: ", r.Form["username"])
 	fmt.Println("Pass: ", r.Form["password"])
