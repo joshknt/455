@@ -19,6 +19,8 @@ type User struct {
 
 //ValidateUsername : Checks whether the username is in the database
 //Author: Josh Kent
+//Argument: un - a string that contains the username to be validated
+//Return: A boolean value if the username is valid or not
 func ValidateUsername(un string) bool {
 	//if username not in database{
 	return true
@@ -30,6 +32,8 @@ func ValidateUsername(un string) bool {
 
 //ValidatePassword : Checks password based on the requirements
 //Author: Josh Kent
+//Argument: un - a string that contains the password to be validated
+//Return: A boolean value if the password is valid or not
 func ValidatePassword(pass string) bool {
 	var numChars = "0123456789"
 	var validChars = ",.?$012345789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -70,6 +74,8 @@ func ValidatePassword(pass string) bool {
 
 //CreateNewUser : Will save the user, if valid, to the database
 //Author: Josh Kent
+//Argument: u - a user struct
+//Return: A boolean value determing if the user was created or not
 func CreateNewUser(u User) bool {
 	if ValidatePassword(u.Password) && ValidateUsername(u.Username) {
 		//database query to save user to database

@@ -57,7 +57,7 @@
 	<body>
 		<h1>Welcome to ADVISE!</h1>
 		
-		<form action = "/getcourses" method = "post">
+		<form action = "/getcourses" method = "get">
 		<input type = "radio" name="choice" value = "major"
 		    checked = "checked"/> Major <br>
         <input type = "radio" name="choice" value = "minor"/> Minor<br>
@@ -74,20 +74,20 @@
         
         
         
-        <input name = "submit" type = "submit"; value = "ADVISE" >
+        <input name = "submit" type = "submit" value = "ADVISE" >
         </form>
         	<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <input type = "submit" value = "Upload" /><br></br>
 
 		<div id="popupbox"> 
-		<form method="post" action="/login">
- 4     <label for="name">User name</label>
- 5     <input type="text" id="name" name="name">
- 6     <label for="password">Password</label>
- 7     <input type="password" id="password" name="password">
- 8     <button type="submit">Login</button>
- 9 </form>
+		<form  action="/login" method="post">
+		<label for="username">User name</label>
+		<input type="text" id="name" name="username">
+		<label for="password">Password</label>
+		<input type="password" id="password" name="password">
+		<button type="submit">Login</button>
+		</form>
 		<br />
 		<center><a href="javascript:login('hide');">X</a></center> 
 		</div> 
