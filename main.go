@@ -53,18 +53,21 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func login(w http.ResponseWriter, r *http.Request) {
-	user := r.URL.Query()["username"]
-	pass := r.URL.Query()["password"]
+	r.ParseForm()
+	user := r.Form["username"]
+	pass := r.Form["password"]
+	target := "/"
+
 	fmt.Println("UN: ", user)
 	fmt.Println("Pass: ", pass)
-	if user != nil || pass != nil {
-		fmt.Println("UN: ", user)
-		fmt.Println("Pass: ", pass)
-		//if password matches users pass in db
-		adminViewHandler(w, r)
-	} else {
-		http.Redirect(w, r, "/", 302)
-	}
+
+	//ADD DB QUERY
+	//if password matches user's pass in db{
+	target = "/admin"
+	//}
+
+	//Redirect to target path whether user was authenticated or not
+	http.Redirect(w, r, target, 302)
 }
 
 func getCourses(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +85,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", defaultViewHandler)
+	router.HandleFunc("/admin", adminViewHandler)
 	router.HandleFunc("/login", login).Methods("POST")
 	router.HandleFunc("/getcourses", getCourses).Methods("GET")
 

@@ -81,13 +81,13 @@
         <input type = "submit" value = "Upload" /><br></br>
 
 		<div id="popupbox"> 
-		<form name="login" action="/login" method="post">
-		<p>Username:
-		<input name="username" size="20" /></p>
-		<p>Password:
-		<input name="password" type="password" size="20" /></center></p>
-		<center><input type="submit" name="submit" value="Login" /></center>
-		</form>
+		<form method="post" action="/login">
+ 4     <label for="name">User name</label>
+ 5     <input type="text" id="name" name="name">
+ 6     <label for="password">Password</label>
+ 7     <input type="password" id="password" name="password">
+ 8     <button type="submit">Login</button>
+ 9 </form>
 		<br />
 		<center><a href="javascript:login('hide');">X</a></center> 
 		</div> 
