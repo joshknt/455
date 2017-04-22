@@ -8,13 +8,13 @@ import (
 // User : Holds all of the user information
 //Author: Josh Kent
 type User struct {
-	Username   string
-	Password   string
-	Department string
-	FirstName  string
-	LastName   string
-	Email      string
-	Superuser  bool
+	Username   string `json:"username, omitempty"`
+	Password   string `json:"password"`
+	Department string `json:"department"`
+	FirstName  string `json:"firstname"`
+	LastName   string `json:"lastname"`
+	Email      string `json:"email"`
+	Superuser  bool   `json:"superuser"`
 }
 
 //ValidateUsername : Checks whether the username is in the database

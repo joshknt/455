@@ -2,25 +2,30 @@ package main
 
 import (
 	//accounts "455/Accounts"
-	//courses "455/Courses"
+	courses "455/Courses"
+	"encoding/json"
 	"fmt"
+	"github.com/gorilla/mux"
 	"html/template"
 	"io/ioutil"
 	"net/http"
 )
 
-type Page struct {
+type page struct {
 	Title string
 	Body  []byte
 }
 
-func loadPage(title string) (*Page, error) {
+var c1 = courses.Course{Hours: 3, Grade: "A", DepartmentID: "CS",
+	Name: "155", Completed: true}
+
+func loadPage(title string) (*page, error) {
 	filename := title + ".txt"
 	body, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	return &Page{Title: title, Body: body}, nil
+	return &page{Title: title, Body: body}, nil
 }
 
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
@@ -47,10 +52,13 @@ func login(w http.ResponseWriter, r *http.Request) {
 	adminViewHandler(w, r)
 }
 
+func getCourses(w http.ResponseWriter, r *http.Request) {
+
+}
+
 func main() {
-	http.HandleFunc("/", defaultViewHandler)
-	http.HandleFunc("/login", login)
+	router := mux.NewRouter().StrictSlash(true)
+	router.HandleFunc("/", defaultViewHandler)
 
-	http.ListenAndServe(":9090", nil)
-
+	http.ListenAndServe(":9090", router)
 }
