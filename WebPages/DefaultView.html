@@ -57,7 +57,7 @@
 	<body>
 		<h1>Welcome to ADVISE!</h1>
 		
-		<form>
+		<form action = "/getcourses" method = "post">
 		<input type = "radio" name="choice" value = "major"
 		    checked = "checked"/> Major <br>
         <input type = "radio" name="choice" value = "minor"/> Minor<br>
@@ -72,13 +72,13 @@
             <option value = "MA"> Mathematics </option>
         </select>
         
-        <p>Upload your transcript: </p>
+        
+        
+        <input name = "submit" type = "submit"; value = "ADVISE" >
+        </form>
+        	<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <input type = "submit" value = "Upload" /><br></br>
-        
-        <input type = "button" value = "ADVISE">
-        </form>
-        	
 
 		<div id="popupbox"> 
 		<form name="login" action="/login" method="post">
