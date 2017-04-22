@@ -3,10 +3,11 @@ package courses
 // Course : Holds all of the course information
 // Author: Arturo Caballero
 type Course struct {
-	Hours, Grade uint8
-	DepartmentID string
-	Name         string
-	Completed    bool
+	Hours        uint8  `json:"hours"`
+	Grade        string `json:"grade"`
+	DepartmentID string `json:"departmentid"`
+	Name         string `json:"name"`
+	Completed    bool   `json:"completed"`
 }
 
 // GetArea1 : Grabs Area 1 from the database and fills the array being passed
