@@ -18,13 +18,9 @@ type Course struct {
 	Completed    bool   `json:"completed"`
 }
 
-var area1 [4]Course
-var area2 [32]Course
-var area3 [18]Course
-var area4 [13]Course
-var major [31]Course
-
-func LoadComputerScience() {
+// PopulateGenEd : Populates areas 1-4 from the database
+// Author: Arturo Caballero
+func PopulateGenEd(a1 *[4]Course, a2 *[32]Course, a3 *[18]Course, a4 *[13]Course) {
 	/* Preparing the databbase abstraction for use */
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
 	if err != nil {
@@ -55,16 +51,91 @@ func LoadComputerScience() {
 	/* makes an array of strings to place into each area */
 	var temp []string = strings.Split(name, ",")
 
-	GetArea1(temp)
-	//GetArea2(temp)
-	//GetArea3(temp)
-	//GetArea4(temp)
-	//GetMajor(temp)
+	GetArea1(a1, temp)
+	GetArea2(a2, temp)
+	GetArea3(a3, temp)
+	GetArea4(a4, temp)
+}
+
+// PopulateMajor: Populates major depending on string being passed in
+// Author: Arturo Caballero
+func PopulateMajor(degree string, major *[]Course) {
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	if err != nil {
+		fmt.Println("error")
+	}
+	defer db.Close()
+
+	var name string
+
+	switch degree {
+	case "Computer Science":
+		/* make the query to the database */
+		rows, err := db.Query("select courses from major where id = ?", 1)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer rows.Close()
+
+		/* scan the row to place into name string variable */
+		rows.Next()
+		err = rows.Scan(&name)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		/* makes an array of strings to place into each area */
+		var temp []string = strings.Split(name, ",")
+
+		GetComputerScienceMajor(major, temp)
+	case "Mathematics":
+		fmt.Println("Mathematics")
+	case "History":
+		fmt.Println("History")
+	case "Computer Info Systems":
+		/* make the query to the database */
+		rows, err := db.Query("select courses from major where id = ?", 3)
+		if err != nil {
+			fmt.Println(err)
+		}
+		defer rows.Close()
+
+		/* scan the row to place into name string variable */
+		rows.Next()
+		err = rows.Scan(&name)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		/* makes an array of strings to place into each area */
+		var temp []string = strings.Split(name, ",")
+
+		GetComputerInfoSystemsMajor(major, temp)
+	case "Chemistry":
+		fmt.Println("Chemistry")
+	}
+}
+
+// PopulateMinor: Populates minor depending on string being passed in
+// Author: Arturo Caballero
+func PopulateMinor(degree string, minor *[]Course) {
+	switch degree {
+	case "Computer Science":
+		fmt.Println("Computer Science")
+	case "Mathematics":
+		fmt.Println("Mathematics")
+	case "History":
+		fmt.Println("History")
+	case "Computer Info Systems":
+		fmt.Println("Computer Info Systems")
+	case "Chemistry":
+		fmt.Println("Chemistry")
+	}
 }
 
 // GetArea1 : Grabs Area 1 from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetArea1(arr []string) {
+func GetArea1(area1 *[4]Course, arr []string) {
 	var i int = 0
 
 	/* iterates through area1 array */
@@ -79,17 +150,16 @@ func GetArea1(arr []string) {
 		area1[i].Name = a2
 		hour, err := strconv.Atoi(a3)
 		if err != nil {
-			fmt.Println("Error")
+			fmt.Println("Conversion Error")
 		}
 		area1[i].Hours = hour
 		i++
 	}
-	fmt.Println(area1)
 }
 
 // GetArea2 : Grabs Area 2 from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetArea2(area2 *[32]Course) {
+func GetArea2(area2 *[32]Course, arr []string) {
 	var i int = 0
 
 	// will eventually be replaced by database calls
@@ -103,7 +173,7 @@ func GetArea2(area2 *[32]Course) {
 
 // GetArea3 : Grabs Area 3 from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetArea3(area3 *[18]Course) {
+func GetArea3(area3 *[18]Course, arr []string) {
 	var i int = 0
 
 	// will eventually be replaced by database calls
@@ -117,7 +187,7 @@ func GetArea3(area3 *[18]Course) {
 
 // GetArea4 : Grabs Area 4 from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetArea4(area4 *[13]Course) {
+func GetArea4(area4 *[13]Course, arr []string) {
 	var i int = 0
 
 	// will eventually be replaced by database calls
@@ -129,16 +199,55 @@ func GetArea4(area4 *[13]Course) {
 	}
 }
 
-// GetMajor : Grabs Major from the database and fills the array being passed
+// GetComputerScience : Grabs Computer Science major from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetMajor(major *[31]Course) {
+func GetComputerScienceMajor(major *[]Course, arr []string) {
+	/* Create a new pointer of type Course */
+	pstc := new(Course)
 	var i int = 0
 
-	// will eventually be replaced by database calls
-	for range major {
-		major[i].DepartmentID = "EN"
-		major[i].Hours = i
-		major[i].Name = "Composition I"
+	for range arr {
+		/* slices each element in arr */
+		a1 := strings.ToUpper(arr[i][0:2])
+		a2 := arr[i][2:5]
+		a3 := arr[i][6:7]
+
+		/* assigns slices to variables in course struct */
+		pstc.DepartmentID = a1
+		pstc.Name = a2
+		hour, err := strconv.Atoi(a3)
+		if err != nil {
+			fmt.Println("Conversion Error")
+		}
+		pstc.Hours = hour
+		/* append Course pointer to the end of major slice */
+		*major = append(*major, *pstc)
+		i++
+	}
+}
+
+// GetComputerInfoScience : Grabs Computer Info Science major from the database and fills the array being passed
+// Author: Arturo Caballero
+func GetComputerInfoSystemsMajor(major *[]Course, arr []string) {
+	pstc := new(Course)
+	var i int = 0
+
+	for range arr {
+		/* slices each element in arr */
+		a1 := strings.ToUpper(arr[i][0:3])
+		a2 := arr[i][3:6]
+		a3 := arr[i][7:8]
+
+		/* assigns slices to variables in course struct */
+		pstc.DepartmentID = a1
+		pstc.Name = a2
+		hour, err := strconv.Atoi(a3)
+		if err != nil {
+			fmt.Println("Conversion Error")
+		}
+		pstc.Hours = hour
+		/* append Course pointer to the end of major slice */
+		*major = append(*major, *pstc)
 		i++
 	}
 }
@@ -278,7 +387,7 @@ func ValidateArea4(area4 *[13]Course) bool {
 
 // ValidateMajor : checks major to see if requirements are fulfilled, returns boolean
 // Author : Arturo Caballero
-func ValidateMajor(major *[31]Course) bool {
+func ValidateComputerScience(major *[31]Course) bool {
 	// split the array into 5 slices
 	var m1 []Course = major[0:5]
 	var m2 []Course = major[5:14]
