@@ -128,9 +128,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(degree)
 
 	//Encode course data to JSON and send response
-	for i := range allCourses {
-		json.NewEncoder(w).Encode(allCourses[i])
-	}
+	json.NewEncoder(w).Encode(allCourses)
 
 }
 
