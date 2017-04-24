@@ -152,4 +152,5 @@ func main() {
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
 	http.ListenAndServe(":9090", router)
+
 }

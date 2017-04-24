@@ -1,27 +1,90 @@
 package courses
 
+import (
+	_ "455/mysql-master"
+	"database/sql"
+	"fmt"
+	"strconv"
+	"strings"
+)
+
 // Course : Holds all of the course information
 // Author: Arturo Caballero
 type Course struct {
-	Hours        uint8  `json:"hours"`
+	Hours        int    `json:"hours"`
 	Grade        string `json:"grade"`
 	DepartmentID string `json:"departmentid"`
 	Name         string `json:"name"`
 	Completed    bool   `json:"completed"`
 }
 
+var area1 [4]Course
+var area2 [32]Course
+var area3 [18]Course
+var area4 [13]Course
+var major [31]Course
+
+func LoadComputerScience() {
+	/* Preparing the databbase abstraction for use */
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	if err != nil {
+		fmt.Println("error")
+	}
+	defer db.Close()
+
+	var name string
+
+	/* make the query to the database */
+	rows, err := db.Query("select courses from general where id = ?", 1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer rows.Close()
+
+	/* scan the row to place into name string variable */
+	rows.Next()
+	err = rows.Scan(&name)
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = rows.Err()
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	/* makes an array of strings to place into each area */
+	var temp []string = strings.Split(name, ",")
+
+	GetArea1(temp)
+	//GetArea2(temp)
+	//GetArea3(temp)
+	//GetArea4(temp)
+	//GetMajor(temp)
+}
+
 // GetArea1 : Grabs Area 1 from the database and fills the array being passed
 // Author: Arturo Caballero
-func GetArea1(area1 *[4]Course) {
+func GetArea1(arr []string) {
 	var i int = 0
 
-	// will eventually be replaced by database calls
+	/* iterates through area1 array */
 	for range area1 {
-		area1[i].DepartmentID = "EN"
-		area1[i].Hours = uint8(i)
-		area1[i].Name = "Composition I"
+		/* slices each element in arr */
+		a1 := strings.ToUpper(arr[i][0:2])
+		a2 := arr[i][2:5]
+		a3 := arr[i][6:7]
+
+		/* assigns slices to variables in course struct */
+		area1[i].DepartmentID = a1
+		area1[i].Name = a2
+		hour, err := strconv.Atoi(a3)
+		if err != nil {
+			fmt.Println("Error")
+		}
+		area1[i].Hours = hour
 		i++
 	}
+	fmt.Println(area1)
 }
 
 // GetArea2 : Grabs Area 2 from the database and fills the array being passed
@@ -32,7 +95,7 @@ func GetArea2(area2 *[32]Course) {
 	// will eventually be replaced by database calls
 	for range area2 {
 		area2[i].DepartmentID = "EN"
-		area2[i].Hours = uint8(i)
+		area2[i].Hours = i
 		area2[i].Name = "Composition I"
 		i++
 	}
@@ -46,7 +109,7 @@ func GetArea3(area3 *[18]Course) {
 	// will eventually be replaced by database calls
 	for range area3 {
 		area3[i].DepartmentID = "EN"
-		area3[i].Hours = uint8(i)
+		area3[i].Hours = i
 		area3[i].Name = "Composition I"
 		i++
 	}
@@ -60,7 +123,7 @@ func GetArea4(area4 *[13]Course) {
 	// will eventually be replaced by database calls
 	for range area4 {
 		area4[i].DepartmentID = "EN"
-		area4[i].Hours = uint8(i)
+		area4[i].Hours = i
 		area4[i].Name = "Composition I"
 		i++
 	}
@@ -74,7 +137,7 @@ func GetMajor(major *[31]Course) {
 	// will eventually be replaced by database calls
 	for range major {
 		major[i].DepartmentID = "EN"
-		major[i].Hours = uint8(i)
+		major[i].Hours = i
 		major[i].Name = "Composition I"
 		i++
 	}
