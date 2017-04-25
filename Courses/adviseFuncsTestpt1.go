@@ -188,7 +188,7 @@ func main() {
 	//	4/25/2017 3:40 PM Failed with -6 instead of 0
 	//-----------------------------End Test Case------------------------------*/
 
-	//--------------------------Begin Test Case RemoveQualityPoints 3-----------
+	/*/--------------------------Begin Test Case RemoveQualityPoints 3-----------
 	//This will edit and then return the QualityPoints starting at 0
 	//Expected input: Remove C in a 3 hour class
 	//Expected output: 6 Quality Points
