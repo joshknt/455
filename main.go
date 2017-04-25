@@ -34,6 +34,7 @@ type page struct {
 	Body  []byte
 }
 
+//MOVE TO ACCOUNTS AND CALL FROM THERE
 //isValidUser : validates if the user is a administrator
 //Author: Josh Kent
 //Argument: A user account
@@ -101,7 +102,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		access = true
 	} else {
 		target = "/"
-	}
+	} //add rest api
 
 	//Redirect to target path whether user was authenticated or not
 	http.Redirect(w, r, target, 302)
