@@ -16,47 +16,51 @@
 </head>
 	</head>
 	<style type = "text/css">
-	    body{background-color: #DB9F11;}
-	    h1{color: #46166B;
-	    	text-align:center; 
-	    	font-family: serif;
-	    }
-	    form{background-color: #46166B;
-	        color: #FFFFFF;
-	        width: 250;
-	        font-family: sans-serif;
-	        padding-top: 10px; 
-	        padding-bottom: 10px; 
-	        padding-left: 10px; 
-	    }
-	    a{font-family: sans-serif;
-	    	color: #FFFFFF;
-	    	position:absolute;
-	    	top:5;
-   			right:5;
+	body{background-color: #DB9F11;}
 
-	    }
-	    #popupbox{
-			margin: 0; 
-			margin-left: 40%; 
-			margin-right: 40%;
-			margin-top: 50px; 
-			padding-top: 10px; 
-			width: 15%; 
-			height: 150px; 
-			position: absolute; 
-			background: #46166B; 
-			border: solid #000000 2px; 
-			z-index: 9; 
-			font-family: sans-serif; 
-			visibility: hidden; 
-			color: #FFFFFF;
+	h1{
+		color: #46166B;
+		text-align:center; 
+		font-family: serif;
+	}
+	#adviseForm{
+		background-color: #46166B;
+		color: #FFFFFF;
+		width: 250;
+		font-family: sans-serif;
+		padding-top: 10px; 
+		padding-bottom: 10px; 
+		padding-left: 10px;
+	}
+	a{
+		font-family: sans-serif;
+		color: #FFFFFF;
+		position:absolute;
+		top:5;
+		right:5;
+	}
+	#popupbox{
+		margin: 0; 
+		margin-left: 40%; 
+		margin-right: 40%;
+		margin-top: 50px; 
+		padding-top: 10px; 
+		width: 280; 
+		height: 180px; 
+		position: absolute; 
+		background: #46166B; 
+		border: solid #000000 2px; 
+		z-index: 9; 
+		font-family: sans-serif; 
+		visibility: hidden; 
+		color: #FFFFFF;
+		}
 	
-			}
 	</style>
 	<body>
 		<h1>Welcome to ADVISE!</h1>
 		
+		<div id = adviseForm>
 		<form action = "/getcourses" method = "get">
 		<input type = "radio" name="choice" value = "major"
 		    checked = "checked"/> Major <br>
@@ -65,11 +69,11 @@
         <p>Select your degree: </p>
         <select name = "degrees">
         	<option value="" style="display:none;"></option>
-            <option value = "CH"> Chemistry </option>
-            <option value = "CIS"> Computer Info Systems </option>
-            <option value = "CS"> Computer Science</option>
-            <option value = "HI"> History </option>
-            <option value = "MA"> Mathematics </option>
+            <option value = "Chemistry"> Chemistry </option>
+            <option value = "Computer Info Systems"> Computer Info Systems </option>
+            <option value = "Computer Science"> Computer Science</option>
+            <option value = "History"> History </option>
+            <option value = "Mathematics"> Mathematics </option>
         </select>
         
         
@@ -79,7 +83,8 @@
         	<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <input type = "submit" value = "Upload" /><br></br>
-
+	</div>
+	
 		<div id="popupbox"> 
 		<form  action="/login" method="post">
 		<label for="username">User name</label>

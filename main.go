@@ -129,9 +129,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(degree)
 
 	//Encode course data to JSON and send response
-	for i := range allCourses {
-		json.NewEncoder(w).Encode(allCourses[i])
-	}
+	json.NewEncoder(w).Encode(allCourses)
 
 }
 
@@ -153,4 +151,5 @@ func main() {
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
 	http.ListenAndServe(":9090", router)
+
 }
