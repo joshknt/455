@@ -1,9 +1,10 @@
 package courses
 
 import (
-	_ "455/mysql-master"
 	"database/sql"
 	"fmt"
+	//mysql-master : Kept blank to keep clarity inside package
+	_ "mysql-master"
 	"strconv"
 	"strings"
 )
@@ -20,7 +21,7 @@ type Course struct {
 
 // PopulateGenEd : Populates areas 1-4 from the database
 // Author: Arturo Caballero
-func PopulateGenEd(a1 *[4]Course, a2 *[32]Course /*, a3 *[18]Course, a4 *[13]Course*/) {
+func PopulateGenEd(a1 *[4]Course, a2 *[32]Course, a3 *[18]Course, a4 *[13]Course) {
 	/* Preparing the databbase abstraction for use */
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
 	if err != nil {

@@ -15,8 +15,15 @@ import (
 var allCourses [3]courses.Course
 var member accounts.User
 var access = false
+var areaOneAr [4]courses.Course
+var areaTwoAr [32]courses.Course
+var areaThreeAr [18]courses.Course
+var areaFourAr [13]courses.Course
+var majorAr []courses.Course
+var minorAr []courses.Course
 
 func init() {
+	courses.PopulateGenEd(&areaOneAr, &areaTwoAr, &areaThreeAr, &areaFourAr)
 	allCourses[0] = courses.Course{Hours: 3, Grade: "A", DepartmentID: "CS",
 		Name: "155", Completed: true}
 
@@ -34,14 +41,7 @@ type page struct {
 	Body  []byte
 }
 
-//isValidUser : validates if the user is a administrator
-//Author: Josh Kent
-//Argument: A user account
-//Return: A boolean value determing whether the user is valid
-func isValidUser(member accounts.User) bool {
-	//ADD DB QUERY to validate user
-	return true
-}
+//MOVE TO ACCOUNTS AND CALL FROM THERE
 
 //loadPage : Helper function to store page data
 //Author: Josh Kent
@@ -74,7 +74,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\AdminView.html")
+		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\indexAdmin.html")
 		t.Execute(w, p)
 	}
 }
@@ -96,7 +96,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(member.Password)
 
 	//If user is valid, set target to admin page
-	if isValidUser(member) {
+	if accounts.IsValidUser(member) {
 		target = "/admin"
 		access = true
 	} else {
@@ -128,7 +128,18 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(degree)
 
 	//Encode course data to JSON and send response
-	json.NewEncoder(w).Encode(allCourses)
+
+	if choice == "major" {
+		courses.PopulateMajor(degree, &majorAr)
+		json.NewEncoder(w).Encode(areaOneAr)
+		json.NewEncoder(w).Encode(areaTwoAr)
+		json.NewEncoder(w).Encode(areaThreeAr)
+		json.NewEncoder(w).Encode(areaFourAr)
+		json.NewEncoder(w).Encode(majorAr)
+	} else {
+		courses.PopulateMinor(degree, &minorAr)
+		json.NewEncoder(w).Encode(minorAr)
+	}
 
 }
 

@@ -17,11 +17,20 @@ type User struct {
 	Superuser  bool   `json:"superuser"`
 }
 
+//IsValidUser : validates if the user is a administrator
+//Author: Josh Kent
+//Argument: A user account
+//Return: A boolean value determing whether the user is valid
+func IsValidUser(member User) bool {
+	//ADD DB QUERY to validate user
+	return true
+}
+
 //ValidateUsername : Checks whether the username is in the database
 //Author: Josh Kent
 //Argument: un - a string that contains the username to be validated
 //Return: A boolean value if the username is valid or not
-func ValidateUsername(un string) bool {
+func validateUsername(un string) bool {
 	//if username not in database{
 	return true
 	//}
@@ -34,7 +43,7 @@ func ValidateUsername(un string) bool {
 //Author: Josh Kent
 //Argument: un - a string that contains the password to be validated
 //Return: A boolean value if the password is valid or not
-func ValidatePassword(pass string) bool {
+func validatePassword(pass string) bool {
 	var numChars = "0123456789"
 	var validChars = ",.?$012345789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	var speChars = ",.?$"
@@ -77,7 +86,7 @@ func ValidatePassword(pass string) bool {
 //Argument: u - a user struct
 //Return: A boolean value determing if the user was created or not
 func CreateNewUser(u User) bool {
-	if ValidatePassword(u.Password) && ValidateUsername(u.Username) {
+	if validatePassword(u.Password) && validateUsername(u.Username) {
 		//database query to save user to database
 		return true
 	}
