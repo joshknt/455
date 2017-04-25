@@ -17,6 +17,15 @@ type User struct {
 	Superuser  bool   `json:"superuser"`
 }
 
+//IsValidUser : validates if the user is a administrator
+//Author: Josh Kent
+//Argument: A user account
+//Return: A boolean value determing whether the user is valid
+func IsValidUser(member User) bool {
+	//ADD DB QUERY to validate user
+	return true
+}
+
 //ValidateUsername : Checks whether the username is in the database
 //Author: Josh Kent
 //Argument: un - a string that contains the username to be validated

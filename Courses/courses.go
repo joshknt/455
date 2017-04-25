@@ -3,6 +3,7 @@ package courses
 import (
 	"database/sql"
 	"fmt"
+	//mysql-master : Kept blank to keep clarity inside package
 	_ "mysql-master"
 	"strconv"
 	"strings"
