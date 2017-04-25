@@ -74,7 +74,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\")
+		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\indexAdmin.html")
 		t.Execute(w, p)
 	}
 }
@@ -131,10 +131,10 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 
 	if choice == "major" {
 		courses.PopulateMajor(degree, &majorAr)
-		// json.NewEncoder(w).Encode(areaOneAr)
-		// json.NewEncoder(w).Encode(areaTwoAr)
-		// json.NewEncoder(w).Encode(areaThreeAr)
-		// json.NewEncoder(w).Encode(areaFourAr)
+		json.NewEncoder(w).Encode(areaOneAr)
+		json.NewEncoder(w).Encode(areaTwoAr)
+		json.NewEncoder(w).Encode(areaThreeAr)
+		json.NewEncoder(w).Encode(areaFourAr)
 		json.NewEncoder(w).Encode(majorAr)
 	} else {
 		courses.PopulateMinor(degree, &minorAr)
