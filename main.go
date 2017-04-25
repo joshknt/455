@@ -75,7 +75,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\AdminView.html")
+		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\")
 		t.Execute(w, p)
 	}
 }

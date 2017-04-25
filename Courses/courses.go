@@ -1,9 +1,9 @@
 package courses
 
 import (
-	_ "455/mysql-master"
 	"database/sql"
 	"fmt"
+	_ "mysql-master"
 	"strconv"
 	"strings"
 )
