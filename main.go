@@ -102,7 +102,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 		access = true
 	} else {
 		target = "/"
-	} //add rest api
+	}
 
 	//Redirect to target path whether user was authenticated or not
 	http.Redirect(w, r, target, 302)
