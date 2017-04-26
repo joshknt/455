@@ -1,6 +1,10 @@
 package accounts
 
 import (
+	"database/sql"
+	"fmt"
+	//mysql-master : Kept blank to keep clarity inside package
+	_ "mysql-master"
 	"strings"
 	"unicode/utf8" //needed for string length
 )
@@ -8,6 +12,7 @@ import (
 // User : Holds all of the user information
 //Author: Josh Kent
 type User struct {
+	Id         int    `json: "id, omitempty"`
 	Username   string `json:"username, omitempty"`
 	Password   string `json:"password"`
 	Department string `json:"department"`
@@ -17,13 +22,49 @@ type User struct {
 	Superuser  bool   `json:"superuser"`
 }
 
-//IsValidUser : validates if the user is a administrator
+//LoadUser : Loads a user account from the database
 //Author: Josh Kent
 //Argument: A user account
-//Return: A boolean value determing whether the user is valid
-func IsValidUser(member User) bool {
-	//ADD DB QUERY to validate user
+//Return: A boolean value determing whether the user is found in the DB
+func LoadUser(member *User) bool {
+	//Open database and defer close until end
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
+
+	//Check for user account in the DB
+	rows, err := db.Query("SELECT * FROM user WHERE username = ?", member.Username)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer rows.Close()
+
+	//Scan the row where the user is found and load information.
+	//If the user is not found, it will throw an error and return false
+	rows.Next()
+	err = rows.Scan(&member.Id, &member.Username, &member.Password, &member.Department,
+		&member.FirstName, &member.LastName, &member.Email, &member.Superuser)
+	if err != nil {
+		fmt.Println(err)
+		return false
+	}
+
 	return true
+}
+
+//IsValidUser : Validates if the user is a valid administrator
+//Author: Josh Kent
+//Argument: A user account, a string containing a password
+//Return: A boolean value determing whether the user is valid
+func IsValidUser(member User, pass string) bool {
+	if member.Password == pass {
+		fmt.Println("mem.pass == pass")
+		return true
+	}
+
+	return false
 }
 
 //ValidateUsername : Checks whether the username is in the database

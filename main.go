@@ -90,17 +90,19 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	//Convert []string to string and store into member
 	member.Username = userar[0]
-	member.Password = passar[0]
+	password := passar[0]
 
-	fmt.Println(member.Username)
-	fmt.Println(member.Password)
-
-	//If user is valid, set target to admin page
-	if accounts.IsValidUser(member) {
-		target = "/admin"
-		access = true
-	} else {
+	//Load the user, if the user is not found redirect
+	if !accounts.LoadUser(&member) {
 		target = "/"
+	} else {
+		//If user is valid, set target to admin page
+		if accounts.IsValidUser(member, password) {
+			target = "/admin"
+			access = true
+		} else {
+			target = "/"
+		}
 	}
 
 	//Redirect to target path whether user was authenticated or not
@@ -110,7 +112,17 @@ func login(w http.ResponseWriter, r *http.Request) {
 //logout : Handles the Request to logout and move to the default page
 //Author: Josh Kent
 func logout(w http.ResponseWriter, r *http.Request) {
+	//Set admin access to false and null all member values
 	access = false
+	member.Username = "null"
+	member.Password = "null"
+	member.Department = "null"
+	member.FirstName = "null"
+	member.LastName = "null"
+	member.Email = "null"
+	member.Superuser = false
+
+	//Redirect to default page
 	http.Redirect(w, r, "/", 302)
 }
 
