@@ -22,16 +22,10 @@ var areaFourAr [13]courses.Course
 var majorAr []courses.Course
 var minorAr []courses.Course
 
+//init : Initializes values need for web application. Will run before main()
+//Author: Josh Kent
 func init() {
 	courses.PopulateGenEd(&areaOneAr, &areaTwoAr, &areaThreeAr, &areaFourAr)
-	allCourses[0] = courses.Course{Hours: 3, Grade: "A", DepartmentID: "CS",
-		Name: "155", Completed: true}
-
-	allCourses[1] = courses.Course{Hours: 3, Grade: "B", DepartmentID: "CS",
-		Name: "255", Completed: true}
-
-	allCourses[2] = courses.Course{Hours: 3, Grade: "D", DepartmentID: "CS",
-		Name: "310", Completed: false}
 }
 
 //page : For storing website data
@@ -40,8 +34,6 @@ type page struct {
 	Title string
 	Body  []byte
 }
-
-//MOVE TO ACCOUNTS AND CALL FROM THERE
 
 //loadPage : Helper function to store page data
 //Author: Josh Kent
