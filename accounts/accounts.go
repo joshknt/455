@@ -172,3 +172,10 @@ func CreateNewUser(u User) bool {
 	fmt.Println("outside validate")
 	return false
 }
+
+//DeleteUser : Deletes specified user from DB
+//Author: Josh Kent
+//Argument: A userstruct
+func DeleteUser(u User) {
+
+}
