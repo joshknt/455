@@ -29,7 +29,7 @@ type User struct {
 //Return: A boolean value determing whether the user is found in the DB
 func LoadUser(member *User) bool {
 	//Open database and defer close until end
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
 		fmt.Println(err)
 	}

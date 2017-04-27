@@ -4,7 +4,7 @@ import (
 	accounts "455/Accounts"
 	courses "455/Courses"
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
 	"io/ioutil"
@@ -15,17 +15,21 @@ import (
 var allCourses [3]courses.Course
 var member accounts.User
 var access = false
-var areaOneAr [4]courses.Course
-var areaTwoAr [32]courses.Course
-var areaThreeAr [18]courses.Course
-var areaFourAr [13]courses.Course
+var areaOneAr []courses.Course
+var areaTwoAr []courses.Course
+var areaThreeAr []courses.Course
+var areaFourAr []courses.Course
 var majorAr []courses.Course
 var minorAr []courses.Course
 
 //init : Initializes values need for web application. Will run before main()
 //Author: Josh Kent
 func init() {
-	courses.PopulateGenEd(&areaOneAr, &areaTwoAr, &areaThreeAr, &areaFourAr)
+
+	courses.PopulateClassArray("general_area1", &areaOneAr)
+	courses.PopulateClassArray("general_area2", &areaTwoAr)
+	courses.PopulateClassArray("general_area3", &areaThreeAr)
+	courses.PopulateClassArray("general_area4", &areaFourAr)
 }
 
 //page : For storing website data
@@ -121,33 +125,29 @@ func logout(w http.ResponseWriter, r *http.Request) {
 //getCourses : Handles the GET request to serve specific course data
 //Author: Josh Kent
 func getCourses(w http.ResponseWriter, r *http.Request) {
-	choicear := r.URL.Query()["choice"]
-	degreear := r.URL.Query()["degrees"]
+	choice := r.URL.Query()["choice"]
+	degree := r.URL.Query()["degrees"]
 
-	//Convert []string to string
-	choice := choicear[0]
-	degree := degreear[0]
+	//Determine whether to view all major requirements or minor requirements
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+		//Populate the specific major
+		courses.PopulateClassArray(degree[0], &majorAr)
 
-	fmt.Println(choice)
-	fmt.Println(degree)
-
-	//Encode course data to JSON and send response
-
-	if choice == "major" {
-		courses.PopulateMajor(degree, &majorAr)
-		e := json.NewEncoder(w)
-		e.Encode(areaOneAr)
-		e.Encode(majorAr)
-		// json.NewEncoder(w).Encode(areaOneAr)
-		// json.NewEncoder(w).Encode(areaTwoAr)
-		// json.NewEncoder(w).Encode(areaThreeAr)
-		// json.NewEncoder(w).Encode(areaFourAr)
-		// json.NewEncoder(w).Encode(majorAr)
+		//Create new JSON encoder that will write to the response writer
+		json.NewEncoder(w).Encode(areaOneAr)
+		json.NewEncoder(w).Encode(areaTwoAr)
+		json.NewEncoder(w).Encode(areaThreeAr)
+		json.NewEncoder(w).Encode(areaFourAr)
+		json.NewEncoder(w).Encode(majorAr)
 	} else {
-		courses.PopulateMinor(degree, &minorAr)
+		degree[0] = degree[0] + "_minor"
+		//Populate the specific minor
+		courses.PopulateClassArray(degree[0], &minorAr)
+
+		//Create new JSON encoder that will write to the response writer
 		json.NewEncoder(w).Encode(minorAr)
 	}
-
 }
 
 //main : main driver for the web server
