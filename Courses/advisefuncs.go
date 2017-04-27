@@ -13,20 +13,50 @@ func ValidateGPA() bool {
 
 // AddtoQualityPoints : Adds to qualityPoint total
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/25/2017 4:00 PM
+// Edited by: Jared Wood on 4/26/2017 6:27 PM
 func AddtoQualityPoints(grade float32, hours float32) {
-	qualityPoints = qualityPoints + (grade * hours)
+	if (grade > 0) && (grade <= 4.0) {
+		if (hours > 0) && (hours <= 4) {
+			qualityPoints = qualityPoints + (grade * hours)
+			AddtoTotalHours(uint8(hours))
+		} else {
+			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
+		}
+	} else {
+		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
+	}
 }
 
 // RemoveQualityPoints : Subtracts from qualityPoint total
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/25/2017 4:00 PM
 func RemoveQualityPoints(grade float32, hours float32) {
-	qualityPoints = qualityPoints - (grade * hours)
+	if (grade > 0) && (grade <= 4.0) {
+		if (hours > 0) && (hours <= 4) {
+			if (grade * hours) <= qualityPoints {
+				qualityPoints = qualityPoints - (grade * hours)
+			} else {
+				qualityPoints = 0
+			}
+			RemoveTotalHours(uint8(hours))
+		} else {
+			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
+		}
+	} else {
+		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
+	}
 }
 
 // UpdateGPA : Updates current GPA when called
 // Author: Arturo Caballero
+// Edited By: Jared Wood on 4/26/2017 6:16 PM
 func UpdateGPA() {
-	gpa = qualityPoints / float32(totalHours)
+	if totalHours > 0 {
+		gpa = qualityPoints / float32(totalHours)
+	} else {
+		gpa = 0
+	}
 }
 
 // GetGPA : Returns GPA
@@ -49,8 +79,14 @@ func AddtoTotalHours(hours uint8) {
 
 // RemoveTotalHours : Subracts hours from totalHours
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/25/2017 2:46 PM
 func RemoveTotalHours(hours uint8) {
-	totalHours = totalHours - hours
+	if hours <= totalHours {
+		totalHours = totalHours - hours
+	} else {
+		totalHours = 0
+	}
+
 }
 
 // GetTotalHours : Returns totalHours
@@ -67,14 +103,28 @@ func ValidateSeniorCollegeHours() bool {
 
 // AddtoSeniorCollegeHours : Adds hours to seniorCollegeHours
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/27/2017 4:56 PM
 func AddtoSeniorCollegeHours(hours uint8) {
-	seniorCollegeHours = seniorCollegeHours + hours
+	if (hours > 0) && (hours <= 4) {
+		seniorCollegeHours = seniorCollegeHours + hours
+	} else {
+		fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nSenior Hours unchanged\n", hours)
+	}
 }
 
 // RemoveSeniorCollegeHours : Subtracts hours from seniorCollegeHours
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/27/2017 4:36 PM
 func RemoveSeniorCollegeHours(hours uint8) {
-	seniorCollegeHours = seniorCollegeHours - hours
+	if (hours > 0) && (hours <= 4) {
+		if hours <= seniorCollegeHours {
+			seniorCollegeHours = seniorCollegeHours - hours
+		} else {
+			seniorCollegeHours = 0
+		}
+	} else {
+		fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nSenior Hours unchanged\n", hours)
+	}
 }
 
 // GetSeniorCollegeHours : Returns seniorCollegeHours
@@ -91,14 +141,28 @@ func ValidateJuniorSeniorHours() bool {
 
 // AddtoJuniorSeniorHours : Adds hours to juniorSeniorHours
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/27/2017 4:56 PM
 func AddtoJuniorSeniorHours(hours uint8) {
-	juniorSeniorHours = juniorSeniorHours + hours
+	if (hours > 0) && (hours <= 4) {
+		juniorSeniorHours = juniorSeniorHours + hours
+	} else {
+		fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nJunior-Senior Hours unchanged\n", hours)
+	}
 }
 
 // RemoveJuniorSeniorHours : Subtracts hours from juniorSeniorHours
 // Author: Arturo Caballero
+// Edited by: Jared Wood on 4/27/2017 4:56 PM
 func RemoveJuniorSeniorHours(hours uint8) {
-	juniorSeniorHours = juniorSeniorHours - hours
+	if (hours > 0) && (hours <= 4) {
+		if hours <= juniorSeniorHours {
+			juniorSeniorHours = juniorSeniorHours - hours
+		} else {
+			juniorSeniorHours = 0
+		}
+	} else {
+		fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nJunior-Senior Hours unchanged\n", hours)
+	}
 }
 
 // GetJuniorSenior : returns juniorSeniorHours
