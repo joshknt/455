@@ -12,9 +12,11 @@ import (
 	//"strings"
 )
 
-var allCourses [3]courses.Course
+//Declare default user and set access
 var member accounts.User
 var access = false
+
+//Declare course arrary
 var areaOneAr []courses.Course
 var areaTwoAr []courses.Course
 var areaThreeAr []courses.Course
@@ -22,13 +24,24 @@ var areaFourAr []courses.Course
 var majorAr []courses.Course
 var minorAr []courses.Course
 
-//init : Initializes values need for web application. Will run before main()
+//init : Initializes values needed for web application. Will run before main()
 //Author: Josh Kent
 func init() {
+	//Populates area I-IV classes
 	courses.PopulateClassArray("general_area1", &areaOneAr)
 	courses.PopulateClassArray("general_area2", &areaTwoAr)
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
 	courses.PopulateClassArray("general_area4", &areaFourAr)
+
+	// member.Id = "999"
+	// member.Username = "jhunt"
+	// member.Password = "suckit666?"
+	// member.Department = "hi"
+	// member.FirstName = "Joe"
+	// member.LastName = "Hunt"
+	// member.Email = "jhunt@uah.edu"
+	// member.Superuser = false
+	// accounts.CreateNewUser(member)
 }
 
 //page : For storing website data
@@ -43,7 +56,10 @@ type page struct {
 //Argument: title - string that holds the title of the page
 //Return: A pointer to the page formed
 func loadPage(title string) (*page, error) {
-	filename := title + ".txt"
+	//Set file name
+	filename := title
+
+	//Read file contents into body
 	body, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
@@ -124,6 +140,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 //getCourses : Handles the GET request to serve specific course data
 //Author: Josh Kent
 func getCourses(w http.ResponseWriter, r *http.Request) {
+	//Get parameters from post request
 	choice := r.URL.Query()["choice"]
 	degree := r.URL.Query()["degrees"]
 
@@ -149,20 +166,87 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//main : main driver for the web server
+//createUser : Handles the request to create a new user to store in DB
+//Author: Josh Kent
+func createUser(w http.ResponseWriter, r *http.Request) {
+	//Parse the POST request and get new user details
+	r.ParseForm()
+	userNameAr := r.Form["username"]
+	passwordAr := r.Form["password"]
+	departmentAr := r.Form["department"]
+	firstNameAr := r.Form["firstname"]
+	lastNameAr := r.Form["lastname"]
+	emailAr := r.Form["email"]
+	superuserAr := r.Form["superuser"]
+
+	//Store the new user into temporary member
+	member.Username = userNameAr[0]
+	member.Password = passwordAr[0]
+	member.Department = departmentAr[0]
+	member.FirstName = firstNameAr[0]
+	member.LastName = lastNameAr[0]
+	member.Email = emailAr[0]
+	//Check superuser status (argument is in string form [string != bool])
+	if superuserAr[0] == "true" {
+		member.Superuser = true
+	} else {
+		member.Superuser = false
+	}
+
+	//Create the new user
+	accounts.CreateNewUser(member)
+}
+
+//getUser : Handles the request and will write the specified user to front end
+//Author: Josh Kent
+func getUser(w http.ResponseWriter, r *http.Request) {
+	//Get parameters from post request and set it to default user
+	userName := r.URL.Query()["username"]
+	member.Username = userName[0]
+
+	//Load user account details
+	accounts.LoadUser(&member)
+
+	//Create JSON encoder and write it to the response writer
+	json.NewEncoder(w).Encode(member)
+
+}
+
+//deleteUser : Handler that will delete a specified user from the database
+//Author: Josh Kent
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+	//Parse the form and get the username to delete
+	r.ParseForm()
+	userToDelete := r.Form["username"]
+
+	//Delete the user
+	accounts.DeleteUser(userToDelete[0])
+}
+
+//main : Main driver for the web server
 //Author(s): Josh Kent
 func main() {
 	//Setup a new router where handle names must match
 	router := mux.NewRouter().StrictSlash(true)
 
 	//File handlers
-	router.HandleFunc("/", defaultViewHandler)
-	router.HandleFunc("/admin", adminViewHandler)
+	router.HandleFunc("/", defaultViewHandler).Methods("GET")
+	router.HandleFunc("/admin", adminViewHandler).Methods("GET")
 
 	//RESTful API
+	//Login and logout handling
 	router.HandleFunc("/login", login).Methods("POST")
 	router.HandleFunc("/logout", logout).Methods("POST")
-	router.HandleFunc("/getcourses", getCourses).Methods("GET")
+
+	//API for accounts
+	router.HandleFunc("/createuser", createUser).Methods("POST")
+	router.HandleFunc("/loaduser", getUser).Methods("PUT")
+	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
+
+	//API for courses
+	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
+	router.HandleFunc("/loadcourses", getCourses).Methods("PUT")
+	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
