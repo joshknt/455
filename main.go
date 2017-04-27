@@ -15,15 +15,18 @@ import (
 var allCourses [3]courses.Course
 var member accounts.User
 var access = false
-var areaOneAr [4]courses.Course
-var areaTwoAr [32]courses.Course
-var areaThreeAr [18]courses.Course
-var areaFourAr [13]courses.Course
+var areaOneAr []courses.Course
+var areaTwoAr []courses.Course
+var areaThreeAr []courses.Course
+var areaFourAr []courses.Course
 var majorAr []courses.Course
 var minorAr []courses.Course
 
 func init() {
-	courses.PopulateGenEd(&areaOneAr, &areaTwoAr, &areaThreeAr, &areaFourAr)
+	courses.PopulateClassArray("general_area1", &areaOneAr)
+	courses.PopulateClassArray("general_area2", &areaTwoAr)
+	courses.PopulateClassArray("general_area3", &areaThreeAr)
+	courses.PopulateClassArray("general_area4", &areaFourAr)
 	allCourses[0] = courses.Course{Hours: 3, Grade: "A", DepartmentID: "CS",
 		Name: "155", Completed: true}
 
@@ -130,14 +133,14 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 	//Encode course data to JSON and send response
 
 	if choice == "major" {
-		courses.PopulateMajor(degree, &majorAr)
+		//courses.PopulateMajor(degree, &majorAr)
 		json.NewEncoder(w).Encode(areaOneAr)
 		json.NewEncoder(w).Encode(areaTwoAr)
 		json.NewEncoder(w).Encode(areaThreeAr)
 		json.NewEncoder(w).Encode(areaFourAr)
 		json.NewEncoder(w).Encode(majorAr)
 	} else {
-		courses.PopulateMinor(degree, &minorAr)
+		//courses.PopulateMinor(degree, &minorAr)
 		json.NewEncoder(w).Encode(minorAr)
 	}
 
