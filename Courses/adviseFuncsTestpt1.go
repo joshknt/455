@@ -15,8 +15,13 @@ func ValidateGPA() bool {
 
 // UpdateGPA : Updates current GPA when called
 // Author: Arturo Caballero
+// Edited By: Jared Wood on 4/26/2017 6:16 PM
 func UpdateGPA() {
-	gpa = qualityPoints / float32(totalHours)
+	if totalHours > 0 {
+		gpa = qualityPoints / float32(totalHours)
+	} else {
+		gpa = 0
+	}
 }
 
 // GetGPA : Returns GPA
@@ -28,17 +33,14 @@ func GetGPA() float32 {
 // AddtoQualityPoints : Adds to qualityPoint total
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/25/2017 4:00 PM
+// Edited by: Jared Wood on 4/26/2017 6:27 PM
 func AddtoQualityPoints(grade float32, hours float32) {
 	if (grade > 0) && (grade <= 4.0) {
 		if (hours > 0) && (hours <= 4) {
-			if (grade * hours) <= qualityPoints {
-				qualityPoints = qualityPoints + (grade * hours)
-			} else {
-				qualityPoints = 0
-			}
+			qualityPoints = qualityPoints + (grade * hours)
 			AddtoTotalHours(uint8(hours))
 		} else {
-			fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nQuality Points unchanged\n", hours)
+			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
 		}
 	} else {
 		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
@@ -58,7 +60,7 @@ func RemoveQualityPoints(grade float32, hours float32) {
 			}
 			RemoveTotalHours(uint8(hours))
 		} else {
-			fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nQuality Points unchanged\n", hours)
+			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
 		}
 	} else {
 		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
@@ -104,6 +106,7 @@ func RemoveTotalHours(hours uint8) {
 //main : Tests all the functions included inside
 //		 There are multiple test cases in main.
 //		 To run one, comment out all but the intended test case.
+//		 Test cases will not test accurately if ran back to back, one at a time is necessary
 //Author: Jared Wood
 func main() {
 	/*/--------------------------Begin Test Case AddtoQualityPoints 1----------
@@ -185,7 +188,7 @@ func main() {
 	fmt.Print("3 hours with a 2.0, C, removed from Quality Points\n")
 	fmt.Printf("Ending Quality Points: %v\n", GetQualityPoints())
 	//Pass Log:
-	//	4/25/2017 3:40 PM Failed with -6 instead of 0
+	// 	4/25/2017 4:40 PM Passed
 	//-----------------------------End Test Case------------------------------*/
 
 	/*/--------------------------Begin Test Case RemoveQualityPoints 3-----------
@@ -199,6 +202,50 @@ func main() {
 	//Pass Log:
 	//	4/25/2017 3:40 PM Failed with -6 instead of 0
 	//	4/25/2017 4:46 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case RemoveQualityPoints 4----------
+	//This will edit and then return the QualityPoints starting at 0
+	//Expected input: A 5.0 in a 3 hour class
+	//Expected output: Error: grade not within bounds
+	fmt.Print("3 hours with a 5.0 added to Quality Points\n")
+	RemoveQualityPoints(5.0, 3)
+	fmt.Printf("Quality Points: %v\n", GetQualityPoints())
+	//Pass Log:
+	//	4/26/2017 6:00 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case RemoveQualityPoints 5----------
+	//This will edit and then return the QualityPoints starting at 0
+	//Expected input: A -1.0 in a 3 hour class
+	//Expected output: Error: grade not within bounds
+	fmt.Print("3 hours with a -1.0 added to Quality Points\n")
+	RemoveQualityPoints(-1.0, 3)
+	fmt.Printf("Quality Points: %v\n", GetQualityPoints())
+	//Pass Log:
+	//	4/25/2017 6:00 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case RemoveQualityPoints 6----------
+	//This will edit and then return the QualityPoints starting at 0
+	//Expected input: A 2.0 in a 5 hour class
+	//Expected output: Error: hours not within bounds
+	fmt.Print("5 hours with a 2.0 added to Quality Points\n")
+	RemoveQualityPoints(2.0, 5)
+	fmt.Printf("Quality Points: %v\n", GetQualityPoints())
+	//Pass Log:
+	//	4/25/2017 6:00 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case RemoveQualityPoints 7----------
+	//This will edit and then return the QualityPoints starting at 0
+	//Expected input: A 2.0 in a -1 hour class
+	//Expected output: Error: hours not within bounds
+	fmt.Print("-1 hours with a 2.0 added to Quality Points\n")
+	RemoveQualityPoints(2.0, -1)
+	fmt.Printf("Quality Points: %v\n", GetQualityPoints())
+	//Pass Log:
+	//	4/25/2017 6:00 PM Passed
 	//-----------------------------End Test Case------------------------------*/
 
 	/*/--------------------------Begin Test Case AddtoTotalHours-------------
@@ -215,7 +262,7 @@ func main() {
 	/*/--------------------------Begin Test Case RemoveTotalHours 1-----------
 	//This will edit and then return the TotalHours starting with 6 hours
 	//Expected input: 3 hours
-	//Expected output: 0 hours
+	//Expected output: 3 hours
 	AddtoTotalHours(6)
 	fmt.Printf("Starting Total Hours: %v\n", GetTotalHours())
 	RemoveTotalHours(3)
@@ -241,39 +288,199 @@ func main() {
 	/*/--------------------------Begin Test Case GPA 1--------------------------
 	//This will edit and then return the current GPA
 	//Expected input: An A in a 3 hour class
-	//Expected output: Begins with 0.0 GPA and ends with a 4.0 GPA
+	//Expected output: 4.0 GPA
 	fmt.Printf("Current GPA: %v\n", GetGPA())
 	fmt.Print("Adding a 4.0 in a 3 hour class\n")
 	AddtoQualityPoints(4, 3)
-	fmt.Print("Updated GPA\n")
+	fmt.Print("GPA was Updated.\n")
 	UpdateGPA()
 	fmt.Printf("New GPA: %v\n", GetGPA())
+	//Pass Log:
+	//	4/26/2017 6:15 PM Passed
 	//-----------------------------End Test Case------------------------------*/
 
 	/*/--------------------------Begin Test Case GPA 2-------------------------
 	//This will edit and then return the current GPA
 	//Expected input: Removing an A in a 3 hour class
-	//Expected output: Begins with 4.0 GPA and ends with a 0.0 GPA
+	//Expected output: 0.0 GPA
 	AddtoQualityPoints(4, 3)
 	UpdateGPA()
 	fmt.Printf("Current GPA: %v\n", GetGPA())
 	fmt.Print("Removing a 4.0 in a 3 hour class\n")
 	RemoveQualityPoints(4, 3)
-	RemoveTotalHours(3)
 	fmt.Print("The GPA was updated\n")
 	UpdateGPA()
 	fmt.Printf("New GPA: %v\n", GetGPA())
+	//Pass Log:
+	//	4/26/2017 6:15 PM Failed with NaN instead of 0
+	//	4/26/2017 6:17 PM Passed
 	//-----------------------------End Test Case------------------------------*/
-	/*
-		fmt.Printf("Validate GPA: %v\n", ValidateGPA())
-		AddtoQualityPoints(3.5, 3)
-		RemoveQualityPoints(3.5, 4)
-		AddtoTotalHours(3)
-		UpdateGPA()
-		fmt.Printf("Get GPA: %v\n", GetGPA())
-		fmt.Printf("Validate Total Hours: %v\n", ValidateTotalHours())
 
-		RemoveTotalHours(4)
-		fmt.Printf("Get Total Hours: %v\n", GetTotalHours())
-	*/
+	/*/--------------------------Begin Test Case GPA 3-------------------------
+	//This will edit and then return the current GPA
+	//Expected input: Removing an A in a 3 hour class
+	//Expected output: 2.0 GPA
+	AddtoQualityPoints(4.0, 3)
+	AddtoQualityPoints(2.0, 3)
+	UpdateGPA()
+	fmt.Printf("Current GPA: %v\n", GetGPA())
+	fmt.Print("Removing a 4.0 in a 3 hour class\n")
+	RemoveQualityPoints(4, 3)
+	fmt.Print("The GPA was updated\n")
+	UpdateGPA()
+	fmt.Printf("New GPA: %v\n", GetGPA())
+	//Pass Log:
+	//	4/26/2017 6:28 PM Failed with NaN instead of 0
+	//	4/26/2017 6:30 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateTotalHours 1----------
+	//This will check if the number of hours is met to graduate
+	//Expected input: 124 hours
+	//Expected output: True
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	fmt.Printf("Total Hours Valid: %v\n", ValidateTotalHours())
+	//Pass Log:
+	//	4/25/2017 6:41 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateTotalHours 2----------
+	//This will check if the number of hours is met to graduate
+	//Expected input: 120 hours
+	//Expected output: True
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	fmt.Printf("Total Hours Valid: %v\n", ValidateTotalHours())
+	//Pass Log:
+	//	4/25/2017 6:43 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateTotalHours 3----------
+	//This will check if the number of hours is met to graduate
+	//Expected input: 116 hours
+	//Expected output: False
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	AddtoQualityPoints(4.0, 4)
+	fmt.Printf("Total Hours Valid: %v\n", ValidateTotalHours())
+	//Pass Log:
+	//	4/25/2017 6:44 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateGPA 1----------
+	//This will check if GPA is met to graduate
+	//Expected input: 4.0 GPA
+	//Expected output: True
+	AddtoQualityPoints(4.0, 4)
+	UpdateGPA()
+	fmt.Printf("GPA Valid: %v\n", ValidateGPA())
+	//Pass Log:
+	//	4/25/2017 6:52 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateGPA 2----------
+	//This will check if the GPA is met to graduate
+	//Expected input: 2.0 GPA
+	//Expected output: True
+	AddtoQualityPoints(2.0, 4)
+	UpdateGPA()
+	fmt.Printf("GPA Valid: %v\n", ValidateGPA())
+	//Pass Log:
+	//	4/25/2017 6:52 PM Passed
+	//-----------------------------End Test Case------------------------------*/
+
+	/*/--------------------------Begin Test Case ValidateGPA 3----------
+	//This will check if the GPA is met to graduate
+	//Expected input: 1.0 GPA
+	//Expected output: False
+	AddtoQualityPoints(1.0, 4)
+	UpdateGPA()
+	fmt.Printf("GPA Valid: %v\n", ValidateGPA())
+	//Pass Log:
+	//	4/25/2017 6:52 PM Passed
+	//-----------------------------End Test Case------------------------------*/
 }
