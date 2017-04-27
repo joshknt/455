@@ -50,7 +50,7 @@ func PopulateClassArray(table string, arr *[]Course) {
 	defer rows.Close()
 }
 
-// InsertClassToDB: Will take an array of classes and insert them into the DB
+// InsertClassToDB: Will take a class struct and insert it into the DB
 // Author: Arturo Caballero
 func InsertClassToDB(table string, class Course) {
 	// Preparing the database for use
@@ -72,7 +72,7 @@ func InsertClassToDB(table string, class Course) {
 	stmt.Exec(1, class.DepartmentID, class.Name, class.Hours, 1)
 }
 
-// DeleteClassFromDB: Will take an array of classes and delete them from the DB
+// DeleteClassFromDB: Will take a class struct and delete it from the DB
 // Author: Arturo Caballero
 func DeleteClassFromDB(table string, class Course) {
 	// Preparing the database for use
