@@ -70,32 +70,25 @@ func IsValidUser(member User, pass string) bool {
 //ValidateUsername : Checks whether the username is in the database
 //Author: Josh Kent
 //Argument: un - a string that contains the username to be validated
-//Return: A boolean value if the username is valid or not
+//Return: A boolean value if the username is already taken or not
 func validateUsername(un string) bool {
+	//Holds the value whether the username exists or not
+	var exists bool
+
 	//Open database and defer close until end
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
 		fmt.Println(err)
 	}
 	defer db.Close()
 
 	//Check for user account in the DB
-	rows, err := db.Query("SELECT * FROM user WHERE username = ?", un)
+	err = db.QueryRow("SELECT EXISTS (SELECT username FROM user WHERE username = ?)", un).Scan(&exists)
 	if err != nil {
 		fmt.Println(err)
 	}
-	defer rows.Close()
 
-	//Scan the rows to look for the username
-	//If the user is not found, it will return true
-	rows.Next()
-	err = rows.Scan()
-	if err != nil {
-		fmt.Println(err)
-		return true
-	}
-
-	return false
+	return exists
 }
 
 //ValidatePassword : Checks password based on the requirements
@@ -146,10 +139,10 @@ func validatePassword(pass string) bool {
 //Argument: u - a user struct
 //Return: A boolean value determing if the user was created or not
 func CreateNewUser(u User) bool {
-	if validatePassword(u.Password) && validateUsername(u.Username) {
+	if validatePassword(u.Password) && !validateUsername(u.Username) {
 		fmt.Println("inside validate")
 		//Open database and defer close until end
-		db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+		db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 		if err != nil {
 			fmt.Println(err)
 		}
