@@ -31,7 +31,7 @@ func PopulateClassArray(table string, arr *[]Course) {
 	rows, err := db.Query(query)
 
 	if err != nil {
-		fmt.Println("Error Querying Database")
+		fmt.Println(err)
 	} else {
 		for rows.Next() {
 			err := rows.Scan(&pstc.DepartmentID, &pstc.Name, &pstc.Hours)

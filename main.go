@@ -4,7 +4,7 @@ import (
 	accounts "455/Accounts"
 	courses "455/Courses"
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
 	"io/ioutil"
@@ -22,19 +22,13 @@ var areaFourAr []courses.Course
 var majorAr []courses.Course
 var minorAr []courses.Course
 
+//init : Initializes values need for web application. Will run before main()
+//Author: Josh Kent
 func init() {
 	courses.PopulateClassArray("general_area1", &areaOneAr)
 	courses.PopulateClassArray("general_area2", &areaTwoAr)
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
 	courses.PopulateClassArray("general_area4", &areaFourAr)
-	allCourses[0] = courses.Course{Hours: 3, Grade: "A", DepartmentID: "CS",
-		Name: "155", Completed: true}
-
-	allCourses[1] = courses.Course{Hours: 3, Grade: "B", DepartmentID: "CS",
-		Name: "255", Completed: true}
-
-	allCourses[2] = courses.Course{Hours: 3, Grade: "D", DepartmentID: "CS",
-		Name: "310", Completed: false}
 }
 
 //page : For storing website data
@@ -43,8 +37,6 @@ type page struct {
 	Title string
 	Body  []byte
 }
-
-//MOVE TO ACCOUNTS AND CALL FROM THERE
 
 //loadPage : Helper function to store page data
 //Author: Josh Kent
@@ -93,17 +85,19 @@ func login(w http.ResponseWriter, r *http.Request) {
 
 	//Convert []string to string and store into member
 	member.Username = userar[0]
-	member.Password = passar[0]
+	password := passar[0]
 
-	fmt.Println(member.Username)
-	fmt.Println(member.Password)
-
-	//If user is valid, set target to admin page
-	if accounts.IsValidUser(member) {
-		target = "/admin"
-		access = true
-	} else {
+	//Load the user, if the user is not found redirect
+	if !accounts.LoadUser(&member) {
 		target = "/"
+	} else {
+		//If user is valid, set target to admin page
+		if accounts.IsValidUser(member, password) {
+			target = "/admin"
+			access = true
+		} else {
+			target = "/"
+		}
 	}
 
 	//Redirect to target path whether user was authenticated or not
@@ -113,43 +107,52 @@ func login(w http.ResponseWriter, r *http.Request) {
 //logout : Handles the Request to logout and move to the default page
 //Author: Josh Kent
 func logout(w http.ResponseWriter, r *http.Request) {
+	//Set admin access to false and null all member values
 	access = false
+	member.Username = "null"
+	member.Password = "null"
+	member.Department = "null"
+	member.FirstName = "null"
+	member.LastName = "null"
+	member.Email = "null"
+	member.Superuser = false
+
+	//Redirect to default page
 	http.Redirect(w, r, "/", 302)
 }
 
 //getCourses : Handles the GET request to serve specific course data
 //Author: Josh Kent
 func getCourses(w http.ResponseWriter, r *http.Request) {
-	choicear := r.URL.Query()["choice"]
-	degreear := r.URL.Query()["degrees"]
+	choice := r.URL.Query()["choice"]
+	degree := r.URL.Query()["degrees"]
 
-	//Convert []string to string
-	choice := choicear[0]
-	degree := degreear[0]
+	//Determine whether to view all major requirements or minor requirements
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+		//Populate the specific major
+		courses.PopulateClassArray(degree[0], &majorAr)
 
-	fmt.Println(choice)
-	fmt.Println(degree)
-
-	//Encode course data to JSON and send response
-
-	if choice == "major" {
-		//courses.PopulateMajor(degree, &majorAr)
+		//Create new JSON encoder that will write to the response writer
 		json.NewEncoder(w).Encode(areaOneAr)
 		json.NewEncoder(w).Encode(areaTwoAr)
 		json.NewEncoder(w).Encode(areaThreeAr)
 		json.NewEncoder(w).Encode(areaFourAr)
 		json.NewEncoder(w).Encode(majorAr)
 	} else {
-		//courses.PopulateMinor(degree, &minorAr)
+		degree[0] = degree[0] + "_minor"
+		//Populate the specific minor
+		courses.PopulateClassArray(degree[0], &minorAr)
+
+		//Create new JSON encoder that will write to the response writer
 		json.NewEncoder(w).Encode(minorAr)
 	}
-
 }
 
 //main : main driver for the web server
 //Author(s): Josh Kent
 func main() {
-	//Setup a new router that handle names must match
+	//Setup a new router where handle names must match
 	router := mux.NewRouter().StrictSlash(true)
 
 	//File handlers
