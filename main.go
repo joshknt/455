@@ -135,11 +135,14 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 
 	if choice == "major" {
 		courses.PopulateMajor(degree, &majorAr)
-		json.NewEncoder(w).Encode(areaOneAr)
-		json.NewEncoder(w).Encode(areaTwoAr)
-		json.NewEncoder(w).Encode(areaThreeAr)
-		json.NewEncoder(w).Encode(areaFourAr)
-		json.NewEncoder(w).Encode(majorAr)
+		e := json.NewEncoder(w)
+		e.Encode(areaOneAr)
+		e.Encode(majorAr)
+		// json.NewEncoder(w).Encode(areaOneAr)
+		// json.NewEncoder(w).Encode(areaTwoAr)
+		// json.NewEncoder(w).Encode(areaThreeAr)
+		// json.NewEncoder(w).Encode(areaFourAr)
+		// json.NewEncoder(w).Encode(majorAr)
 	} else {
 		courses.PopulateMinor(degree, &minorAr)
 		json.NewEncoder(w).Encode(minorAr)
@@ -150,7 +153,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 //main : main driver for the web server
 //Author(s): Josh Kent
 func main() {
-	//Setup a new router that handle names must match
+	//Setup a new router where handle names must match
 	router := mux.NewRouter().StrictSlash(true)
 
 	//File handlers
