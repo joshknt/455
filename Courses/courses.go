@@ -20,28 +20,94 @@ type Course struct {
 // PopulateClassArray: Populates the given array from the table name passed
 // Author: Arturo Caballero
 func PopulateClassArray(table string, arr *[]Course) {
+	// new pointer of type Course
 	pstc := new(Course)
+	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
 		fmt.Println("Error Preparing Database")
 	}
 	defer db.Close()
 
+	// Makes query for Next() by appending table argument
 	query := ("select dept, course, credits from " + table)
 	rows, err := db.Query(query)
 
 	if err != nil {
 		fmt.Println("Error Querying Database")
 	} else {
+		// If no querying error has occurred iterate through every row in table
 		for rows.Next() {
+			// Stores table values into pointer Course variables
 			err := rows.Scan(&pstc.DepartmentID, &pstc.Name, &pstc.Hours)
 			if err != nil {
 				fmt.Println("Error Scanning Rows")
 			}
+			// Appends pointer to arr argument and grows slice
 			*arr = append(*arr, *pstc)
 		}
 	}
 	defer rows.Close()
+}
+
+// InsertClassesToDB: Will take an array of classes and insert them into the DB
+// Author: Arturo Caballero
+func InsertClassesToDB(table string, arr *[]Course) {
+	var n int = 1
+	// Makes pointer of length(arr) and copies arr to pstc
+	pstc := make([]Course, len(*arr))
+	copy(pstc, *arr)
+
+	// Preparing the database for use
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
+	if err != nil {
+		fmt.Println("Error Preparing Database")
+	}
+	defer db.Close()
+
+	// Prepares query stmt for Exec() by appending table argument
+	query := ("insert " + table + " set id=?, dept=?, course=?, credits=?, year=?")
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		fmt.Println("Error Querying Database")
+	}
+	defer stmt.Close()
+
+	// Executes for each structure in pstc and inserts into table
+	for i := 0; i < len(pstc); i++ {
+		stmt.Exec(n, pstc[i].DepartmentID, pstc[i].Name, pstc[i].Hours, 1)
+		n++
+	}
+}
+
+// DeleteClassesFromDB: Will take an array of classes and delete them from the DB
+// Author: Arturo Caballero
+func DeleteClassesFromDB(table string, arr *[]Course) {
+	var n int = 1
+	// Makes pointer of length(arr) and copies arr to pstc
+	pstc := make([]Course, len(*arr))
+	copy(pstc, *arr)
+
+	// Preparing the database for use
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
+	if err != nil {
+		fmt.Println("Error Preparing Database")
+	}
+	defer db.Close()
+
+	// Prepares query stmt for Exec() by appending table argument
+	query := ("delete from " + table + " where id=?")
+	stmt, err := db.Prepare(query)
+	if err != nil {
+		fmt.Println("Error Querying Database")
+	}
+	defer stmt.Close()
+
+	// Executes for each structure in pstc and deletes from table using id
+	for i := 0; i < len(pstc); i++ {
+		stmt.Exec(n)
+		n++
+	}
 }
 
 // ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
