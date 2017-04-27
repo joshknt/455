@@ -25,7 +25,6 @@ var minorAr []courses.Course
 //init : Initializes values need for web application. Will run before main()
 //Author: Josh Kent
 func init() {
-
 	courses.PopulateClassArray("general_area1", &areaOneAr)
 	courses.PopulateClassArray("general_area2", &areaTwoAr)
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
