@@ -52,6 +52,7 @@ func LoadUser(member *User) bool {
 		return false
 	}
 
+	//Return true if the user was loaded correctly
 	return true
 }
 
@@ -64,6 +65,7 @@ func IsValidUser(member User, pass string) bool {
 		return true
 	}
 
+	//Return false if the password did not match
 	return false
 }
 
@@ -83,11 +85,13 @@ func validateUsername(un string) bool {
 	defer db.Close()
 
 	//Check for user account in the DB
+	//DO NOT try to format this line. It will insert a new line char in the query
 	err = db.QueryRow("SELECT EXISTS (SELECT username FROM user WHERE username = ?)", un).Scan(&exists)
 	if err != nil {
 		fmt.Println(err)
 	}
 
+	//Return whether the username exists or not
 	return exists
 }
 
@@ -131,6 +135,7 @@ func validatePassword(pass string) bool {
 		return false
 	}
 
+	//Return only if the password met all of the requirements
 	return true
 }
 
@@ -147,7 +152,8 @@ func CreateNewUser(u User) bool {
 		}
 		defer db.Close()
 
-		//Prepare Insert query for DB
+		//Prepare the query: MUST BE DONE with INSERT AND DELETE queries
+		//DO NOT try to format this line. It will insert a new line char in the query
 		stmt, err := db.Prepare("INSERT INTO user (id, username, password, department, firstname,lastname, email, supervisor) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
 			fmt.Println(err)
@@ -159,9 +165,11 @@ func CreateNewUser(u User) bool {
 			fmt.Println(err)
 		}
 
+		//Return if the user had a unique username and valid password
 		return true
 	}
 
+	//Return if the username was already taken or password didn't meet requirements
 	return false
 }
 
@@ -176,6 +184,7 @@ func DeleteUser(un string) {
 	}
 	defer db.Close()
 
+	//Prepare the query: MUST BE DONE with INSERT AND DELETE queries
 	stmt, err := db.Prepare("DELETE FROM user WHERE username = ?")
 	if err != nil {
 		fmt.Println(err)

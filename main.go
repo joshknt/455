@@ -171,6 +171,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 func createUser(w http.ResponseWriter, r *http.Request) {
 	//Parse the POST request and get new user details
 	r.ParseForm()
+	idAr := r.Form["id"]
 	userNameAr := r.Form["username"]
 	passwordAr := r.Form["password"]
 	departmentAr := r.Form["department"]
@@ -180,6 +181,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 	superuserAr := r.Form["superuser"]
 
 	//Store the new user into temporary member
+	member.Id = idAr[0]
 	member.Username = userNameAr[0]
 	member.Password = passwordAr[0]
 	member.Department = departmentAr[0]
@@ -209,7 +211,6 @@ func getUser(w http.ResponseWriter, r *http.Request) {
 
 	//Create JSON encoder and write it to the response writer
 	json.NewEncoder(w).Encode(member)
-
 }
 
 //deleteUser : Handler that will delete a specified user from the database
