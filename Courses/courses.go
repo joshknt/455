@@ -5,8 +5,6 @@ import (
 	"fmt"
 	//mysql-master : Kept blank to keep clarity inside package
 	_ "mysql-master"
-	"strconv"
-	"strings"
 )
 
 // Course : Holds all of the course information
@@ -19,251 +17,31 @@ type Course struct {
 	Completed    bool   `json:"completed"`
 }
 
-// PopulateGenEd : Populates areas 1-4 from the database
+// PopulateClassArray: Populates the given array from the table name passed
 // Author: Arturo Caballero
-func PopulateGenEd(a1 *[4]Course, a2 *[32]Course, a3 *[18]Course, a4 *[13]Course) {
-	/* Preparing the databbase abstraction for use */
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
-	if err != nil {
-		fmt.Println("error")
-	}
-	defer db.Close()
-
-	var name string
-
-	/* make the query to the database */
-	rows, err := db.Query("select courses from general where id = ?", 1)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer rows.Close()
-
-	/* scan the row to place into name string variable */
-	rows.Next()
-	err = rows.Scan(&name)
-	if err != nil {
-		fmt.Println(err)
-	}
-	err = rows.Err()
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	/* makes an array of strings to place into each area */
-	var temp []string = strings.Split(name, ",")
-
-	GetArea1(a1, temp)
-	GetArea2(a2, temp)
-	//GetArea3(a3, temp)
-	//GetArea4(a4, temp)
-}
-
-// PopulateMajor: Populates major depending on string being passed in
-// Author: Arturo Caballero
-func PopulateMajor(degree string, major *[]Course) {
-	var name string
-	var n int
-
-	switch degree {
-	case "Computer Science":
-		n = 1
-	case "Mathematics":
-		n = 2
-	case "Computer Info Systems":
-		n = 3
-	}
-
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
-	if err != nil {
-		fmt.Println("error")
-	}
-	defer db.Close()
-
-	rows, err := db.Query("select courses from major where id = ?", n)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer rows.Close()
-
-	/* scan the row to place into name string variable */
-	rows.Next()
-	err = rows.Scan(&name)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	/* makes an array of strings to place into each area */
-	var temp []string = strings.Split(name, ",")
-
-	GetMajorOrMinor(major, temp)
-}
-
-// PopulateMinor: Populates minor depending on string being passed in
-// Author: Arturo Caballero
-func PopulateMinor(degree string, minor *[]Course) {
-	var name string
-	var n int
-
-	switch degree {
-	case "Computer Science":
-		n = 1
-	case "Mathematics":
-		n = 2
-	case "Computer Info Systems":
-		n = 3
-	}
-
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
-	if err != nil {
-		fmt.Println("error")
-	}
-	defer db.Close()
-
-	rows, err := db.Query("select courses from minor where id = ?", n)
-	if err != nil {
-		fmt.Println(err)
-	}
-	defer rows.Close()
-
-	/* scan the row to place into name string variable */
-	rows.Next()
-	err = rows.Scan(&name)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	/* makes an array of strings to place into each area */
-	var temp []string = strings.Split(name, ",")
-
-	GetMajorOrMinor(minor, temp)
-}
-
-// GetArea1 : Grabs Area 1 from the database and fills the array being passed
-// Author: Arturo Caballero
-func GetArea1(area1 *[4]Course, arr []string) {
-	var i int = 0
-
-	/* iterates through area1 array */
-	for range area1 {
-		var n int = strings.IndexAny(arr[i], "1234")
-		/* slices each element in arr */
-		a1 := strings.ToUpper(arr[i][0:n])
-		a2 := arr[i][n : n+3]
-		a3 := arr[i][n+4 : n+5]
-
-		/* assigns slices to variables in course struct */
-		area1[i].DepartmentID = a1
-		area1[i].Name = a2
-		hour, err := strconv.Atoi(a3)
-		if err != nil {
-			fmt.Println("Conversion Error")
-		}
-		area1[i].Hours = hour
-		i++
-	}
-}
-
-// GetArea2 : Grabs Area 2 from the database and fills the array being passed
-// Author: Arturo Caballero
-func GetArea2(area2 *[32]Course, arr []string) {
-	var i int = 4
-
-	// will eventually be replaced by database calls
-	for range area2 {
-		var n int = strings.IndexAny(arr[i], "1234")
-		/* slices each element in arr */
-		a1 := strings.ToUpper(arr[i][0:n])
-		a2 := arr[i][n : n+3]
-		a3 := arr[i][n+4 : n+5]
-
-		/* assigns slices to variables in course struct */
-		area2[i-4].DepartmentID = a1
-		area2[i-4].Name = a2
-		hour, err := strconv.Atoi(a3)
-		if err != nil {
-			fmt.Println("Conversion Error")
-		}
-		area2[i-4].Hours = hour
-		i++
-	}
-}
-
-// GetArea3 : Grabs Area 3 from the database and fills the array being passed
-// Author: Arturo Caballero
-func GetArea3(area3 *[18]Course, arr []string) {
-	var i int = 4
-
-	// will eventually be replaced by database calls
-	for range area3 {
-		var n int = strings.IndexAny(arr[i], "1234")
-		/* slices each element in arr */
-		a1 := strings.ToUpper(arr[i][0:n])
-		a2 := arr[i][n : n+3]
-		a3 := arr[i][n+4 : n+5]
-
-		/* assigns slices to variables in course struct */
-		area3[i-4].DepartmentID = a1
-		area3[i-4].Name = a2
-		hour, err := strconv.Atoi(a3)
-		if err != nil {
-			fmt.Println("Conversion Error")
-		}
-		area3[i-4].Hours = hour
-		i++
-	}
-}
-
-// GetArea4 : Grabs Area 4 from the database and fills the array being passed
-// Author: Arturo Caballero
-func GetArea4(area4 *[13]Course, arr []string) {
-	var i int = 4
-
-	// will eventually be replaced by database calls
-	for range area4 {
-		var n int = strings.IndexAny(arr[i], "1234")
-		/* slices each element in arr */
-		a1 := strings.ToUpper(arr[i][0:n])
-		a2 := arr[i][n : n+3]
-		a3 := arr[i][n+4 : n+5]
-
-		/* assigns slices to variables in course struct */
-		area4[i-4].DepartmentID = a1
-		area4[i-4].Name = a2
-		hour, err := strconv.Atoi(a3)
-		if err != nil {
-			fmt.Println("Conversion Error")
-		}
-		area4[i-4].Hours = hour
-		i++
-	}
-}
-
-// GetMajorOrMinor : Grabs Computer Science major or minor from the database and fills the array being passed
-// Author: Arturo Caballero
-func GetMajorOrMinor(m *[]Course, arr []string) {
-	/* Create a new pointer of type Course */
+func PopulateClassArray(table string, arr *[]Course) {
 	pstc := new(Course)
-	var i int = 0
-
-	for range arr {
-		var n int = strings.IndexAny(arr[i], "1234")
-		/* slices each element in arr */
-		a1 := strings.ToUpper(arr[i][0:n])
-		a2 := arr[i][n : n+3]
-		a3 := arr[i][n+4 : n+5]
-
-		/* assigns slices to variables in course struct */
-		pstc.DepartmentID = a1
-		pstc.Name = a2
-		hour, err := strconv.Atoi(a3)
-		if err != nil {
-			fmt.Println("Conversion Error")
-		}
-		pstc.Hours = hour
-		/* append Course pointer to the end of major or minor slice */
-		*m = append(*m, *pstc)
-		i++
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
+	if err != nil {
+		fmt.Println("Error Preparing Database")
 	}
+	defer db.Close()
+
+	query := ("select dept, course, credits from " + table)
+	rows, err := db.Query(query)
+
+	if err != nil {
+		fmt.Println("Error Querying Database")
+	} else {
+		for rows.Next() {
+			err := rows.Scan(&pstc.DepartmentID, &pstc.Name, &pstc.Hours)
+			if err != nil {
+				fmt.Println("Error Scanning Rows")
+			}
+			*arr = append(*arr, *pstc)
+		}
+	}
+	defer rows.Close()
 }
 
 // ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
