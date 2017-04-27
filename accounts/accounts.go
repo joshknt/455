@@ -140,7 +140,6 @@ func validatePassword(pass string) bool {
 //Return: A boolean value determing if the user was created or not
 func CreateNewUser(u User) bool {
 	if validatePassword(u.Password) && !validateUsername(u.Username) {
-		fmt.Println("inside validate")
 		//Open database and defer close until end
 		db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 		if err != nil {
@@ -162,13 +161,29 @@ func CreateNewUser(u User) bool {
 
 		return true
 	}
-	fmt.Println("outside validate")
+
 	return false
 }
 
 //DeleteUser : Deletes specified user from DB
 //Author: Josh Kent
-//Argument: A userstruct
-func DeleteUser(u User) {
+//Argument: A string containing a username to delete
+func DeleteUser(un string) {
+	//Open database and defer close until end
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer db.Close()
 
+	stmt, err := db.Prepare("DELETE FROM user WHERE username = ?")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	//Execute Insert query with proper values
+	_, err = stmt.Exec(un)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
