@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	//"strings"
-	"fmt"
+	//"fmt"
 	"strconv"
 )
 
@@ -60,6 +60,7 @@ type page struct {
 //Author: Josh Kent
 //Argument: title - string that holds the title of the page
 //Return: A pointer to the page formed
+//Tested By: Josh Kent
 func loadPage(title string) (*page, error) {
 	//Set file name
 	filename := title
@@ -74,6 +75,7 @@ func loadPage(title string) (*page, error) {
 
 //defaultViewHandler : Serves the default page
 //Author: Josh Kent
+//Tested By: Josh Kent
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
@@ -83,6 +85,7 @@ func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
 
 //adminViewHandler : Serves the admin page
 //Author: Josh Kent
+//Tested By: Josh Kent
 func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	//Check for access to protected handlers
 	if access == false {
@@ -100,6 +103,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 
 //login : Handles the POST request to gain access into admin view
 //Author: Josh Kent
+//Tested By: Josh Kent
 func login(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	target := "/"
@@ -150,6 +154,7 @@ func logout(w http.ResponseWriter, r *http.Request) {
 
 //createUser : Handles the request to create a new user to store in DB
 //Author: Josh Kent
+//Tested By: Josh Kent
 func createUser(w http.ResponseWriter, r *http.Request) {
 	//Parse the POST request and get new user details
 	r.ParseForm()
@@ -183,6 +188,7 @@ func createUser(w http.ResponseWriter, r *http.Request) {
 
 //getUser : Handles the request and will write the specified user to front end
 //Author: Josh Kent
+//Tested By: Josh Kent
 func getUser(w http.ResponseWriter, r *http.Request) {
 	//Get parameters from post request and set it to default user
 	userName := r.URL.Query()["username"]
@@ -211,6 +217,7 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 
 //getCourses : Handles the GET request to serve specific course data
 //Author: Josh Kent
+//Tested By: Josh Kent
 func getCourses(w http.ResponseWriter, r *http.Request) {
 	//Get parameters from post request
 	choice := r.URL.Query()["choice"]
@@ -240,6 +247,7 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 
 //createCourse : Handler that will create a course in the specific table
 //Author: Josh Kent
+//Tested By: Josh Kent
 func createCourse(w http.ResponseWriter, r *http.Request) {
 	//Parse POST request and get parameters
 	r.ParseForm()
@@ -267,6 +275,7 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 
 //deleteCourse : Handler that will delete a course in the specific table
 //Author: Josh Kent
+//Tested By: Josh Kent
 func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	//Parse POST request and get parameters
 	r.ParseForm()
@@ -322,5 +331,4 @@ func main() {
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
 	http.ListenAndServe(":9090", router)
-
 }
