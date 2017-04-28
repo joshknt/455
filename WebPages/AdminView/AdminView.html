@@ -1,65 +1,93 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <style>
-        body {background-color:#DB9F11;}
-        div {background-color:#46166B; color: #FFFFFF;                 width:150px; height:200px; font-family: sans-serif;}
-        h1 {color: #46166B; text-align: center; 
-            font-family: serif;
-           }
-        table, th, td {border: 1px solid #5F6062; border-collapse: collapse;}
-        th, td {padding: 5px; text-align: center; color: #46166B;}
-        caption {
-            text-align: center;
-            margin-top: 5px;
-            font-size: 135%;
-            font-weight: bold;
-            color: #46166B;
-            }
-    </style>
     <title> View Page Administrator </title>
     </head>
-
+    <style type = "text/css">    
+body {background-color:#DB9F11;}
+div {background-color:#46166B;
+    color: #FFFFFF; 
+    width:215px;
+    height:155px;
+    padding-bottom:10px; 
+    padding-left:10px;
+    padding-top: 10px;
+    font-family: sans-serif;
+    }
+h1 {color:#46166B;
+   text-align:center; 
+   font-family: serif;
+   }
+.button1 {background-color:#DB9F11;
+        color:white;
+        border-radius:8px;
+        }
+.button2 {
+    background-color:#5F6062;
+    color:white;
+    border-radius: 6px;
+    position: absolute;
+    top:0;
+    right: 0;
+    }
+    </style>
+    
+<!--
+========================================================================================================================
+-->
+    
 <body> <!--style="background-image:url(lionlogo.jpg)"-->
     <!--add functionality for welcome "maths"-->
     <h1><center>View</center></h1>
-<div>
-<form action="">
+        <form action="/logout" method="post">
+    <b><right><button class="button button2" type="submit">
+        Log out</button></right></b></form>
+<div class="left-div">
+<form action="/loadcourses" method="put">
   <input type="radio" name="degree" value="major">
   Major<br>
   <input type="radio" name="degree" value="minor">
   Minor<br>
-</form>
-
 <p>
-select catalog years <br> 
+select the degree <br> 
 <select>
-    <option value="">      </option>
-    <option value="2010-2011">2010-2011</option>
-    <option value="2011-2012">2011-2012</option>
-    <option value="2012-2013">2012-2013</option>
-    <option value="2013-2014">2013-2014</option>
-    <option value="2014-2015">2014-2015</option>
-    <option value="2015-2016">2015-2016</option>
-    <option value="2016-2017">2016-2017</option>    
+    <option value="" style="display:none;"></option>
+    <option value = "CH"> Chemistry </option>
+    <option value = "CIS"> Computer Info Systems </option>
+    <option value = "CS"> Computer Science</option>
+    <option value = "HI"> History </option>
+    <option value = "MA"> Mathematics </option>    
 </select>
 </p>
-
+</form>
 <p>
-select action<br>   
-<select>
-    <option value="">        </option>
-    <option value="create">Create</option>
-    <option value="modify">Modify</option>
-    <option value="view">View</option>
-</select>   
+<button class = "button button1" type = "submit" onclick="myFunction1()">
+    CREATE
+</button>
+    <script>
+function myFunction1() {
+    window.open("AdminCreate.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction2()">
+    MODIFY
+</button>
+    <script>
+function myFunction2() {
+    window.open("AdminModify.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction3()">
+    VIEW
+</button>
+    <script>
+function myFunction3() {
+    window.open("AdminView.html", "_self", false);
+}
+    </script>
 </p>
-<!-- add to call functionality ?-->   
-<button type="button">ADVISE</button>
 </div>
-<!-- javascript ? create the table in a new page? -->
-<object width="600" height="600" data="MACheck2016-17.pdf" align="right"></object>
-
+    
 </body>
 
 </html>
