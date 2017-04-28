@@ -19,7 +19,7 @@ type Course struct {
 
 //PopulateClassArray : Populates the given array from the table name passed
 //Author: Arturo Caballero
-//Tested By: Josh Kent
+//Tested By: Josh Kent, Arturo Caballero
 func PopulateClassArray(table string, arr *[]Course) {
 	// new pointer of type Course
 	pstc := new(Course)
@@ -53,7 +53,7 @@ func PopulateClassArray(table string, arr *[]Course) {
 
 //InsertClassToDB : Will take a class struct and insert it into the DB
 //Author: Arturo Caballero
-//Tested By: Josh Kent
+//Tested By: Josh Kent, Arturo Caballero
 func InsertClassToDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
@@ -77,7 +77,7 @@ func InsertClassToDB(table string, class Course) {
 
 //DeleteClassFromDB : Will take a class struct and delete it from the DB
 //Author: Arturo Caballero
-//Tested By: Josh Kent
+//Tested By: Josh Kent, Arturo Caballero
 func DeleteClassFromDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
