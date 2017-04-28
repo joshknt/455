@@ -241,12 +241,12 @@ func main() {
 
 	//API for accounts
 	router.HandleFunc("/createuser", createUser).Methods("POST")
-	router.HandleFunc("/loaduser", getUser).Methods("PUT")
+	router.HandleFunc("/loaduser", getUser).Methods("GET")
 	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
 
 	//API for courses
 	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
-	router.HandleFunc("/loadcourses", getCourses).Methods("PUT")
+	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
