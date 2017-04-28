@@ -1,4 +1,4 @@
-package main////test
+package main
 
 import (
 	accounts "455/Accounts"
