@@ -224,6 +224,20 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 	accounts.DeleteUser(userToDelete[0])
 }
 
+//createCourse : Handler that will create a course in the specific table
+//Author: Josh Kent
+func createCourse(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+
+}
+
+//deleteCourse : Handler that will delete a course in the specific table
+//Author: Josh Kent
+func deleteCourse(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	//userToDelete := r.Form["username"]
+}
+
 //main : Main driver for the web server
 //Author(s): Josh Kent
 func main() {
@@ -241,13 +255,15 @@ func main() {
 
 	//API for accounts
 	router.HandleFunc("/createuser", createUser).Methods("POST")
-	router.HandleFunc("/loaduser", getUser).Methods("PUT")
+	router.HandleFunc("/loaduser", getUser).Methods("GET")
 	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
 
 	//API for courses
-	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
-	router.HandleFunc("/loadcourses", getCourses).Methods("PUT")
-	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+	//NOTE: need to call insertclasstodb()
+	router.HandleFunc("/createcourse", createCourse).Methods("POST")
+	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
+	//NOTE: need to call deleteclassfromdb()
+	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
