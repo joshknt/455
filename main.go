@@ -267,11 +267,17 @@ func main() {
 	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
 
 	//API for courses
+<<<<<<< HEAD
 	//NOTE: need to call insertclasstodb()
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	//NOTE: need to call deleteclassfromdb()
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+=======
+	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
+	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
+	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+>>>>>>> refs/remotes/origin/master
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.

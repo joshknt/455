@@ -50,14 +50,9 @@ func PopulateClassArray(table string, arr *[]Course) {
 	defer rows.Close()
 }
 
-// InsertClassesToDB: Will take an array of classes and insert them into the DB
+// InsertClassToDB: Will take a class struct and insert it into the DB
 // Author: Arturo Caballero
-func InsertClassesToDB(table string, arr *[]Course) {
-	var n int = 1
-	// Makes pointer of length(arr) and copies arr to pstc
-	pstc := make([]Course, len(*arr))
-	copy(pstc, *arr)
-
+func InsertClassToDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
@@ -74,20 +69,12 @@ func InsertClassesToDB(table string, arr *[]Course) {
 	defer stmt.Close()
 
 	// Executes for each structure in pstc and inserts into table
-	for i := 0; i < len(pstc); i++ {
-		stmt.Exec(n, pstc[i].DepartmentID, pstc[i].Name, pstc[i].Hours, 1)
-		n++
-	}
+	stmt.Exec(1, class.DepartmentID, class.Name, class.Hours, 1)
 }
 
-// DeleteClassesFromDB: Will take an array of classes and delete them from the DB
+// DeleteClassFromDB: Will take a class struct and delete it from the DB
 // Author: Arturo Caballero
-func DeleteClassesFromDB(table string, arr *[]Course) {
-	var n int = 1
-	// Makes pointer of length(arr) and copies arr to pstc
-	pstc := make([]Course, len(*arr))
-	copy(pstc, *arr)
-
+func DeleteClassFromDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
@@ -96,18 +83,14 @@ func DeleteClassesFromDB(table string, arr *[]Course) {
 	defer db.Close()
 
 	// Prepares query stmt for Exec() by appending table argument
-	query := ("delete from " + table + " where id=?")
+	query := ("delete from " + table + " where dept=? and course=?")
 	stmt, err := db.Prepare(query)
 	if err != nil {
 		fmt.Println("Error Querying Database")
 	}
 	defer stmt.Close()
 
-	// Executes for each structure in pstc and deletes from table using id
-	for i := 0; i < len(pstc); i++ {
-		stmt.Exec(n)
-		n++
-	}
+	stmt.Exec(class.DepartmentID, class.Name)
 }
 
 // ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
