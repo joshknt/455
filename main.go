@@ -16,7 +16,8 @@ import (
 var member accounts.User
 var access = false
 
-//Declare course arrary
+//Declare course supporting variables
+var tempCourse courses.Course
 var areaOneAr []courses.Course
 var areaTwoAr []courses.Course
 var areaThreeAr []courses.Course
@@ -235,7 +236,14 @@ func createCourse(w http.ResponseWriter, r *http.Request) {
 //Author: Josh Kent
 func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	//userToDelete := r.Form["username"]
+	courseDep := r.Form["department"]
+	courseName := r.Form["name"]
+
+	tempCourse.DepartmentID = courseDep[0]
+	tempCourse.Name = courseName[0]
+
+	courses.DeleteClassFromDb(tempCourse)
+
 }
 
 //main : Main driver for the web server
