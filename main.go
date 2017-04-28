@@ -50,7 +50,7 @@ func login(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/", defaultViewHandler)
 	http.HandleFunc("/login", login)
-
-	http.ListenAndServe(":9090", nil)
-
+	fmt.Println("Listening...")
+	http.ListenAndServe(":8080", nil)
+	fmt.Println("Stop Listening...")
 }
