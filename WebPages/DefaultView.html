@@ -11,6 +11,33 @@
     		document.getElementById('popupbox').style.visibility="hidden"; 
 			}
 		}
+
+		
+ // var httpRequest;
+  document.getElementById("submitData").addEventListener('click', makeRequest);
+
+  function makeRequest() {
+	  
+    var httpRequest = new XMLHttpRequest();
+	httpRequest.open('GET', 'loadcourses?choice=major&degrees=cs&submit=ADVISE',true);
+
+	httpRequest.onload = function(){
+		if(httpRequest.status === 200){
+			responseObject = JSON.parse(responseObject.responseText);
+
+			var newContent = '';
+			for(var i = 0; i <responseObject.courses.length; i++){
+				newContent += '<div class= "courses">';
+				newContent += responseObject.courses[i].name + '</br>';
+				newContent += '</div>';
+			}
+			doument.getElementById('content').innerHTML = newContent;
+		}
+	};
+
+  };
+  httpRequest.send(null);
+
 	</script>
 	
 </head>
@@ -69,20 +96,20 @@
         <p>Select your degree: </p>
         <select name = "degrees">
         	<option value="" style="display:none;"></option>
-            <option value = "Chemistry"> Chemistry </option>
-            <option value = "Computer Info Systems"> Computer Info Systems </option>
+            <option value = "ch"> Chemistry </option>
+            <option value = "cis"> Computer Info Systems </option>
             <option value = "cs"> Computer Science</option>
-            <option value = "History"> History </option>
-            <option value = "Mathematics"> Mathematics </option>
+            <option value = "hi"> History </option>
+            <option value = "ma"> Mathematics </option>
         </select>
         
         
         
-        <input name = "submit" type = "submit" value = "ADVISE" >
+        <input name = "submitData" type = "submit" value = "ADVISE>
         </form>
         	<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
-        <input type = "submit" value = "Upload" /><br></br>
+        <input type = "upload" value = "Upload" /><br></br>
 	</div>
 	
 	<div id="popupbox"> 
@@ -102,6 +129,9 @@
 		
 		<p><a href="javascript:login('show');">Login as Administrator</a></p>
         	
+		<form id = "content">
+			Area I:
+		</form>
 
 	</body>
 </html>
