@@ -4,19 +4,21 @@ import (
 	accounts "455/Accounts"
 	courses "455/Courses"
 	"encoding/json"
-	//"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
 	"io/ioutil"
 	"net/http"
 	//"strings"
+	"fmt"
+	"strconv"
 )
 
 //Declare default user and set access
 var member accounts.User
 var access = false
 
-//Declare course arrary
+//Declare course supporting variables
+var tempCourse courses.Course
 var areaOneAr []courses.Course
 var areaTwoAr []courses.Course
 var areaThreeAr []courses.Course
@@ -33,7 +35,7 @@ func init() {
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
 	courses.PopulateClassArray("general_area4", &areaFourAr)
 
-	// member.Id = "999"
+	//member.Id = "999"
 	// member.Username = "jhunt"
 	// member.Password = "suckit666?"
 	// member.Department = "hi"
@@ -43,6 +45,9 @@ func init() {
 	// member.Superuser = false
 	// accounts.CreateNewUser(member)
 }
+
+//=====================================================================================
+//Webpage Handling
 
 //page : For storing website data
 //Author: Josh Kent
@@ -89,6 +94,9 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 		t.Execute(w, p)
 	}
 }
+
+//=====================================================================================
+//Login/Logout Handlers
 
 //login : Handles the POST request to gain access into admin view
 //Author: Josh Kent
@@ -137,34 +145,8 @@ func logout(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-//getCourses : Handles the GET request to serve specific course data
-//Author: Josh Kent
-func getCourses(w http.ResponseWriter, r *http.Request) {
-	//Get parameters from post request
-	choice := r.URL.Query()["choice"]
-	degree := r.URL.Query()["degrees"]
-
-	//Determine whether to view all major requirements or minor requirements
-	if choice[0] == "major" {
-		degree[0] = degree[0] + "_major"
-		//Populate the specific major
-		courses.PopulateClassArray(degree[0], &majorAr)
-
-		//Create new JSON encoder that will write to the response writer
-		json.NewEncoder(w).Encode(areaOneAr)
-		json.NewEncoder(w).Encode(areaTwoAr)
-		json.NewEncoder(w).Encode(areaThreeAr)
-		json.NewEncoder(w).Encode(areaFourAr)
-		json.NewEncoder(w).Encode(majorAr)
-	} else {
-		degree[0] = degree[0] + "_minor"
-		//Populate the specific minor
-		courses.PopulateClassArray(degree[0], &minorAr)
-
-		//Create new JSON encoder that will write to the response writer
-		json.NewEncoder(w).Encode(minorAr)
-	}
-}
+//=====================================================================================
+//User API
 
 //createUser : Handles the request to create a new user to store in DB
 //Author: Josh Kent
@@ -224,6 +206,92 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 	accounts.DeleteUser(userToDelete[0])
 }
 
+//=====================================================================================
+//Course API
+
+//getCourses : Handles the GET request to serve specific course data
+//Author: Josh Kent
+func getCourses(w http.ResponseWriter, r *http.Request) {
+	//Get parameters from post request
+	choice := r.URL.Query()["choice"]
+	degree := r.URL.Query()["degrees"]
+
+	//Determine whether to view all major requirements or minor requirements
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+		//Populate the specific major
+		courses.PopulateClassArray(degree[0], &majorAr)
+
+		//Create new JSON encoder that will write to the response writer
+		json.NewEncoder(w).Encode(areaOneAr)
+		json.NewEncoder(w).Encode(areaTwoAr)
+		json.NewEncoder(w).Encode(areaThreeAr)
+		json.NewEncoder(w).Encode(areaFourAr)
+		json.NewEncoder(w).Encode(majorAr)
+	} else {
+		degree[0] = degree[0] + "_minor"
+		//Populate the specific minor
+		courses.PopulateClassArray(degree[0], &minorAr)
+
+		//Create new JSON encoder that will write to the response writer
+		json.NewEncoder(w).Encode(minorAr)
+	}
+}
+
+//createCourse : Handler that will create a course in the specific table
+//Author: Josh Kent
+func createCourse(w http.ResponseWriter, r *http.Request) {
+	//Parse POST request and get parameters
+	r.ParseForm()
+	choice := r.Form["choice"]
+	degree := r.Form["degrees"]
+	hourAr := r.Form["hours"]
+	departmentAr := r.Form["department"]
+	nameAr := r.Form["name"]
+
+	//Define the correct table
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+	} else {
+		degree[0] = degree[0] + "_minor"
+	}
+
+	//Convert string[] to int and store the otherh params into the temp course struct
+	tempCourse.Hours, _ = strconv.Atoi(hourAr[0])
+	tempCourse.DepartmentID = departmentAr[0]
+	tempCourse.Name = nameAr[0]
+
+	//Create the course in the appropriate table
+	courses.InsertClassToDB(degree[0], tempCourse)
+}
+
+//deleteCourse : Handler that will delete a course in the specific table
+//Author: Josh Kent
+func deleteCourse(w http.ResponseWriter, r *http.Request) {
+	//Parse POST request and get parameters
+	r.ParseForm()
+	courseDep := r.Form["department"]
+	courseName := r.Form["name"]
+	choice := r.Form["choice"]
+	degree := r.Form["degrees"]
+
+	//Define the correct table
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+	} else {
+		degree[0] = degree[0] + "_minor"
+	}
+
+	//Set appropriate temp course data to send to delete course function
+	tempCourse.DepartmentID = courseDep[0]
+	tempCourse.Name = courseName[0]
+
+	courses.DeleteClassFromDB(degree[0], tempCourse)
+}
+
+//=====================================================================================
+//=====================================================================================
+
 //main : Main driver for the web server
 //Author(s): Josh Kent
 func main() {
@@ -245,9 +313,11 @@ func main() {
 	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
 
 	//API for courses
-	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
+	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
-	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+
+	//API for degree validation
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.

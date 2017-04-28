@@ -17,8 +17,9 @@ type Course struct {
 	Completed    bool   `json:"completed"`
 }
 
-// PopulateClassArray: Populates the given array from the table name passed
-// Author: Arturo Caballero
+//PopulateClassArray : Populates the given array from the table name passed
+//Author: Arturo Caballero
+//Tested By: Josh Kent
 func PopulateClassArray(table string, arr *[]Course) {
 	// new pointer of type Course
 	pstc := new(Course)
@@ -50,8 +51,9 @@ func PopulateClassArray(table string, arr *[]Course) {
 	defer rows.Close()
 }
 
-// InsertClassToDB: Will take a class struct and insert it into the DB
-// Author: Arturo Caballero
+//InsertClassToDB : Will take a class struct and insert it into the DB
+//Author: Arturo Caballero
+//Tested By: Josh Kent
 func InsertClassToDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
@@ -61,19 +63,21 @@ func InsertClassToDB(table string, class Course) {
 	defer db.Close()
 
 	// Prepares query stmt for Exec() by appending table argument
-	query := ("insert " + table + " set id=?, dept=?, course=?, credits=?, year=?")
-	stmt, err := db.Prepare(query)
+	stmt, err := db.Prepare("INSERT INTO " + table + " (dept, course, credits, year) VALUES (?, ?, ?, ?)")
 	if err != nil {
-		fmt.Println("Error Querying Database")
+		fmt.Println(err)
 	}
-	defer stmt.Close()
 
 	// Executes for each structure in pstc and inserts into table
-	stmt.Exec(1, class.DepartmentID, class.Name, class.Hours, 1)
+	_, err = stmt.Exec(class.DepartmentID, class.Name, class.Hours, 1)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
-// DeleteClassFromDB: Will take a class struct and delete it from the DB
-// Author: Arturo Caballero
+//DeleteClassFromDB : Will take a class struct and delete it from the DB
+//Author: Arturo Caballero
+//Tested By: Josh Kent
 func DeleteClassFromDB(table string, class Course) {
 	// Preparing the database for use
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
@@ -93,8 +97,8 @@ func DeleteClassFromDB(table string, class Course) {
 	stmt.Exec(class.DepartmentID, class.Name)
 }
 
-// ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
-// Author: Arturo Caballero
+//ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
+//Author: Arturo Caballero
 func ValidateArea1(area1 *[4]Course) bool {
 	//split the array into 2 slices
 	var a1 []Course = area1[0:2]
@@ -110,8 +114,8 @@ func ValidateArea1(area1 *[4]Course) bool {
 	}
 }
 
-// ValidateArea2 : Checks area2 to see if requirements are fulfilled, returns boolean
-// Author: Arturo Caballero
+//ValidateArea2 : Checks area2 to see if requirements are fulfilled, returns boolean
+//Author: Arturo Caballero
 func ValidateArea2(area2 *[32]Course) bool {
 	// split the array into 3 slices
 	var a1 []Course = area2[0:1]
@@ -150,8 +154,8 @@ func ValidateArea2(area2 *[32]Course) bool {
 	}
 }
 
-// ValidateArea3 : checks area3 to see if requirements are fulfilled, returns boolean
-// Author : Arturo Caballero
+//ValidateArea3 : checks area3 to see if requirements are fulfilled, returns boolean
+//Author : Arturo Caballero
 func ValidateArea3(area3 *[18]Course) bool {
 	// split the array into 2 slices
 	var a1 []Course = area3[0:8]
@@ -189,8 +193,8 @@ func ValidateArea3(area3 *[18]Course) bool {
 	}
 }
 
-// ValidateArea4 : checks area4 to see if requirements are fulfilled, return boolean
-// Author : Arturo Caballero
+//ValidateArea4 : checks area4 to see if requirements are fulfilled, return boolean
+//Author : Arturo Caballero
 func ValidateArea4(area4 *[13]Course) bool {
 	// split the array into 2 slices
 	var a1 []Course = area4[0:4]
@@ -226,8 +230,8 @@ func ValidateArea4(area4 *[13]Course) bool {
 	}
 }
 
-// ValidateMajor : checks major to see if requirements are fulfilled, returns boolean
-// Author : Arturo Caballero
+//ValidateMajor : checks major to see if requirements are fulfilled, returns boolean
+//Author : Arturo Caballero
 func ValidateComputerScience(major *[31]Course) bool {
 	// split the array into 5 slices
 	var m1 []Course = major[0:5]

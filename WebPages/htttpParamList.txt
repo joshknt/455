@@ -1,0 +1,22 @@
+HTTP Request Parameter List:
+
+/loadcourses: GET
+	choice, degrees
+	
+/deletecourse: DELETE
+	choice, degrees, department, name
+	
+/createcourse: POST
+	choice, degrees, hours, department, name
+	
+/createuser: POST
+	id, username, password, department, firstname, lastname, email, superuser
+	
+/loaduser: GET
+	username
+	
+/deleteuser: DELETE
+	username
+	
+
+	
