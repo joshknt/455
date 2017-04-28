@@ -34,7 +34,7 @@ func init() {
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
 	courses.PopulateClassArray("general_area4", &areaFourAr)
 
-	// member.Id = "999"
+	//member.Id = "999"
 	// member.Username = "jhunt"
 	// member.Password = "suckit666?"
 	// member.Department = "hi"
@@ -228,22 +228,38 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 //createCourse : Handler that will create a course in the specific table
 //Author: Josh Kent
 func createCourse(w http.ResponseWriter, r *http.Request) {
+	//Parse POST request and get parameters
 	r.ParseForm()
+	choiceAr := r.Form["choice"]
+	degreesAr := r.Form["degrees"]
+	hourAr := r.Form["hours"]
+	departmentAr := r.Form["department"]
+	nameAr := r.Form["name"]
 
 }
 
 //deleteCourse : Handler that will delete a course in the specific table
 //Author: Josh Kent
 func deleteCourse(w http.ResponseWriter, r *http.Request) {
+	//Parse POST request and get parameters
 	r.ParseForm()
 	courseDep := r.Form["department"]
 	courseName := r.Form["name"]
+	choice := r.Form["choice"]
+	degree := r.Form["degrees"]
 
+	//Define the correct table
+	if choice[0] == "major" {
+		degree[0] = degree[0] + "_major"
+	} else {
+		degree[0] = degree[0] + "_minor"
+	}
+
+	//Set appropriate temp course data to send to delete course function
 	tempCourse.DepartmentID = courseDep[0]
 	tempCourse.Name = courseName[0]
 
-	courses.DeleteClassFromDb(tempCourse)
-
+	courses.DeleteClassFromDB(degree[0], tempCourse)
 }
 
 //main : Main driver for the web server
@@ -267,17 +283,9 @@ func main() {
 	router.HandleFunc("/deleteuser", deleteUser).Methods("DELETE")
 
 	//API for courses
-<<<<<<< HEAD
-	//NOTE: need to call insertclasstodb()
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
-	//NOTE: need to call deleteclassfromdb()
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
-=======
-	//router.HandleFunc("/createcourse", createCourse).Methods("POST")
-	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
-	//router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
->>>>>>> refs/remotes/origin/master
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.

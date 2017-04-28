@@ -1,0 +1,15 @@
+HTTP Request Parameter List:
+
+	choice, degrees
+	
+	choice, degrees, department, name
+	
+	
+	id, username, password, department, firstname, lastname, email, superuser
+	
+	username
+	
+	username
+	
+
+	
