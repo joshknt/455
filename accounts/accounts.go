@@ -27,6 +27,7 @@ type User struct {
 //Author: Josh Kent
 //Argument: A user account
 //Return: A boolean value determing whether the user is found in the DB
+//Tested By: Josh Kent
 func LoadUser(member *User) bool {
 	//Open database and defer close until end
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
@@ -60,6 +61,7 @@ func LoadUser(member *User) bool {
 //Author: Josh Kent
 //Argument: A user account, a string containing a password
 //Return: A boolean value determing whether the user is valid
+//Tested By: Josh Kent
 func IsValidUser(member User, pass string) bool {
 	if member.Password == pass {
 		return true
@@ -73,6 +75,7 @@ func IsValidUser(member User, pass string) bool {
 //Author: Josh Kent
 //Argument: un - a string that contains the username to be validated
 //Return: A boolean value if the username is already taken or not
+//Tested By: Josh Kent
 func validateUsername(un string) bool {
 	//Holds the value whether the username exists or not
 	var exists bool
@@ -104,6 +107,7 @@ func validateUsername(un string) bool {
 //	-Must be <12 and >8 characters
 //Argument: un - a string that contains the password to be validated
 //Return: A boolean value if the password is valid or not
+//Tested By: Josh Kent
 func validatePassword(pass string) bool {
 	var numChars = "0123456789"
 	var speChars = ",.?$"
@@ -143,6 +147,7 @@ func validatePassword(pass string) bool {
 //Author: Josh Kent
 //Argument: u - a user struct
 //Return: A boolean value determing if the user was created or not
+//Tested By: Josh Kent
 func CreateNewUser(u User) bool {
 	if validatePassword(u.Password) && !validateUsername(u.Username) {
 		//Open database and defer close until end
@@ -176,6 +181,7 @@ func CreateNewUser(u User) bool {
 //DeleteUser : Deletes specified user from DB
 //Author: Josh Kent
 //Argument: A string containing a username to delete
+//Tested By: Josh Kent
 func DeleteUser(un string) {
 	//Open database and defer close until end
 	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
