@@ -12,35 +12,31 @@
 			}
 		}
 
-
-(function() {
   var httpRequest;
-  document.getElementById("submit").addEventListener('click', makeRequest);
+  document.getElementById("test").addEventListener('click', makeRequest);
 
   function makeRequest() {
     httpRequest = new XMLHttpRequest();
-
-    if (!httpRequest) {
-      alert('Giving up :( Cannot create an XMLHTTP instance');
-      return false;
-    }
-    httpRequest.onreadystatechange = alertContents;
-    httpRequest.open('GET', 'loadcourses?choice=major&degrees=cs&submit=ADVISE');
-    httpRequest.send();
   }
+    // if (!httpRequest) {
+    //   alert('Giving up :( Cannot create an XMLHTTP instance');
+    //   return false;
+    // }
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs&submit=ADVISE');
+  
 
   function alertContents() {
-    if (httpRequest.readyState === XMLHttpRequest.DONE) {
-      if (httpRequest.status === 200) {
-        alert(httpRequest.responseText);
+    if (httpRequest.readyState == 4) {
+      if (httpRequest.status == 200) 
+	  	if(httpRequest.responseText != null{
+        var response = JSON.parse(httpRequest.responseText);
       } else {
         alert('There was a problem with the request.');
       }
     }
   }
-})();
-
-
+  httpRequest.send(null);
 	</script>
 	
 </head>
@@ -106,11 +102,10 @@
             <option value = "ma"> Mathematics </option>
         </select>
         
-        
-        
-        <input name = "submit" type = "submit" value = "ADVISE" >
+        <input name = "test" type = "submit" value = "ADVISE" >
         </form>
-        	<p>Upload your transcript: </p>
+
+        <p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <input type = "submit" value = "Upload" /><br></br>
 	</div>
