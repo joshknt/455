@@ -307,6 +307,47 @@ func ValidateComputerScienceMajor(major []Course) bool {
 	}
 }
 
+//ValidateComputerScienceMinor : checks major to see if requirements are fulfilled, returns boolean
+//Author : Arturo Caballero
+func ValidateComputerScienceMinor(minor []Course) bool {
+	var m1 []Course = minor[0:3]
+	var m2 []Course = minor[3:13]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	/* check first slice, if 3 class completed s1 = true */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 3 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/* check second slice, if 3 class completed s1 = true */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count++
+		}
+		if count >= 3 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+}
+
 //ValidateComputerInfoSystemMajor : checks major to see if requirements are fulfilled, returns boolean
 //Author : Arturo Caballero
 func ValidateComputerInfoSystemMajor(major []Course) bool {
@@ -372,6 +413,7 @@ func ValidateComputerInfoSystemMinor(minor []Course) bool {
 	var s1, s2 bool
 	var i, count int = 0, 0
 
+	/* check first slice, if 4 class completed s1 = true */
 	for range m1 {
 		if m1[i].Completed == true {
 			count++
@@ -383,6 +425,7 @@ func ValidateComputerInfoSystemMinor(minor []Course) bool {
 		i++
 	}
 
+	/* check first slice, if 2 class completed s1 = true */
 	i, count = 0, 0
 	for range m2 {
 		if m2[i].Completed == true {
