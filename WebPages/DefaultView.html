@@ -12,31 +12,34 @@
 			}
 		}
 
-		
- // var httpRequest;
-  document.getElementById("submitData").addEventListener('click', makeRequest);
+
+(function() {
+  var httpRequest;
+  document.getElementById("submit").addEventListener('click', makeRequest);
 
   function makeRequest() {
-	  
-    var httpRequest = new XMLHttpRequest();
-	httpRequest.open('GET', 'loadcourses?choice=major&degrees=cs&submit=ADVISE',true);
+    httpRequest = new XMLHttpRequest();
 
-	httpRequest.onload = function(){
-		if(httpRequest.status === 200){
-			responseObject = JSON.parse(responseObject.responseText);
+    if (!httpRequest) {
+      alert('Giving up :( Cannot create an XMLHTTP instance');
+      return false;
+    }
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('GET', 'loadcourses?choice=major&degrees=cs&submit=ADVISE');
+    httpRequest.send();
+  }
 
-			var newContent = '';
-			for(var i = 0; i <responseObject.courses.length; i++){
-				newContent += '<div class= "courses">';
-				newContent += responseObject.courses[i].name + '</br>';
-				newContent += '</div>';
-			}
-			doument.getElementById('content').innerHTML = newContent;
-		}
-	};
+  function alertContents() {
+    if (httpRequest.readyState === XMLHttpRequest.DONE) {
+      if (httpRequest.status === 200) {
+        alert(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+})();
 
-  };
-  httpRequest.send(null);
 
 	</script>
 	
@@ -105,11 +108,11 @@
         
         
         
-        <input name = "submitData" type = "submit" value = "ADVISE>
+        <input name = "submit" type = "submit" value = "ADVISE" >
         </form>
         	<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
-        <input type = "upload" value = "Upload" /><br></br>
+        <input type = "submit" value = "Upload" /><br></br>
 	</div>
 	
 	<div id="popupbox"> 
@@ -129,9 +132,6 @@
 		
 		<p><a href="javascript:login('show');">Login as Administrator</a></p>
         	
-		<form id = "content">
-			Area I:
-		</form>
 
 	</body>
 </html>
