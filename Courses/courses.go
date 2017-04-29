@@ -99,7 +99,7 @@ func DeleteClassFromDB(table string, class Course) {
 
 //ValidateArea1 : Checks area1 to see if requirements are fulfilled, returns boolean
 //Author: Arturo Caballero
-func ValidateArea1(area1 *[4]Course) bool {
+func ValidateArea1(area1 []Course) bool {
 	//split the array into 2 slices
 	var a1 []Course = area1[0:2]
 	var a2 []Course = area1[2:4]
@@ -116,7 +116,7 @@ func ValidateArea1(area1 *[4]Course) bool {
 
 //ValidateArea2 : Checks area2 to see if requirements are fulfilled, returns boolean
 //Author: Arturo Caballero
-func ValidateArea2(area2 *[32]Course) bool {
+func ValidateArea2(area2 []Course) bool {
 	// split the array into 3 slices
 	var a1 []Course = area2[0:1]
 	var a2 []Course = area2[1:9]
@@ -156,7 +156,7 @@ func ValidateArea2(area2 *[32]Course) bool {
 
 //ValidateArea3 : checks area3 to see if requirements are fulfilled, returns boolean
 //Author : Arturo Caballero
-func ValidateArea3(area3 *[18]Course) bool {
+func ValidateArea3(area3 []Course) bool {
 	// split the array into 2 slices
 	var a1 []Course = area3[0:8]
 	var a2 []Course = area3[8:18]
@@ -195,7 +195,7 @@ func ValidateArea3(area3 *[18]Course) bool {
 
 //ValidateArea4 : checks area4 to see if requirements are fulfilled, return boolean
 //Author : Arturo Caballero
-func ValidateArea4(area4 *[13]Course) bool {
+func ValidateArea4(area4 []Course) bool {
 	// split the array into 2 slices
 	var a1 []Course = area4[0:4]
 	var a2 []Course = area4[4:13]
@@ -230,15 +230,15 @@ func ValidateArea4(area4 *[13]Course) bool {
 	}
 }
 
-//ValidateMajor : checks major to see if requirements are fulfilled, returns boolean
+//ValidateComputerScienceMajor : checks major to see if requirements are fulfilled, returns boolean
 //Author : Arturo Caballero
-func ValidateComputerScience(major *[31]Course) bool {
+func ValidateComputerScienceMajor(major []Course) bool {
 	// split the array into 5 slices
-	var m1 []Course = major[0:5]
-	var m2 []Course = major[5:14]
-	var m3 []Course = major[14:19]
-	var m4 []Course = major[19:24]
-	var m5 []Course = major[24:31]
+	var m1 []Course = major[0:6]
+	var m2 []Course = major[6:15]
+	var m3 []Course = major[15:20]
+	var m4 []Course = major[20:27]
+	var m5 []Course = major[27:32]
 
 	var s1, s2, s3, s4, s5 bool
 	var i, count int = 0, 0
@@ -305,4 +305,100 @@ func ValidateComputerScience(major *[31]Course) bool {
 	} else {
 		return false
 	}
+}
+
+//ValidateComputerInfoSystemMajor : checks major to see if requirements are fulfilled, returns boolean
+//Author : Arturo Caballero
+func ValidateComputerInfoSystemMajor(major []Course) bool {
+	var m1 []Course = major[0:15]
+	var m2 []Course = major[15:22]
+	var m3 []Course = major[22:29]
+
+	var s1, s2, s3 bool
+	var i, count int = 0, 0
+
+	/* check first slice, if 11 class completed s1 = true */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 11 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/* check second slice, if 7 classes completed s2 = true */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count++
+		}
+		if count >= 7 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	/* check third slice, if 7 classes completed s3 = true */
+	i, count = 0, 0
+	for range m3 {
+		if m3[i].Completed == true {
+			count++
+		}
+		if count >= 7 {
+			s3 = true
+			break
+		}
+		i++
+	}
+
+	/* if all three areas complete return true */
+	if s1 && s2 && s3 {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ValidateComputerInfoSystemMinor: Validate computer info sys minor
+// Author: Arturo Caballero
+func ValidateComputerInfoSystemMinor(minor []Course) bool {
+	var m1 []Course = minor[0:4]
+	var m2 []Course = minor[6:9]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 4 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count++
+		}
+		if count >= 2 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+
 }
