@@ -229,12 +229,21 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 		//Populate the specific major
 		courses.PopulateClassArray(degree[0], &majorAr)
 
+		test := append(areaOneAr, areaTwoAr...)
+		test = append(test, areaThreeAr...)
+		test = append(test, areaFourAr...)
+		test = append(test, majorAr...)
+
 		//Create new JSON encoder that will write to the response writer
-		json.NewEncoder(w).Encode(areaOneAr)
-		json.NewEncoder(w).Encode(areaTwoAr)
-		json.NewEncoder(w).Encode(areaThreeAr)
-		json.NewEncoder(w).Encode(areaFourAr)
-		json.NewEncoder(w).Encode(majorAr)
+		// e := json.NewEncoder(w)
+		// e.Encode(areaOneAr)
+
+		//json.NewEncoder(w).Encode("Erin Rocks")
+		json.NewEncoder(w).Encode(test)
+		//json.NewEncoder(w).Encode(areaTwoAr)
+		// json.NewEncoder(w).Encode(areaThreeAr)
+		// json.NewEncoder(w).Encode(areaFourAr)
+		// json.NewEncoder(w).Encode(majorAr)
 	} else {
 		degree[0] = degree[0] + "_minor"
 		//Populate the specific minor

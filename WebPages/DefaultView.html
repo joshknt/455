@@ -12,31 +12,47 @@
 			}
 		}
 
-  var httpRequest;
-  document.getElementById("test").addEventListener('click', makeRequest);
+  function loadCourses() {
+   var  httpRequest = new XMLHttpRequest();
 
-  function makeRequest() {
-    httpRequest = new XMLHttpRequest();
-  }
-    // if (!httpRequest) {
-    //   alert('Giving up :( Cannot create an XMLHTTP instance');
-    //   return false;
-    // }
-    httpRequest.onreadystatechange = alertContents;
-    httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs&submit=ADVISE');
   
+    httpRequest.onreadystatechange = function(){
 
-  function alertContents() {
-    if (httpRequest.readyState == 4) {
-      if (httpRequest.status == 200) 
-	  	if(httpRequest.responseText != null{
-        var response = JSON.parse(httpRequest.responseText);
-      } else {
-        alert('There was a problem with the request.');
-      }
-    }
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+
+			var newContent = "";
+			for(var i=0; i<98; i++){
+  		//document.getElementById('courses').innerHTML = myObj[i].name ;
+		  //	newContent = '<h4>Area  I</h4>';
+		  	if(i === 0){
+				  newContent += '<h4><u> Area I</u></h4>'
+			  }
+			if(i === 4){
+				  newContent += '<h4><u> Area II</u></h4>'
+			  }
+			if(i === 34){
+				newContent += '<h4><u> Area III</u></h4>'
+			}
+			if(i === 53){
+				newContent += '<h4><u> Area IV</u></h4>'
+			}
+			if(i === 66){
+				newContent += '<h4><u> Major</u></h4>'
+			}
+		  	newContent +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	newContent += myObj[i].name;
+			newContent += ' [' + myObj[i].hours + ']' + '<br>';
+			}
+			document.getElementById('courses').innerHTML =  newContent ;
+		}
+	};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
   }
-  httpRequest.send(null);
+
 	</script>
 	
 </head>
@@ -81,6 +97,12 @@
 		visibility: hidden; 
 		color: #FFFFFF;
 		}
+
+	#courses{
+		background: #FFFFFF;
+		font-family: sans-serif;
+		text-transform: uppercase;
+	}
 	
 	</style>
 	<body>
@@ -102,12 +124,12 @@
             <option value = "ma"> Mathematics </option>
         </select>
         
-        <input name = "test" type = "submit" value = "ADVISE" >
+        <button type = "button" onclick= "loadCourses()" >ADVISE</button>
         </form>
 
-        <p>Upload your transcript: </p>
+        <!--<p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
-        <input type = "submit" value = "Upload" /><br></br>
+        <input type = "submit" value = "Upload" /><br></br>-->
 	</div>
 	
 	<div id="popupbox"> 
@@ -126,6 +148,10 @@
 		</div> 
 		
 		<p><a href="javascript:login('show');">Login as Administrator</a></p>
+
+		<div id = courses>
+
+		</div>
         	
 
 	</body>
