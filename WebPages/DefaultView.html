@@ -11,6 +11,32 @@
     		document.getElementById('popupbox').style.visibility="hidden"; 
 			}
 		}
+
+  var httpRequest;
+  document.getElementById("test").addEventListener('click', makeRequest);
+
+  function makeRequest() {
+    httpRequest = new XMLHttpRequest();
+  }
+    // if (!httpRequest) {
+    //   alert('Giving up :( Cannot create an XMLHTTP instance');
+    //   return false;
+    // }
+    httpRequest.onreadystatechange = alertContents;
+    httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs&submit=ADVISE');
+  
+
+  function alertContents() {
+    if (httpRequest.readyState == 4) {
+      if (httpRequest.status == 200) 
+	  	if(httpRequest.responseText != null{
+        var response = JSON.parse(httpRequest.responseText);
+      } else {
+        alert('There was a problem with the request.');
+      }
+    }
+  }
+  httpRequest.send(null);
 	</script>
 	
 </head>
@@ -69,18 +95,17 @@
         <p>Select your degree: </p>
         <select name = "degrees">
         	<option value="" style="display:none;"></option>
-            <option value = "Chemistry"> Chemistry </option>
-            <option value = "Computer Info Systems"> Computer Info Systems </option>
+            <option value = "ch"> Chemistry </option>
+            <option value = "cis"> Computer Info Systems </option>
             <option value = "cs"> Computer Science</option>
-            <option value = "History"> History </option>
-            <option value = "Mathematics"> Mathematics </option>
+            <option value = "hi"> History </option>
+            <option value = "ma"> Mathematics </option>
         </select>
         
-        
-        
-        <input name = "submit" type = "submit" value = "ADVISE" >
+        <input name = "test" type = "submit" value = "ADVISE" >
         </form>
-        	<p>Upload your transcript: </p>
+
+        <p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <input type = "submit" value = "Upload" /><br></br>
 	</div>

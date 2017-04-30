@@ -2,8 +2,74 @@
 <html>
     <head>
     <title> Create Page Administrator </title>
-    <script src="js/AdminCreate.js" type="text/javascript"></script>
-    <link href="AdminCreate.css" rel="stylesheet" type="text/css">
+        <style type = "text/css">    
+body {background-color:#DB9F11;}
+.left-div {
+    background-color:#46166B;
+    color: #FFFFFF; 
+    width:215px;
+    height:155px;
+    padding-bottom:10px; 
+    padding-left:10px;
+    padding-top: 10px;
+    font-family: sans-serif;
+    }
+.right-div {
+            position: absolute;
+            top: 10%;
+            left: 27%;
+            background-color: #DB9F11;           
+           }
+h1 {color:#46166B;
+   text-align:center; 
+   font-family: serif;
+   }
+.button1 {background-color:#DB9F11;
+        color:white;
+        border-radius:8px;
+        }
+.button2 {
+    background-color:#5F6062;
+    color:white;
+    border-radius: 6px;
+    position: absolute;
+    top:0;
+    right: 0;
+    }
+.button3 {    
+    background-color:#5F6062;
+    color:white;
+    border-radius: 6px;     
+        }
+
+        
+table, th, td {
+        border: 0;
+        border-collapse: collapse;
+        background-color: #DB9F11;
+        }
+        table {
+            float: right;
+
+        }
+        th, td {
+            padding: 5px;
+            text-align:center;
+            color:#46166B;
+            background-color:#DB9F11;
+            }
+        caption {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 135%;
+            font-weight: bold;
+            color:#46166B;
+            }
+input {
+    background-color:white; 
+    color:#46166B;
+    }   
+    </style>
     </head>
     
 <!--
@@ -13,43 +79,124 @@
 <body> <!--style="background-image:url(lionlogo.jpg)"-->
     <!--add functionality for welcome "maths"-->
     <h1><center>Create</center></h1>
-<div>
-<form action="">
+<form action="/logout" method="post">
+    <b><right><button class="button button2" type="submit">
+        Log out</button></right></b></form>
+
+<div class="right-div">
+<table align="center">
+    <caption><b>MATHEMATICS CURRICULUM REQUIREMENTS</b></caption><br><br>
+    <tr>
+        <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
+        <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
+        <th align="center">AREA III<br> History, Social & <br>Behavioral Sciences<br>(12 hrs)</th>
+        <th align="center">AREA IV <br> Written Composition<br>(6 hrs)</th>
+        <th align="center">COURSE<br>REQUIREMENTS<br>FOR MAJOR<br>(60 hrs)</th>
+    </tr> 
+<!-- ===========================================================================================================================
+=============================================================================================================================-->
+   
+<script>
+    $(function() {
+        var scntDiv = $('#p_scents');
+        var i = $('#p_scents p').size() + 1;
+        
+        $('#addScnt').live('click', function() {
+                $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="" placeholder="Input Value" /></label> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt').live('click', function() { 
+                if( i > 2 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});    
+    </script>
+<!--==============================================================-->
+    <td>  
+<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents">
+        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+</div>
+<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    </td>
+<!-- =======================================================================================================================-->
+     <td>  
+<div id="p_scents">
+        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+</div>
+<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents">
+        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+</div>
+<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents">
+        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15"/></label>
+</div>
+<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    </td>
+    
+</table>
+
+</div>
+<div class="left-div">
+<form action="/loadcourses" method="put">
   <input type="radio" name="degree" value="major">
   Major<br>
   <input type="radio" name="degree" value="minor">
   Minor<br>
-</form>
-
 <p>
-select catalog years <br> 
+select the degree <br> 
 <select>
-    <option value="">      </option>
-    <option value="2010-2011">2010-2011</option>
-    <option value="2011-2012">2011-2012</option>
-    <option value="2012-2013">2012-2013</option>
-    <option value="2013-2014">2013-2014</option>
-    <option value="2014-2015">2014-2015</option>
-    <option value="2015-2016">2015-2016</option>
-    <option value="2016-2017">2016-2017</option>    
+    <option value="" style="display:none;"></option>
+    <option value = "CH"> Chemistry </option>
+    <option value = "CIS"> Computer Info Systems </option>
+    <option value = "CS"> Computer Science</option>
+    <option value = "HI"> History </option>
+    <option value = "MA"> Mathematics </option>    
 </select>
 </p>
-
+</form>
 <p>
-
-<button onclick="myFunction()">CREATE</button>
-
+<button class = "button button1" type = "submit" onclick="myFunction1()">
+    CREATE
+</button>
     <script>
-function myFunction() {
-    window.open("AdminCreate2nd.html", "_blank", false, "width=900,height=400");
+function myFunction1() {
+    window.open("AdminCreate.html", "_self", false);
 }
-</script>
-    
-<button type="button">MODIFY</button> 
-<button type="button">VIEW</button>
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction2()">
+    MODIFY
+</button>
+    <script>
+function myFunction2() {
+    window.open("AdminModify.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction3()">
+    VIEW
+</button>
+    <script>
+function myFunction3() {
+    window.open("AdminView.html", "_self", false);
+}
+    </script>
 </p>
 </div>
-
     
 </body>
 
