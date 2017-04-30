@@ -23,32 +23,64 @@
 			myObj = JSON.parse(this.responseText);
 			
 
-			var newContent = "";
-			for(var i=0; i<98; i++){
-  		//document.getElementById('courses').innerHTML = myObj[i].name ;
-		  //	newContent = '<h4>Area  I</h4>';
-		  	if(i === 0){
-				  newContent += '<h4><u> Area I</u></h4>'
-			  }
-			if(i === 4){
-				  newContent += '<h4><u> Area II</u></h4>'
-			  }
-			if(i === 34){
-				newContent += '<h4><u> Area III</u></h4>'
+			var one = "";
+			var two = "";
+			var three = "";
+			var four = "";
+			var major = "";
+
+		document.getElementById('courses').style.visibility = "visible";
+		for(var i = 0; i < 4; i++){
+			if(i === 0){
+				one +=  '<h4><u> Area I</u></h4>'
 			}
-			if(i === 53){
-				newContent += '<h4><u> Area IV</u></h4>'
-			}
-			if(i === 66){
-				newContent += '<h4><u> Major</u></h4>'
-			}
-		  	newContent +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	newContent += myObj[i].name;
-			newContent += ' [' + myObj[i].hours + ']' + '<br>';
-			}
-			document.getElementById('courses').innerHTML =  newContent ;
+			one +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	one += myObj[i].name;
+			one += ' [' + myObj[i].hours + ']' + '<br>';
 		}
-	};
+		document.getElementById('areaOne').innerHTML = one;
+
+		for(var i = 4; i < 34; i++){
+			if(i === 4){
+				two +=  '<h4><u> Area II</u></h4>'
+			}
+			two +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	two += myObj[i].name;
+			two += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaTwo').innerHTML = two;
+
+		for(var i = 34; i < 53; i++){
+			if(i === 34){
+				three +=  '<h4><u> Area III</u></h4>'
+			}
+			three +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	three += myObj[i].name;
+			three += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaThree').innerHTML = three;
+
+		for(var i = 53; i < 66; i++){
+			if(i === 53){
+				four +=  '<h4><u> Area IV</u></h4>'
+			}
+			four +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	four += myObj[i].name;
+			four += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFour').innerHTML = four;
+
+		for(var i = 66; i < 98; i++){
+			if(i === 66){
+				major +=  '<h4><u> Major Courses</u></h4>'
+			}
+			major +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	major += myObj[i].name;
+			major += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFive').innerHTML = major;
+	}
+};
 		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
 		httpRequest.send();
   }
@@ -99,11 +131,48 @@
 		}
 
 	#courses{
+		visibility: hidden;
+		margin:0;
+		margin-left: 30%; 
+		margin-right: 30%;
+		margin-top: 50px;
 		background: #FFFFFF;
 		font-family: sans-serif;
 		text-transform: uppercase;
+		position:absolute;
+		height: 1000px; 
+		width:750px
 	}
 	
+		#areaOne{
+		position:relative;
+		left: 50px;
+		top: 50px;
+	}	
+
+		#areaTwo{
+		position:relative;
+		left: 50px;
+		top: 50px;
+	}	
+	#areaThree{
+		position:relative;
+		left: 225px;
+		bottom: 772px;
+
+	}	
+	#areaFour{
+		position:relative;
+		left: 400px;
+		bottom:1225px;
+	}
+	#areaFive{
+		position:relative;
+		left: 550px;
+		bottom: 1553px;
+		
+	}
+
 	</style>
 	<body>
 		<h1>Welcome to ADVISE!</h1>
@@ -150,7 +219,11 @@
 		<p><a href="javascript:login('show');">Login as Administrator</a></p>
 
 		<div id = courses>
-
+			<form id = "areaOne"></form>
+			<form id = "areaTwo"></form>
+			<form id = "areaThree"></form>
+			<form id = "areaFour"></form>
+			<form id = "areaFive"></form>
 		</div>
         	
 
