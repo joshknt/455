@@ -9,8 +9,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	//"strings"
-	"fmt"
-	"github.com/jung-kurt/gofpdf"
+	//"fmt"
+
 	"strconv"
 )
 
@@ -299,29 +299,12 @@ func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	courses.DeleteClassFromDB(degree[0], tempCourse)
 }
 
-func createPDF() {
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-	pdf.SetFont("Arial", "B", 10)
-	for i := range areaOneAr {
-		pdf.Cell(5, 10, "[ ]")
-		pdf.Cell(5, 10, areaOneAr[i].DepartmentID)
-		pdf.Cell(1, 10, areaOneAr[i].Name)
-		pdf.Cell(20, 10, " ")
-	}
-	err := pdf.OutputFileAndClose("hello.pdf")
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
 //=====================================================================================
 //=====================================================================================
 
 //main : Main driver for the web server
 //Author(s): Josh Kent
 func main() {
-	createPDF()
 	//Setup a new router where handle names must match
 	router := mux.NewRouter().StrictSlash(true)
 
@@ -343,8 +326,6 @@ func main() {
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
-
-	//API for degree validation
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
