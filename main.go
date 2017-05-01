@@ -85,7 +85,7 @@ func adminIndexHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\indexAdmin.html")
+		t, _ := template.ParseFiles("WebPages\\indexAdmin.html")
 		t.Execute(w, p)
 	}
 }
@@ -100,7 +100,7 @@ func adminModifyHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\AdminModify\\AdminModify.html")
+		t, _ := template.ParseFiles("WebPages\\AdminModify.html")
 		t.Execute(w, p)
 	}
 }
@@ -115,7 +115,7 @@ func adminCreateHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\AdminCreate\\AdminCreate.html")
+		t, _ := template.ParseFiles("WebPages\\AdminCreate.html")
 		t.Execute(w, p)
 	}
 }
@@ -130,7 +130,7 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
-		t, _ := template.ParseFiles("WebPages\\AdminView\\AdminView.html")
+		t, _ := template.ParseFiles("WebPages\\AdminView.html")
 		t.Execute(w, p)
 	}
 }
