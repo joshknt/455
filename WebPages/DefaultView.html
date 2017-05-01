@@ -3,7 +3,10 @@
 		<title>ADVISE</title>
 		
 	<script language="JavaScript" type="text/javascript">
-		
+// .................................................................................
+// Author: Erin Cosby
+// Fuction to show login in popupbox window
+
 	function login(showhide)
 	{
 		if(showhide == "show")
@@ -15,91 +18,106 @@
     		document.getElementById('popupbox').style.visibility="hidden"; 
 		}
 	}
-// ---------------------------------------------------------------------------------
-  function loadCourses() {
-   var  httpRequest = new XMLHttpRequest();
-  
-    httpRequest.onreadystatechange = function(){
+// .................................................................................
+// Author: Erin Cosby
+// Function uses AJAX to pull courses from the server
 
-		if(this.readyState == 4 && this.status == 200){
-			//document.getElementById("courses").innerHTML = this.responseText;
-			myObj = JSON.parse(this.responseText);
-			
-			var one = "";
-			var two = "";
-			var three = "";
-			var four = "";
-			var major = "";
+  function loadCourses(c, d) 
+  {
+	  //var url = new URL("http://localhost:9090//loadcourses?choice="+c+"&degrees="+d);
+	  var  httpRequest = new XMLHttpRequest();
+	  httpRequest.onreadystatechange = function(){
+		  
+		  if(this.readyState == 4 && this.status == 200)
+		  {
+			  myObj = JSON.parse(this.responseText);
+			  
+			  var one = "";
+			  var two = "";
+			  var three = "";
+			  var four = "";
+			  var major = "";
+			  
+			  document.getElementById('courses').style.visibility = "visible";
+			  
+			  for(var i = 0; i < 4; i++)
+			  {
+				  if(i === 0)
+				  {
+					  one +=  '<h4><u> Area I</u></h4>'
+				  }
+				  	  one +=  '<input type = checkbox>' + myObj[i].departmentid;
+					  one += myObj[i].name;
+					  one += ' [' + myObj[i].hours + ']' + '<br>';
+			  }
+				  document.getElementById('areaOne').innerHTML = one;
 
-		document.getElementById('courses').style.visibility = "visible";
-		for(var i = 0; i < 4; i++){
-			if(i === 0){
-				one +=  '<h4><u> Area I</u></h4>'
+		 	  for(var i = 4; i < 34; i++)
+			   {
+				   if(i === 4)
+				   {
+					   two +=  '<h4><u> Area II</u></h4>'
+				   }
+					   two +=  '<input type = checkbox>' + myObj[i].departmentid;
+					   two += myObj[i].name;
+					   two += ' [' + myObj[i].hours + ']' + '<br>';
+			   }
+					   document.getElementById('areaTwo').innerHTML = two;
+
+			for(var i = 34; i < 53; i++)
+			{
+				if(i === 34)
+				{
+					three +=  '<h4><u> Area III</u></h4>'
+				}
+					three +=  '<input type = checkbox>' + myObj[i].departmentid;
+					three += myObj[i].name;
+					three += ' [' + myObj[i].hours + ']' + '<br>';
 			}
-			one +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	one += myObj[i].name;
-			one += ' [' + myObj[i].hours + ']' + '<br>';
-		}
-		document.getElementById('areaOne').innerHTML = one;
+					document.getElementById('areaThree').innerHTML = three;
 
-		for(var i = 4; i < 34; i++){
-			if(i === 4){
-				two +=  '<h4><u> Area II</u></h4>'
-			}
-			two +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	two += myObj[i].name;
-			two += ' [' + myObj[i].hours + ']' + '<br>';
+			for(var i = 53; i < 66; i++)
+			{
+				if(i === 53)
+				{
+					four +=  '<h4><u> Area IV</u></h4>'
+				}
+					four +=  '<input type = checkbox>' + myObj[i].departmentid;
+					four += myObj[i].name;
+					four += ' [' + myObj[i].hours + ']' + '<br>';
 		}
-		document.getElementById('areaTwo').innerHTML = two;
+					document.getElementById('areaFour').innerHTML = four;
 
-		for(var i = 34; i < 53; i++){
-			if(i === 34){
-				three +=  '<h4><u> Area III</u></h4>'
+			for(var i = 66; i < 98; i++)
+			{
+				if(i === 66)
+				{
+					major +=  '<h4><u> Major Courses</u></h4>'
+				}
+					major +=  '<input type = checkbox>' + myObj[i].departmentid;
+					major += myObj[i].name;
+					major += ' [' + myObj[i].hours + ']' + '<br>';
 			}
-			three +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	three += myObj[i].name;
-			three += ' [' + myObj[i].hours + ']' + '<br>';
+					document.getElementById('areaFive').innerHTML = major;
 		}
-		document.getElementById('areaThree').innerHTML = three;
-
-		for(var i = 53; i < 66; i++){
-			if(i === 53){
-				four +=  '<h4><u> Area IV</u></h4>'
-			}
-			four +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	four += myObj[i].name;
-			four += ' [' + myObj[i].hours + ']' + '<br>';
-		}
-		document.getElementById('areaFour').innerHTML = four;
-
-		for(var i = 66; i < 98; i++){
-			if(i === 66){
-				major +=  '<h4><u> Major Courses</u></h4>'
-			}
-			major +=  '<input type = checkbox>' + myObj[i].departmentid;
-		  	major += myObj[i].name;
-			major += ' [' + myObj[i].hours + ']' + '<br>';
-		}
-		document.getElementById('areaFive').innerHTML = major;
-	}
-};
-	httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
-	httpRequest.send();
+	};
+		httpRequest.open('GET', "/loadcourses?choice="+c.value+"&degrees="+d.value, true);
+		httpRequest.send();
   }
-
-
 	</script>
-	
-</head>
 	</head>
-	<style type = "text/css">
-	body{background-color: #DB9F11;}
+<!--.................................................................................	-->
+<style type = "text/css">
+	body{
+		background-color: #DB9F11;
+	}
 
 	h1{
 		color: #46166B;
 		text-align:center; 
 		font-family: serif;
 	}
+
 	#adviseForm{
 		background-color: #46166B;
 		position:absolute;
@@ -112,6 +130,7 @@
 		padding-left: 10px;
 		border-radius: 20px;
 	}
+
 	a{
 		font-family: sans-serif;
 		color: #FFFFFF;
@@ -119,6 +138,7 @@
 		top:5;
 		right:5;
 	}
+
 	#popupbox{
 		margin: 0; 
 		margin-left: 40%; 
@@ -149,65 +169,70 @@
 		height: 1000px; 
 		width:750px
 	}
-	
-		#areaOne{
+
+	#areaOne{
 		position:relative;
 		left: 50px;
 		top: 50px;
-	}	
-		#areaTwo{
+	}
+		
+	#areaTwo{
 		position:relative;
 		left: 50px;
 		top: 50px;
-	}	
+	}
+
 	#areaThree{
 		position:relative;
 		left: 225px;
 		bottom: 772px;
-
 	}	
+
 	#areaFour{
 		position:relative;
 		left: 400px;
 		bottom:1225px;
 	}
+
 	#areaFive{
 		position:relative;
 		left: 550px;
 		bottom: 1553px;
 	}
+
 	button{
 		background: #DB9F11;
 		color: #FFFFFF;
 		border-radius: 8px;
 	}
-
 	</style>
+<!-- ...................................................................... -->
 	<body>
 		<h1>Welcome to ADVISE!</h1>
 		
 		<div id = adviseForm>
 		<form action = "/loadcourses" method = "get">
-		<input type = "radio" name="choice" value = "major"
-		    checked = "checked"/> Major <br>
-        <input type = "radio" name="choice" value = "minor"/> Minor<br>
+			<input type = "radio" name="choice" value = "major"
+				checked = "checked"/> Major <br>
+			<input type = "radio" name="choice" value = "minor"/> Minor<br>
         
-        <p>Select your degree: </p>
-        <select name = "degrees">
-        	<option value="" style="display:none;"></option>
-            <option value = "ch"> Chemistry </option>
-            <option value = "cis"> Computer Info Systems </option>
-            <option value = "cs"> Computer Science</option>
-            <option value = "hi"> History </option>
-            <option value = "ma"> Mathematics </option>
-        </select>
-        
-        <button type = "button" onclick= "loadCourses()" >ADVISE</button>
+			<p>Select your degree: </p>
+			<select name = "degrees">
+				<option value="" style="display:none;"></option>
+				<option value = "ch"> Chemistry </option>
+				<option value = "cis"> Computer Info Systems </option>
+				<option value = "cs"> Computer Science</option>
+				<option value = "hi"> History </option>
+				<option value = "ma"> Mathematics </option>
+			</select>
+			
+			<button type = "button" onclick= "loadCourses(choice, degrees)" >ADVISE</button>
         </form>
 
         <p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
         <br><button type = "button" id = "upload" />UPLOAD<br>
+
 	</div>
 	
 	<div id="popupbox"> 
