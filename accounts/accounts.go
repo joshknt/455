@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	//mysql-master : Kept blank to keep clarity inside package
+	"golang.org/x/crypto/bcrypt"
 	_ "mysql-master"
 	"regexp"
 	"strings"
@@ -59,15 +60,15 @@ func LoadUser(member *User) bool {
 
 //IsValidUser : Validates if the user is a valid administrator
 //Author: Josh Kent
-//Argument: A user account, a string containing a password
+//Argument: A user account, a string containing a hashed password
 //Return: A boolean value determing whether the user is valid
 //Tested By: Josh Kent
 func IsValidUser(member User, pass string) bool {
-	if member.Password == pass {
+	err := bcrypt.CompareHashAndPassword([]byte(member.Password), []byte(pass))
+	if err == nil {
 		return true
 	}
 
-	//Return false if the password did not match
 	return false
 }
 
@@ -150,6 +151,11 @@ func validatePassword(pass string) bool {
 //Tested By: Josh Kent
 func CreateNewUser(u User) bool {
 	if validatePassword(u.Password) && !validateUsername(u.Username) {
+		//Generate hash and store it back into member struct
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+		if err != nil {
+			fmt.Println(err)
+		}
 		//Open database and defer close until end
 		db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 		if err != nil {
@@ -165,7 +171,7 @@ func CreateNewUser(u User) bool {
 		}
 
 		//Execute Insert query with proper values
-		_, err = stmt.Exec(u.Id, u.Username, u.Password, u.Department, u.FirstName, u.LastName, u.Email, u.Superuser)
+		_, err = stmt.Exec(u.Id, u.Username, hashedPassword, u.Department, u.FirstName, u.LastName, u.Email, u.Superuser)
 		if err != nil {
 			fmt.Println(err)
 		}

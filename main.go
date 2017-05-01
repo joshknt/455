@@ -9,8 +9,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	//"strings"
-	//"fmt"
-
+	"fmt"
+	"github.com/jung-kurt/gofpdf"
 	"strconv"
 )
 
@@ -230,12 +230,15 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 		//Populate the specific major
 		courses.PopulateClassArray(degree[0], &majorAr)
 
+		//Append all arrays into one for front-end UI formatting (fyi: SUPER DIRTY!)
+		allCourses := append(areaOneAr, areaTwoAr...)
+		allCourses = append(allCourses, areaThreeAr...)
+		allCourses = append(allCourses, areaFourAr...)
+		allCourses = append(allCourses, majorAr...)
+
 		//Create new JSON encoder that will write to the response writer
-		json.NewEncoder(w).Encode(areaOneAr)
-		json.NewEncoder(w).Encode(areaTwoAr)
-		json.NewEncoder(w).Encode(areaThreeAr)
-		json.NewEncoder(w).Encode(areaFourAr)
-		json.NewEncoder(w).Encode(majorAr)
+		e := json.NewEncoder(w)
+		e.Encode(allCourses)
 	} else {
 		degree[0] = degree[0] + "_minor"
 		//Populate the specific minor
@@ -297,6 +300,22 @@ func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	tempCourse.Name = courseName[0]
 
 	courses.DeleteClassFromDB(degree[0], tempCourse)
+}
+
+func createPDF() {
+	pdf := gofpdf.New("P", "mm", "A4", "")
+	pdf.AddPage()
+	pdf.SetFont("Arial", "B", 10)
+	for i := range areaOneAr {
+		pdf.Cell(5, 10, "[ ]")
+		pdf.Cell(5, 10, areaOneAr[i].DepartmentID)
+		pdf.Cell(1, 10, areaOneAr[i].Name)
+		pdf.Cell(20, 10, " ")
+	}
+	err := pdf.OutputFileAndClose("hello.pdf")
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 //=====================================================================================
