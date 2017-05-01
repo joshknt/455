@@ -24,7 +24,7 @@ func PopulateClassArray(table string, arr *[]Course) {
 	// new pointer of type Course
 	pstc := new(Course)
 	// Preparing the database for use
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
 	if err != nil {
 		fmt.Println("Error Preparing Database")
 	}
@@ -444,4 +444,251 @@ func ValidateComputerInfoSystemMinor(minor []Course) bool {
 		return false
 	}
 
+}
+
+// ValidateChemistryMajor: Function to validate the General Chemistry major
+// Author: Arturo Caballero
+func ValidateChemistryMajor(major []Course) bool {
+	var m1 []Course = major[0:7]
+	var m2 []Course = major[7:17]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	/* check first class slice, if all classes completed s1 = true */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 7 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/* check second class slice, if all classes completed s2 = true */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 21 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	/* if both classes slices are true then return true, else return false */
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ValidateChemistryMinor: Function to validate the General Chemistry minor
+// Author: Arturo Caballero
+func ValidateChemistryMinor(minor []Course) bool {
+	var m1 []Course = minor[0:2]
+	var m2 []Course = minor[2:7]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	/* check first class slice if all classes are completed */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 2 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/* check second class slice if 14 hours have been achieved */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 14 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	/* if s1 and s2 are true then return true, else return false */
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ValidateHistoryMajor: Function to validate the History major
+// Author: Arturo Caballero
+func ValidateHistoryMajor(major []Course) bool {
+	var m1 []Course = major[0:5]
+	var m2 []Course = major[5:74]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	/* check first class slice, if all classes completed s1 = true */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 5 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/*check second class slice, if 21 hours have been achieved s2 = true */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 21 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	/* return true if all requirements met */
+	if s1 && s2 && major[72].Completed {
+		return true
+	} else {
+		return false
+	}
+
+}
+
+// ValidateHistoryMinor: Function to validate the History minor
+// Author: Arturo Caballero
+func ValidateHistoryMinor(minor []Course) bool {
+	var m1 []Course = minor[0:5]
+	var m2 []Course = minor[5:74]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	/* check first class slice, if all classes completed s1 = true */
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 5 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	/*check second class slice, if 9 hours have been achieved s2 = true */
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 9 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	/* if s1 and s2 are true then return true, else return false */
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ValidateMathMajor: Function to validate the Math major
+// Author: Arturo Caballero
+func ValidateMathMajor(major []Course) bool {
+	var m1 []Course = major[0:12]
+	var m2 []Course = major[12:28]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	for range m1 {
+		if m1[i].Completed == true {
+			count = count + m1[i].Hours
+		}
+		if count >= 33 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 9 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
+}
+
+// ValidateMathMinor: Function to validate the Math minor
+// Author: Arturo Caballero
+func ValidateMathMinor(minor []Course) bool {
+	var m1 []Course = minor[0:3]
+	var m2 []Course = minor[3:24]
+
+	var s1, s2 bool
+	var i, count int = 0, 0
+
+	for range m1 {
+		if m1[i].Completed == true {
+			count++
+		}
+		if count >= 3 {
+			s1 = true
+			break
+		}
+		i++
+	}
+
+	i, count = 0, 0
+	for range m2 {
+		if m2[i].Completed == true {
+			count = count + m2[i].Hours
+		}
+		if count >= 9 {
+			s2 = true
+			break
+		}
+		i++
+	}
+
+	if s1 && s2 {
+		return true
+	} else {
+		return false
+	}
 }
