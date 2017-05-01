@@ -81,10 +81,17 @@ table, th, td {
             color:#DB9F11;
             background-color:#46166B;
             }
-        caption {
+        .caption1 {
             text-align: center;
             margin-top: 5px;
             font-size: 135%;
+            font-weight: bold;
+            color:#46166B;
+            }
+        .caption2 {
+            text-align: left;
+            margin-top: 5px;
+            font-size: 70%;
             font-weight: bold;
             color:#46166B;
             }
@@ -95,7 +102,8 @@ input {
 a {
     text-decoration: none;
     color:#5F6062;
-}  
+} 
+
     </style>
  <!--=============================================================================================================-->  
 <script>
@@ -169,7 +177,7 @@ $(function myFunction3() {
         var i = $('#p_scents3 p').size() + 1;
         
         $('#addScnt3').live('click', function() {
-                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt3">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -200,7 +208,7 @@ $(function myFunction4() {
         var i = $('#p_scents4 p').size() + 1;
         
         $('#addScnt4').live('click', function() {
-                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt4">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -232,7 +240,7 @@ $(function myFunction5() {
         var i = $('#p_scents5 p').size() + 1;
         
         $('#addScnt5').live('click', function() {
-                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt5">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -336,13 +344,13 @@ function viewButton()
 Log out</button></right></b></form>
 	        </h2>
 		</header>   
-        <h1><center>Create</center></h1>
 <body> 
     
 <form action="/createcourse" method="post">
 <div class="right-div">
 <table align="center">
-    <caption>CURRICULUM REQUIREMENTS</caption><br><br><p>
+    <caption class="caption1">CURRICULUM REQUIREMENTS</caption><br><caption class = "caption2">
+    [Enter] key to save courses</caption><br><p>
     <tr>
         <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
         <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
@@ -355,7 +363,7 @@ Log out</button></right></b></form>
     <td> 
 <div id="p_scents1">
         <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt1">&#10006;</a>
+<a href="#" id="remScnt1">&#10006; </a>
 </div>
 <a class="button button3" href="#" id="addScnt1">Add Course</a>
     </td>
