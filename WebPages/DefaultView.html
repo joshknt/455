@@ -99,12 +99,15 @@
 	}
 	#adviseForm{
 		background-color: #46166B;
+		position:absolute;
+		margin-left: 10px;
 		color: #FFFFFF;
 		width: 250;
 		font-family: sans-serif;
 		padding-top: 10px; 
 		padding-bottom: 10px; 
 		padding-left: 10px;
+		border-radius: 20px;
 	}
 	a{
 		font-family: sans-serif;
@@ -135,7 +138,7 @@
 		margin:0;
 		margin-left: 30%; 
 		margin-right: 30%;
-		margin-top: 50px;
+		margin-bottom: 30px;
 		background: #FFFFFF;
 		font-family: sans-serif;
 		text-transform: uppercase;
@@ -170,7 +173,11 @@
 		position:relative;
 		left: 550px;
 		bottom: 1553px;
-		
+	}
+	button{
+		background: #DB9F11;
+		color: #FFFFFF;
+		border-radius: 8px;
 	}
 
 	</style>
@@ -196,9 +203,9 @@
         <button type = "button" onclick= "loadCourses()" >ADVISE</button>
         </form>
 
-        <!--<p>Upload your transcript: </p>
+        <p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
-        <input type = "submit" value = "Upload" /><br></br>-->
+        <br><button type = "button" id = "upload" />UPLOAD<br>
 	</div>
 	
 	<div id="popupbox"> 
