@@ -348,6 +348,17 @@ func validateGPA(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(courses.ValidateGPA())
 }
 
+//getGPA : Handler that will update and return the current GPA
+//Author: Josh Kent
+//JSON: Sends GPA
+func getGPA(w http.ResponseWriter, r *http.Request) {
+	//Update GPA first
+	courses.UpdateGPA()
+
+	//Send updated GPA to front-end
+	json.NewEncoder(w).Encode(courses.GetGPA())
+}
+
 //addToQualityPoints : Handler that will increment quality points
 //Author: Josh Kent
 func addToQualityPoints(w http.ResponseWriter, r *http.Request) {
@@ -358,17 +369,6 @@ func addToQualityPoints(w http.ResponseWriter, r *http.Request) {
 //Author: Josh Kent
 func removeQualityPoints(w http.ResponseWriter, r *http.Request) {
 
-}
-
-//getGPA : Handler that will update and return the current GPA
-//Author: Josh Kent
-//JSON: Sends GPA
-func getGPA(w http.ResponseWriter, r *http.Request) {
-	//Update GPA first
-	courses.UpdateGPA()
-
-	//Send updated GPA to front-end
-	json.NewEncoder(w).Encode(courses.GetGPA())
 }
 
 //validateTotalHours : Handler that will validate total hours
@@ -480,22 +480,26 @@ func main() {
 
 	//API for courses
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
-	router.HandleFunc("/loadcourses", getCourses).Methods("POST")
+	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
 
 	//API for degree validation
 	router.HandleFunc("/validategpa", validateGPA).Methods("GET")
+	router.HandleFunc("/getgpa", getGPA).Methods("GET")
+
 	router.HandleFunc("/addtoqualitypoints", addToQualityPoints).Methods("POST")
 	router.HandleFunc("/removequalitypoints", removeQualityPoints).Methods("POST")
-	router.HandleFunc("/getgpa", getGPA).Methods("GET")
+
 	router.HandleFunc("/validatetotalhours", validateTotalHours).Methods("GET")
 	router.HandleFunc("/addtototalhours", addToTotalHours).Methods("POST")
 	router.HandleFunc("/removetotalhours", removeTotalHours).Methods("POST")
 	router.HandleFunc("/gettotalhours", getTotalHours).Methods("GET")
+
 	router.HandleFunc("/validateseniorcollegehours", validateSeniorCollegeHours).Methods("GET")
 	router.HandleFunc("/addtoseniorcollegehours", addToSeniorCollegeHours).Methods("POST")
 	router.HandleFunc("/removeseniorcollegehours", removeSeniorCollgeHours).Methods("POST")
 	router.HandleFunc("/getseniorcollegehours", getSeniorCollegeHours).Methods("GET")
+
 	router.HandleFunc("/validatejuniorseniorhours", validateJuniorSeniorHours).Methods("GET")
 	router.HandleFunc("/addtojuniorseniorhours", addToJuniorSeniorHours).Methods("POST")
 	router.HandleFunc("/removejuniorseniorhours", removeJuniorSeniorHours).Methods("POST")
