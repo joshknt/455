@@ -24,7 +24,7 @@ func PopulateClassArray(table string, arr *[]Course) {
 	// new pointer of type Course
 	pstc := new(Course)
 	// Preparing the database for use
-	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/test")
+	db, err := sql.Open("mysql", "root@tcp(127.0.0.1:3306)/testcs455")
 	if err != nil {
 		fmt.Println("Error Preparing Database")
 	}

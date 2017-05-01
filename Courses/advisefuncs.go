@@ -50,8 +50,6 @@ func RemoveQualityPoints(grade float32, hours float32) {
 			} else {
 				qualityPoints = 0
 			}
-			//RemoveTotalHours(uint8(hours))
-			//The code above removed due to it being unecessary
 		}
 	}
 }
