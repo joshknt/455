@@ -25,23 +25,23 @@ func ValidateGPA() bool {
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/25/2017 4:00 PM
 // Edited by: Jared Wood on 4/26/2017 6:27 PM
+// Hours need to be within 1 and 4
+// Grade needs to be within 0.0 and 4.0
 func AddtoQualityPoints(grade float32, hours float32) {
 	if (grade > 0) && (grade <= 4.0) {
 		if (hours > 0) && (hours <= 4) {
 			qualityPoints = qualityPoints + (grade * hours)
 			//AddtoTotalHours(uint8(hours))
 			//The code above removed due to it being unecessary
-		} else {
-			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
 		}
-	} else {
-		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
 	}
 }
 
 // RemoveQualityPoints : Subtracts from qualityPoint total
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/25/2017 4:00 PM
+// Hours need to be within 1 and 4
+// Grade needs to be within 0.0 and 4.0
 func RemoveQualityPoints(grade float32, hours float32) {
 	if (grade > 0) && (grade <= 4.0) {
 		if (hours > 0) && (hours <= 4) {
@@ -52,11 +52,7 @@ func RemoveQualityPoints(grade float32, hours float32) {
 			}
 			//RemoveTotalHours(uint8(hours))
 			//The code above removed due to it being unecessary
-		} else {
-			fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nQuality Points unchanged\n", hours)
 		}
-	} else {
-		fmt.Printf("Grade is out of range: %v. Needs to be within 0.0 and 4.0\nQuality Points unchanged\n", grade)
 	}
 }
 
@@ -111,17 +107,17 @@ func ValidateSeniorCollegeHours() bool {
 // AddtoSeniorCollegeHours : Adds hours to seniorCollegeHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
+// Hours need to be within 1 and 4
 func AddtoSeniorCollegeHours(hours uint8) {
 	if (hours > 0) && (hours <= 4) {
 		seniorCollegeHours = seniorCollegeHours + hours
-	} else {
-		fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nSenior Hours unchanged\n", hours)
 	}
 }
 
 // RemoveSeniorCollegeHours : Subtracts hours from seniorCollegeHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:36 PM
+// Hours need to be within 1 and 4
 func RemoveSeniorCollegeHours(hours uint8) {
 	if (hours > 0) && (hours <= 4) {
 		if hours <= seniorCollegeHours {
@@ -129,8 +125,6 @@ func RemoveSeniorCollegeHours(hours uint8) {
 		} else {
 			seniorCollegeHours = 0
 		}
-	} else {
-		fmt.Printf("Hours is out of range: %v. Needs to be within 0 and 4\nSenior Hours unchanged\n", hours)
 	}
 }
 
@@ -149,17 +143,17 @@ func ValidateJuniorSeniorHours() bool {
 // AddtoJuniorSeniorHours : Adds hours to juniorSeniorHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
+// Hours need to be within 1 and 4
 func AddtoJuniorSeniorHours(hours uint8) {
 	if (hours > 0) && (hours <= 4) {
 		juniorSeniorHours = juniorSeniorHours + hours
-	} else {
-		fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nJunior-Senior Hours unchanged\n", hours)
 	}
 }
 
 // RemoveJuniorSeniorHours : Subtracts hours from juniorSeniorHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
+// Hours need to be within 1 and 4
 func RemoveJuniorSeniorHours(hours uint8) {
 	if (hours > 0) && (hours <= 4) {
 		if hours <= juniorSeniorHours {
@@ -167,8 +161,6 @@ func RemoveJuniorSeniorHours(hours uint8) {
 		} else {
 			juniorSeniorHours = 0
 		}
-	} else {
-		fmt.Printf("Hours is out of range: %v. Needs to be within 1 and 4\nJunior-Senior Hours unchanged\n", hours)
 	}
 }
 
