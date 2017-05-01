@@ -2,7 +2,6 @@
 <html>
     <head>
     <title> View Page Administrator </title>
-    </head>
     <style type = "text/css">    
 body {background-color:#DB9F11;}
 div {background-color:#46166B;
@@ -31,7 +30,46 @@ h1 {color:#46166B;
     right: 0;
     }
     </style>
-    
+    <script language="JavaScript" type="text/javascript">
+function loadCourses() {
+   var  httpRequest = new XMLHttpRequest();
+  
+    httpRequest.onreadystatechange = function(){
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+			var newContent = "";
+			for(var i=0; i<98; i++){
+  		//document.getElementById('courses').innerHTML = myObj[i].name ;
+		  //	newContent = '<h4>Area  I</h4>';
+		  	if(i === 0){
+				  newContent += '<h4><u> Area I</u></h4>'
+			  }
+			if(i === 4){
+				  newContent += '<h4><u> Area II</u></h4>'
+			  }
+			if(i === 34){
+				newContent += '<h4><u> Area III</u></h4>'
+			}
+			if(i === 53){
+				newContent += '<h4><u> Area IV</u></h4>'
+			}
+			if(i === 66){
+				newContent += '<h4><u> Major</u></h4>'
+			}
+		  	newContent +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	newContent += myObj[i].name;
+			newContent += ' [' + myObj[i].hours + ']' + '<br>';
+			}
+			document.getElementById('courses').innerHTML =  newContent ;
+		}
+	};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
+  }
+    </script>
+    </head>
 <!--
 ========================================================================================================================
 -->
@@ -44,22 +82,21 @@ h1 {color:#46166B;
         Log out</button></right></b></form>
 <div class="left-div">
 <form action="/loadcourses" method="put">
-  <input type="radio" name="degree" value="major">
+  <input type="radio" name="choice" value="major" checked="checked"/>
   Major<br>
-  <input type="radio" name="degree" value="minor">
+  <input type="radio" name="choice" value="minor">
   Minor<br>
 <p>
 select the degree <br> 
 <select>
     <option value="" style="display:none;"></option>
-    <option value = "CH"> Chemistry </option>
-    <option value = "CIS"> Computer Info Systems </option>
-    <option value = "CS"> Computer Science</option>
-    <option value = "HI"> History </option>
-    <option value = "MA"> Mathematics </option>    
+    <option value = "ch"> Chemistry </option>
+    <option value = "cis"> Computer Info Systems </option>
+    <option value = "cs"> Computer Science</option>
+    <option value = "hi"> History </option>
+    <option value = "ma"> Mathematics </option>    
 </select>
 </p>
-</form>
 <p>
 <button class = "button button1" type = "submit" onclick="myFunction1()">
     CREATE
@@ -77,7 +114,7 @@ function myFunction2() {
     window.open("AdminModify.html", "_self", false);
 }
     </script>
-<button class = "button button1" type = "submit" onclick="myFunction3()">
+<button class = "button button1" type = "button" onclick="loadCourses()">
     VIEW
 </button>
     <script>
@@ -86,6 +123,7 @@ function myFunction3() {
 }
     </script>
 </p>
+</form>
 </div>
     
 </body>

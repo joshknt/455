@@ -2,6 +2,12 @@
 <html>
     <head>
     <title> Create Page Administrator </title>
+    <script type="text/javascript" src="jspdf.debug.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <style type = "text/css">    
 body {background-color:#DB9F11;}
 .left-div {
@@ -18,7 +24,7 @@ body {background-color:#DB9F11;}
             position: absolute;
             top: 10%;
             left: 27%;
-            background-color: #DB9F11;           
+            background-color: #46166B;           
            }
 h1 {color:#46166B;
    text-align:center; 
@@ -41,12 +47,16 @@ h1 {color:#46166B;
     color:white;
     border-radius: 6px;     
         }
-
+.button4 {    
+    background-color:#5F6062;
+    color:white;
+    border-radius: 4px;     
+        }
         
 table, th, td {
         border: 0;
         border-collapse: collapse;
-        background-color: #DB9F11;
+        background-color: #46166B;
         }
         table {
             float: right;
@@ -55,20 +65,24 @@ table, th, td {
         th, td {
             padding: 5px;
             text-align:center;
-            color:#46166B;
-            background-color:#DB9F11;
+            color:#DB9F11;
+            background-color:#46166B;
             }
         caption {
             text-align: center;
             margin-top: 5px;
             font-size: 135%;
             font-weight: bold;
-            color:#46166B;
+            color:#DB9F11;
             }
 input {
     background-color:white; 
     color:#46166B;
-    }   
+    } 
+a {
+    text-decoration: none;
+    color:#5F6062;
+}  
     </style>
     </head>
     
@@ -80,80 +94,163 @@ input {
     <!--add functionality for welcome "maths"-->
     <h1><center>Create</center></h1>
 <form action="/logout" method="post">
-    <b><right><button class="button button2" type="submit">
+    <b><right><button class="button button4" type="submit">
         Log out</button></right></b></form>
 
 <div class="right-div">
 <table align="center">
-    <caption><b>MATHEMATICS CURRICULUM REQUIREMENTS</b></caption><br><br>
+    <caption><b>CURRICULUM REQUIREMENTS</b></caption><br><br><p>
     <tr>
         <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
         <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
         <th align="center">AREA III<br> History, Social & <br>Behavioral Sciences<br>(12 hrs)</th>
         <th align="center">AREA IV <br> Written Composition<br>(6 hrs)</th>
         <th align="center">COURSE<br>REQUIREMENTS<br>FOR MAJOR<br>(60 hrs)</th>
-    </tr> 
+    </tr> </p>
 <!-- ===========================================================================================================================
 =============================================================================================================================-->
    
 <script>
-    $(function() {
-        var scntDiv = $('#p_scents');
-        var i = $('#p_scents p').size() + 1;
+$(function myFunction1() {
+        var scntDiv = $('#p_scents1');
+        var i = $('#p_scents1 p').size() + 1;
         
-        $('#addScnt').live('click', function() {
-                $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="20" name="p_scnt_' + i +'" value="" placeholder="Input Value" /></label> <a href="#" id="remScnt">Remove</a></p>').appendTo(scntDiv);
+        $('#addScnt1').live('click', function() {
+                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt_1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">x</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
         
-        $('#remScnt').live('click', function() { 
-                if( i > 2 ) {
+        $('#remScnt1').live('click', function() { 
+                if( i > 1 ) {
                         $(this).parents('p').remove();
                         i--;
                 }
                 return false;
         });
-});    
-    </script>
+});
+</script>
 <!--==============================================================-->
-    <td>  
-<button class="button button2" type="#" id="addScnt">+Add Course</button>
+    <td> 
+<div id="p_scents1">
+        <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
+</div>
+<a href="#" id="addScnt1">Add Course</button>
     </td>
 <!-- ========================================================================================================================-->
+<script>
+$(function myFunction2() {
+        var scntDiv = $('#p_scents2');
+        var i = $('#p_scents2 p').size() + 1;
+        
+        $('#addScnt2').live('click', function() {
+                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt_2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">x</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt2').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+</script>
      <td>  
-<div id="p_scents">
-        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+<div id="p_scents2">
+        <label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2" value="" placeholder="ex: EN 111" /></label>
 </div>
-<button class="button button2" type="#" id="addScnt">+Add Course</button>
+<a href="#" id="addScnt2">Add Course</a>
     </td>
 <!-- =======================================================================================================================-->
+<script>
+$(function myFunction3() {
+        var scntDiv = $('#p_scents3');
+        var i = $('#p_scents3 p').size() + 1;
+        
+        $('#addScnt3').live('click', function() {
+                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt_3' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt3">x</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt3').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+</script>
      <td>  
-<div id="p_scents">
-        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+<div id="p_scents3">
+        <label for="p_scnts3"><input type="text" id="p_scnt3" size = "15" name="p_scnt3" value="" placeholder="ex: EN 111" /></label>
 </div>
-<button class="button button2" type="#" id="addScnt">+Add Course</button>
+<button class= "button button3" href="#" id="addScnt3">+Add Course</button>
     </td>
 <!-- ========================================================================================================================-->
+<script>
+$(function myFunction4() {
+        var scntDiv = $('#p_scents4');
+        var i = $('#p_scents4 p').size() + 1;
+        
+        $('#addScnt4').live('click', function() {
+                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "15" name="p_scnt_4' + i +'" value="" placeholder="ex: EN 111" /></label> <button class="button button4" href="#" id="remScnt4">X</button></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt4').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+</script>
      <td>  
-<div id="p_scents">
-        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15" /></label>
+<div id="p_scents4">
+        <label for="p_scnts4"><input type="text" id="p_scnt4" size = "15" name="p_scnt4" value="" placeholder="ex: EN 111" /></label>
 </div>
-<button class="button button2" type="#" id="addScnt">+Add Course</button>
+<button class= "button button3" href="#" id="addScnt4">+Add Course</button>
     </td>
 <!-- ========================================================================================================================-->
+<script>
+$(function myFunction5() {
+        var scntDiv = $('#p_scents5');
+        var i = $('#p_scents5 p').size() + 1;
+        
+        $('#addScnt5').live('click', function() {
+                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt_5' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt5">X</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt5').live('click', function() { 
+                if( i > 1) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+</script>
      <td>  
-<div id="p_scents">
-        <label for="p_scnts"><input type="text" id="p_scnt" name="p_scnt" value="" placeholder="ex: EN 111  (3)" size = "15"/></label>
+<div id="p_scents5">
+        <label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt5" value="" placeholder="ex: EN 111" /></label>
 </div>
-<button class="button button2" type="#" id="addScnt">+Add Course</button>
+<a href="#" id="addScnt5">+Add Course</a>
     </td>
     
 </table>
-
+<!--=========================================================================================================================-->
 </div>
 <div class="left-div">
-<form action="/loadcourses" method="put">
+<form action="/loadcourses" method="get">
   <input type="radio" name="degree" value="major">
   Major<br>
   <input type="radio" name="degree" value="minor">
@@ -162,11 +259,11 @@ input {
 select the degree <br> 
 <select>
     <option value="" style="display:none;"></option>
-    <option value = "CH"> Chemistry </option>
-    <option value = "CIS"> Computer Info Systems </option>
-    <option value = "CS"> Computer Science</option>
-    <option value = "HI"> History </option>
-    <option value = "MA"> Mathematics </option>    
+    <option value = "ch"> Chemistry </option>
+    <option value = "cis"> Computer Info Systems </option>
+    <option value = "cs"> Computer Science</option>
+    <option value = "hi"> History </option>
+    <option value = "ma"> Mathematics </option>    
 </select>
 </p>
 </form>
@@ -197,7 +294,23 @@ function myFunction3() {
     </script>
 </p>
 </div>
-    
+  
+<button class="button button1" >Save</button>
+<script>
+function printData()
+{
+   var divToPrint=document.getElementById("printTable");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
+
+$('button').on('click',function(){
+printData();
+})
+</script>
+<button class="button button1" onclick="printData()">Print</button>
 </body>
 
 </html>

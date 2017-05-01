@@ -6,12 +6,8 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"html/template"
-	//"io"
 	"io/ioutil"
 	"net/http"
-	//"strings"
-	"fmt"
-	"github.com/jung-kurt/gofpdf"
 	"strconv"
 )
 
@@ -69,6 +65,10 @@ func loadPage(title string) (*page, error) {
 //Author: Josh Kent
 //Tested By: Josh Kent
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
+	//Reset values for each user
+	courses.ResetValues()
+
+	//Serve default page
 	title := r.URL.Path[len("/"):]
 	p, _ := loadPage(title)
 	t, _ := template.ParseFiles("WebPages\\DefaultView.html")
@@ -323,32 +323,13 @@ func deleteCourse(w http.ResponseWriter, r *http.Request) {
 	courses.DeleteClassFromDB(degree[0], tempCourse)
 }
 
-func createPDF() {
-	pdf := gofpdf.New("P", "mm", "A4", "")
-	pdf.AddPage()
-	pdf.SetFont("Arial", "B", 10)
-	for i := range areaOneAr {
-		pdf.Cell(5, 10, "[ ]")
-		pdf.Cell(5, 10, areaOneAr[i].DepartmentID)
-		pdf.Cell(1, 10, areaOneAr[i].Name)
-		pdf.Cell(20, 10, " ")
-	}
-	err := pdf.OutputFileAndClose("hello.pdf")
-	if err != nil {
-		fmt.Println(err)
-	}
-}
-
-func printpdf(w http.ResponseWriter, r *http.Request) {
-
-}
-
 //=====================================================================================
 //=====================================================================================
 
 //main : Main driver for the web server
 //Author(s): Josh Kent
 func main() {
+
 	//Setup a new router where handle names must match
 	router := mux.NewRouter().StrictSlash(true)
 
@@ -372,9 +353,6 @@ func main() {
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
-
-	//Download PDF
-	router.HandleFunc("/printpdf", printpdf).Methods("GET")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.

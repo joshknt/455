@@ -5,6 +5,16 @@ var seniorCollegeHours uint8 = 0
 var juniorSeniorHours uint8 = 0
 var gpa, qualityPoints float32 = 0, 0
 
+// ResetValues : Resets values for each user
+// Author: Josh Kent
+func ResetValues() {
+	totalHours = 0
+	seniorCollegeHours = 0
+	juniorSeniorHours = 0
+	gpa = 0
+	qualityPoints = 0
+}
+
 // ValidateGPA : Returns true if gpa >= 2.0
 // Author: Arturo Caballero
 func ValidateGPA() bool {
