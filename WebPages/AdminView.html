@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title> View Page Administrator </title>
+    <style type = "text/css">    
+body {background-color:#DB9F11;}
+header{
+	background: white;
+	margin:0,0,10,0;
+	padding: 0,0,0,0;
+	border 0;
+}
+.left-div {
+    background-color:#46166B;
+    color: #FFFFFF; 
+    width:215px;
+    height:155px;
+    padding-bottom:10px; 
+    padding-left:10px;
+    padding-top: 10px;
+    font-family: sans-serif;
+    border-radius: 20px;
+    }
+.right-div {
+            position: absolute;
+            top: 10%;
+            left: 27%;
+            background-color: #DB9F11; 
+            visibility: hidden;          
+           }
+h1 {color:#46166B;
+   text-align:center; 
+   font-family: serif;
+   }
+h3{
+	text-align: center;
+}
+.button1 {background-color:#DB9F11;
+        color:white;
+        border-radius:8px;
+        }
+.button2 {
+    background-color:#46166B;
+    color:white;
+    border-radius: 8px;
+    position: header;
+    right: 0;
+    float: right;
+    width: 85px;
+    height: 35px;
+    display: inline;
+}
+    </style>
+    <script language="JavaScript" type="text/javascript">
+function loadCourses() {
+   var  httpRequest = new XMLHttpRequest();
+  
+    httpRequest.onreadystatechange = function(){
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+			var newContent = "";
+			for(var i=0; i<98; i++){
+  		//document.getElementById('courses').innerHTML = myObj[i].name ;
+		  //	newContent = '<h4>Area  I</h4>';
+		  	if(i === 0){
+				  newContent += '<h4><u> Area I</u></h4>'
+			  }
+			if(i === 4){
+				  newContent += '<h4><u> Area II</u></h4>'
+			  }
+			if(i === 34){
+				newContent += '<h4><u> Area III</u></h4>'
+			}
+			if(i === 53){
+				newContent += '<h4><u> Area IV</u></h4>'
+			}
+			if(i === 66){
+				newContent += '<h4><u> Major</u></h4>'
+			}
+		  	newContent +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	newContent += myObj[i].name;
+			newContent += ' [' + myObj[i].hours + ']' + '<br>';
+			}
+			document.getElementById('courses').innerHTML =  newContent ;
+		}
+	};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
+  }
+    </script>
+<!--
+========================================================================================================================
+-->
+<script language="Javascript">
+
+function createButton()
+{
+    document.Form1.action = "/admincreate"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function modifyButton()
+{
+    document.Form1.action = "/adminmodify"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function viewButton()
+{
+    document.Form1.action = "/adminview"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+</script>
+    </head>
+<!--================================================================================-->
+<header>
+			<h2> <img src="advise.png" alt="logo" aligh="left" style = "width: 250px " float: "right"</img>
+<form action="/logout" method="post">
+<b><right><button class="button button2" type="submit">
+Log out</button></right></b></form>
+	        </h2>
+		</header>
+<body>
+    <h1>Welcome!</h1>
+<div class="left-div">
+<form name ="Form1" method="get">
+  <input type="radio" name="choice" value="major"/>
+  Major<br>
+  <input type="radio" name="choice" value="minor">
+  Minor<br>
+<p>
+select the degree <br> 
+<select>
+    <option value="" style="display:none;"></option>
+    <option value = "ch"> Chemistry </option>
+    <option value = "cis"> Computer Info Systems </option>
+    <option value = "cs"> Computer Science</option>
+    <option value = "hi"> History </option>
+    <option value = "ma"> Mathematics </option>    
+</select>
+</p>
+
+<p>
+<button class = "button button1" type = "submit" onclick=" return createButton();">
+    CREATE
+</button>
+
+<button class = "button button1" type = "button" onclick="modifyButton()">
+    MODIFY
+</button>
+
+<button class = "button button1" type = "button" onclick="viewButton()">
+    VIEW
+</button>
+</p>
+</div>
+</form>
+    
+</body>
+
+</html>

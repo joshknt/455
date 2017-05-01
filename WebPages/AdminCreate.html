@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title> Create Page Administrator </title>
+    <script type="text/javascript" src="jspdf.debug.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+        <style type = "text/css">    
+body {background-color:#DB9F11;}
+header{
+	background: white;
+	margin:0,0,10,0;
+	padding: 0,0,0,0;
+	border 0;
+}
+.left-div {
+    background-color:#46166B;
+    color: #FFFFFF; 
+    width:215px;
+    height:155px;
+    padding-bottom:10px; 
+    padding-left:10px;
+    padding-top: 10px;
+    font-family: sans-serif;
+    border-radius: 20px;
+    }
+.right-div {
+            position: absolute;
+            top: 10%;
+            left: 27%;
+            background-color: #DB9F11;           
+           }
+h1 {color:#46166B;
+   text-align:center; 
+   font-family: serif;
+   }
+h3{
+	text-align: center;
+}
+.button1 {background-color:#DB9F11;
+        color:white;
+        border-radius:8px;
+        }
+.button2 {
+    background-color:#46166B;
+    color:white;
+    border-radius: 8px;
+    position: header;
+    right: 0;
+    float: right;
+    width: 85px;
+    height: 35px;
+    display: inline;
+}
+.button3 {    
+    background-color:#5F6062;
+    color:white;
+    border-radius: 6px;     
+        }
+.button4 {    
+    background-color:#5F6062;
+    color:white;
+    border-radius: 4px;     
+        }
+        
+table, th, td {
+        border: 0;
+        border-collapse: collapse;
+        background-color: #46166B;
+        }
+        table {
+            float: right;
+
+        }
+        th, td {
+            padding: 5px;
+            text-align:center;
+            color:#DB9F11;
+            background-color:#46166B;
+            }
+        caption {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 135%;
+            font-weight: bold;
+            color:#46166B;
+            }
+input {
+    background-color:white; 
+    color:#46166B;
+    } 
+a {
+    text-decoration: none;
+    color:#5F6062;
+}  
+    </style>
+ <!--=============================================================================================================-->  
+<script>
+//------------- Function for Area I ---------------------
+$(function myFunction1() {
+        var scntDiv = $('#p_scents1');
+        var i = $('#p_scents1 p').size() + 1;
+        
+        $('#addScnt1').live('click', function() {
+                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt1').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+
+$('#addScnt1').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt1').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt1').click();
+        $('#p_scnt1').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area II ---------------------
+$(function myFunction2() {
+        var scntDiv = $('#p_scents2');
+        var i = $('#p_scents2 p').size() + 1;
+        
+        $('#addScnt2').live('click', function() {
+                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">&#10006;</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt2').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+
+$('#addScnt2').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt2').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt2').click();
+        $('#p_scnt2').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area III ---------------------
+$(function myFunction3() {
+        var scntDiv = $('#p_scents3');
+        var i = $('#p_scents3 p').size() + 1;
+        
+        $('#addScnt3').live('click', function() {
+                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt3').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+$('#addScnt3').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt3').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt3').click();
+        $('#p_scnt3').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area IV ---------------------
+$(function myFunction4() {
+        var scntDiv = $('#p_scents4');
+        var i = $('#p_scents4 p').size() + 1;
+        
+        $('#addScnt4').live('click', function() {
+                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt4').live('click', function() { 
+                if( i > 1 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+
+$('#addScnt4').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt4').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt4').click();
+        $('#p_scnt4').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area V ---------------------
+$(function myFunction5() {
+        var scntDiv = $('#p_scents5');
+        var i = $('#p_scents5 p').size() + 1;
+        
+        $('#addScnt5').live('click', function() {
+                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+        });
+        
+        $('#remScnt5').live('click', function() { 
+                if( i > 1) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+        });
+});
+
+$('#addScnt5').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt5').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt5').click();
+        $('#p_scnt5').css('background-color', '#ffff00');
+    }
+});
+
+// ----- Function to send courses to server ----
+/* $(function sendCourse() {
+  $('input[name="p_scnt"]').click(sendCourse() {
+    var data = {
+        degrees: $('#cs').val(),
+        name: $('#password').val(),
+        hours: $('#password').val(),
+    };
+    $.post(/createcourse, data, sendCourse(data) {
+       console.log(data);
+    });
+  });
+}); */
+
+// ----- Function to delete courses -----
+/* $scope.delete = function(object) {
+    $http({
+        url: 'domain/resource',
+        method: 'DELETE',
+        data: {
+            id: object.id
+        },
+        headers: {
+            "Content-Type": "application/json;charset=utf-8"
+        }
+    }).then(function(res) {
+        console.log(res.data);
+    }, function(error) {
+        console.log(error);
+    });
+}; */
+
+</script>
+<script language="Javascript">
+
+function createButton()
+{
+    document.Form1.action = "/admincreate"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function modifyButton()
+{
+    document.Form1.action = "/adminmodify"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function viewButton()
+{
+    document.Form1.action = "/adminview"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+</script>
+   </head>   
+<!--
+========================================================================================================================
+--> 
+<header>
+			<h2> <img src="advise.png" alt="logo" aligh="left" style = "width: 250px " float: "right"</img>
+<form action="/logout" method="post">
+<b><right><button class="button button2" type="submit">
+Log out</button></right></b></form>
+	        </h2>
+		</header>   
+        <h1><center>Create</center></h1>
+<body> 
+    
+<form action="/createcourse" method="post">
+<div class="right-div">
+<table align="center">
+    <caption>CURRICULUM REQUIREMENTS</caption><br><br><p>
+    <tr>
+        <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
+        <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
+        <th align="center">AREA III<br> History, Social & <br>Behavioral Sciences<br>(12 hrs)</th>
+        <th align="center">AREA IV <br> Written Composition<br>(6 hrs)</th>
+        <th align="center">COURSE<br>REQUIREMENTS<br>FOR MAJOR<br>(60 hrs)</th>
+    </tr> </p>
+<!-- ===========================================================================================================================
+=============================================================================================================================-->
+    <td> 
+<div id="p_scents1">
+        <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
+</div>
+<a class="button button3" href="#" id="addScnt1">Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents2">
+        <label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt2">&#10006;</a>
+</div>
+<a class="button button3" href="#" id="addScnt2">Add Course</a>
+    </td>
+<!-- =======================================================================================================================-->
+     <td>  
+<div id="p_scents3">
+        <label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt3">&#10006;</a>
+</div>
+<a class= "button button3" href="#" id="addScnt3">+Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents4">
+        <label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt4">&#10006;</a>
+</div>
+<a class= "button button3" href="#" id="addScnt4">+Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents5">
+        <label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt5" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt5">&#10006;</a>
+</div>
+<a class="button button3" href="#" id="addScnt5">+Add Course</a>
+    </td>    
+</table>
+</div></form>
+<!--=========================================================================================================================-->
+
+<div class="left-div">
+<form name ="Form1" method="get">
+  <input type="radio" name="choice" value="major"/>
+  Major<br>
+  <input type="radio" name="choice" value="minor"/>
+  Minor<br>
+<p>
+select the degree <br> 
+<select>
+    <option value="" style="display:none;"></option>
+    <option value = "ch"> Chemistry </option>
+    <option value = "cis"> Computer Info Systems </option>
+    <option value = "cs"> Computer Science</option>
+    <option value = "hi"> History </option>
+    <option value = "ma"> Mathematics </option>    
+</select>
+</p>
+
+<p>
+<button class = "button button1" type = "submit" onclick=" return createButton();">
+    CREATE
+</button>
+
+<button class = "button button1" type = "button" onclick="modifyButton()">
+    MODIFY
+</button>
+
+<button class = "button button1" type = "button" onclick="viewButton()">
+    VIEW
+</button>
+</p>
+</div>
+</form>
+  
+<button class="button button1" >Save</button>
+<!-- <script>
+function printData()
+{
+   var divToPrint=document.getElementById("printTable");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
+
+$('button').on('click',function(){
+printData();
+})
+</script> -->
+<button class="button button1" onclick="printData()">Print</button>
+</body>
+
+</html>

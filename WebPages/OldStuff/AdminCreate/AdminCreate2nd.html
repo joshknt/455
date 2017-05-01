@@ -193,7 +193,152 @@ function myFunction3() {
     </script>
 </p>
 </div>
-    
+    !-- =============================================================================-->
+<script language="JavaScript" type="text/javascript">
+//----Function to Create Courses ----
+funtion createCourses() {
+         var elem=document.getElementById("tabCourses");
+         var hide = elem.style.display =="none";
+         if (hide) {
+             elem.style.display="table";
+        } 
+        else {
+           elem.style.display="none";
+        }
+}
+//-----------------------------------------------------------------------------------
+//---- Function to Modify Courses ----
+function modifyCourses() {
+   var  httpRequest = new XMLHttpRequest();
+  
+    httpRequest.onreadystatechange = function(){
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+			var one = "";
+			var two = "";
+			var three = "";
+			var four = "";
+			var major = "";
+		document.getElementById('courses').style.visibility = "visible";
+		for(var i = 0; i < 4; i++){
+			if(i === 0){
+				one +=  '<h4><u> Area I</u></h4>'
+			}
+			one +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	one += myObj[i].name;
+			one += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaOne').innerHTML = one;
+		for(var i = 4; i < 34; i++){
+			if(i === 4){
+				two +=  '<h4><u> Area II</u></h4>'
+			}
+			two +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	two += myObj[i].name;
+			two += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaTwo').innerHTML = two;
+		for(var i = 34; i < 53; i++){
+			if(i === 34){
+				three +=  '<h4><u> Area III</u></h4>'
+			}
+			three +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	three += myObj[i].name;
+			three += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaThree').innerHTML = three;
+		for(var i = 53; i < 66; i++){
+			if(i === 53){
+				four +=  '<h4><u> Area IV</u></h4>'
+			}
+			four +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	four += myObj[i].name;
+			four += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFour').innerHTML = four;
+		for(var i = 66; i < 98; i++){
+			if(i === 66){
+				major +=  '<h4><u> Major Courses</u></h4>'
+			}
+			major +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	major += myObj[i].name;
+			major += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFive').innerHTML = major;
+	}
+};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
+  }
+//-------------------------------------------------------------------------------------
+//---- Function to View Courses ----
+function viewCourses() {
+   var  httpRequest = new XMLHttpRequest();
+  
+    httpRequest.onreadystatechange = function(){
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+			var one = "";
+			var two = "";
+			var three = "";
+			var four = "";
+			var major = "";
+		document.getElementById('courses').style.visibility = "visible";
+		for(var i = 0; i < 4; i++){
+			if(i === 0){
+				one +=  '<h4><u> Area I</u></h4>'
+			}
+			one +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	one += myObj[i].name;
+			one += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaOne').innerHTML = one;
+		for(var i = 4; i < 34; i++){
+			if(i === 4){
+				two +=  '<h4><u> Area II</u></h4>'
+			}
+			two +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	two += myObj[i].name;
+			two += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaTwo').innerHTML = two;
+		for(var i = 34; i < 53; i++){
+			if(i === 34){
+				three +=  '<h4><u> Area III</u></h4>'
+			}
+			three +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	three += myObj[i].name;
+			three += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaThree').innerHTML = three;
+		for(var i = 53; i < 66; i++){
+			if(i === 53){
+				four +=  '<h4><u> Area IV</u></h4>'
+			}
+			four +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	four += myObj[i].name;
+			four += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFour').innerHTML = four;
+		for(var i = 66; i < 98; i++){
+			if(i === 66){
+				major +=  '<h4><u> Major Courses</u></h4>'
+			}
+			major +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	major += myObj[i].name;
+			major += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFive').innerHTML = major;
+	}
+};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
+  }
+</script>
 </body>
 
 </html>

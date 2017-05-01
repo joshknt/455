@@ -84,39 +84,15 @@ a {
     color:#5F6062;
 }  
     </style>
-    </head>
-    
-<!--
-========================================================================================================================
--->
-    
-<body> <!--style="background-image:url(lionlogo.jpg)"-->
-    <!--add functionality for welcome "maths"-->
-    <h1><center>Create</center></h1>
-<form action="/logout" method="post">
-    <b><right><button class="button button4" type="submit">
-        Log out</button></right></b></form>
-
-<div class="right-div">
-<table align="center">
-    <caption><b>CURRICULUM REQUIREMENTS</b></caption><br><br><p>
-    <tr>
-        <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
-        <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
-        <th align="center">AREA III<br> History, Social & <br>Behavioral Sciences<br>(12 hrs)</th>
-        <th align="center">AREA IV <br> Written Composition<br>(6 hrs)</th>
-        <th align="center">COURSE<br>REQUIREMENTS<br>FOR MAJOR<br>(60 hrs)</th>
-    </tr> </p>
-<!-- ===========================================================================================================================
-=============================================================================================================================-->
-   
+ <!--=============================================================================================================-->  
 <script>
+//------------- Function for Area I ---------------------
 $(function myFunction1() {
         var scntDiv = $('#p_scents1');
         var i = $('#p_scents1 p').size() + 1;
         
         $('#addScnt1').live('click', function() {
-                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt_1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">x</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt_1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -129,22 +105,26 @@ $(function myFunction1() {
                 return false;
         });
 });
-</script>
-<!--==============================================================-->
-    <td> 
-<div id="p_scents1">
-        <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
-</div>
-<a href="#" id="addScnt1">Add Course</button>
-    </td>
-<!-- ========================================================================================================================-->
-<script>
+
+$('#addScnt1').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt1').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt1').click();
+        $('#p_scnt1').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area II ---------------------
 $(function myFunction2() {
         var scntDiv = $('#p_scents2');
         var i = $('#p_scents2 p').size() + 1;
         
         $('#addScnt2').live('click', function() {
-                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt_2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">x</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt_2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -157,21 +137,26 @@ $(function myFunction2() {
                 return false;
         });
 });
-</script>
-     <td>  
-<div id="p_scents2">
-        <label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2" value="" placeholder="ex: EN 111" /></label>
-</div>
-<a href="#" id="addScnt2">Add Course</a>
-    </td>
-<!-- =======================================================================================================================-->
-<script>
+
+$('#addScnt2').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt2').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt2').click();
+        $('#p_scnt2').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area III ---------------------
 $(function myFunction3() {
         var scntDiv = $('#p_scents3');
         var i = $('#p_scents3 p').size() + 1;
         
         $('#addScnt3').live('click', function() {
-                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt_3' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt3">x</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt_3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -184,21 +169,25 @@ $(function myFunction3() {
                 return false;
         });
 });
-</script>
-     <td>  
-<div id="p_scents3">
-        <label for="p_scnts3"><input type="text" id="p_scnt3" size = "15" name="p_scnt3" value="" placeholder="ex: EN 111" /></label>
-</div>
-<button class= "button button3" href="#" id="addScnt3">+Add Course</button>
-    </td>
-<!-- ========================================================================================================================-->
-<script>
+$('#addScnt3').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt3').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt3').click();
+        $('#p_scnt3').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area IV ---------------------
 $(function myFunction4() {
         var scntDiv = $('#p_scents4');
         var i = $('#p_scents4 p').size() + 1;
         
         $('#addScnt4').live('click', function() {
-                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "15" name="p_scnt_4' + i +'" value="" placeholder="ex: EN 111" /></label> <button class="button button4" href="#" id="remScnt4">X</button></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt_4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -211,21 +200,26 @@ $(function myFunction4() {
                 return false;
         });
 });
-</script>
-     <td>  
-<div id="p_scents4">
-        <label for="p_scnts4"><input type="text" id="p_scnt4" size = "15" name="p_scnt4" value="" placeholder="ex: EN 111" /></label>
-</div>
-<button class= "button button3" href="#" id="addScnt4">+Add Course</button>
-    </td>
-<!-- ========================================================================================================================-->
-<script>
+
+$('#addScnt4').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt4').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt4').click();
+        $('#p_scnt4').css('background-color', '#ffff00');
+    }
+});
+//------------- Function for Area V ---------------------
 $(function myFunction5() {
         var scntDiv = $('#p_scents5');
         var i = $('#p_scents5 p').size() + 1;
         
         $('#addScnt5').live('click', function() {
-                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt_5' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt5">X</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt_5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -238,14 +232,83 @@ $(function myFunction5() {
                 return false;
         });
 });
+
+$('#addScnt5').click(function() {
+    alert('Course added!');
+    
+    return false;
+});
+
+$('#p_scnt5').on('keyup', function(e) {
+    if (e.keyCode === 13) {
+        $('#addScnt5').click();
+        $('#p_scnt5').css('background-color', '#ffff00');
+    }
+});
 </script>
+
+   </head>   
+<!--
+========================================================================================================================
+-->    
+<body> 
+    <h1><center>Create</center></h1>
+<form action="/logout" method="post">
+    <b><right><button class="button button4" type="submit">
+        Log out</button></right></b></form>
+
+<form action="/createcourse" method="post">
+<div class="right-div">
+<table align="center">
+    <caption><b>CURRICULUM REQUIREMENTS</b></caption><br><br><p>
+    <tr>
+        <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
+        <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
+        <th align="center">AREA III<br> History, Social & <br>Behavioral Sciences<br>(12 hrs)</th>
+        <th align="center">AREA IV <br> Written Composition<br>(6 hrs)</th>
+        <th align="center">COURSE<br>REQUIREMENTS<br>FOR MAJOR<br>(60 hrs)</th>
+    </tr> </p>
+<!-- ===========================================================================================================================
+=============================================================================================================================-->
+    <td> 
+<div id="p_scents1">
+        <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
+</div>
+<a class="button button3" href="#" id="addScnt1">Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents2">
+        <label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
+</div>
+<a class="button button3" href="#" id="addScnt2">Add Course</a>
+    </td>
+<!-- =======================================================================================================================-->
+     <td>  
+<div id="p_scents3">
+        <label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
+</div>
+<a class= "button button3" href="#" id="addScnt3">+Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
+     <td>  
+<div id="p_scents4">
+        <label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
+</div>
+<a class= "button button3" href="#" id="addScnt4">+Add Course</a>
+    </td>
+<!-- ========================================================================================================================-->
      <td>  
 <div id="p_scents5">
         <label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt5" value="" placeholder="ex: EN 111" /></label>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
-<a href="#" id="addScnt5">+Add Course</a>
-    </td>
-    
+<a class="button button3" href="#" id="addScnt5">+Add Course</a>
+    </td>    
 </table>
 <!--=========================================================================================================================-->
 </div>
