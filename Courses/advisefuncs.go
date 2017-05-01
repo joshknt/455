@@ -25,11 +25,11 @@ func ValidateGPA() bool {
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/25/2017 4:00 PM
 // Edited by: Jared Wood on 4/26/2017 6:27 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 // Grade needs to be within 0.0 and 4.0
 func AddtoQualityPoints(grade float32, hours float32) {
 	if (grade > 0) && (grade <= 4.0) {
-		if (hours > 0) && (hours <= 4) {
+		if (hours > 0) && (hours <= 5) {
 			qualityPoints = qualityPoints + (grade * hours)
 			//AddtoTotalHours(uint8(hours))
 			//The code above removed due to it being unecessary
@@ -40,11 +40,11 @@ func AddtoQualityPoints(grade float32, hours float32) {
 // RemoveQualityPoints : Subtracts from qualityPoint total
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/25/2017 4:00 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 // Grade needs to be within 0.0 and 4.0
 func RemoveQualityPoints(grade float32, hours float32) {
 	if (grade > 0) && (grade <= 4.0) {
-		if (hours > 0) && (hours <= 4) {
+		if (hours > 0) && (hours <= 5) {
 			if (grade * hours) <= qualityPoints {
 				qualityPoints = qualityPoints - (grade * hours)
 			} else {
@@ -105,9 +105,9 @@ func ValidateSeniorCollegeHours() bool {
 // AddtoSeniorCollegeHours : Adds hours to seniorCollegeHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 func AddtoSeniorCollegeHours(hours uint8) {
-	if (hours > 0) && (hours <= 4) {
+	if (hours > 0) && (hours <= 5) {
 		seniorCollegeHours = seniorCollegeHours + hours
 	}
 }
@@ -115,9 +115,9 @@ func AddtoSeniorCollegeHours(hours uint8) {
 // RemoveSeniorCollegeHours : Subtracts hours from seniorCollegeHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:36 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 func RemoveSeniorCollegeHours(hours uint8) {
-	if (hours > 0) && (hours <= 4) {
+	if (hours > 0) && (hours <= 5) {
 		if hours <= seniorCollegeHours {
 			seniorCollegeHours = seniorCollegeHours - hours
 		} else {
@@ -141,9 +141,9 @@ func ValidateJuniorSeniorHours() bool {
 // AddtoJuniorSeniorHours : Adds hours to juniorSeniorHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 func AddtoJuniorSeniorHours(hours uint8) {
-	if (hours > 0) && (hours <= 4) {
+	if (hours > 0) && (hours <= 5) {
 		juniorSeniorHours = juniorSeniorHours + hours
 	}
 }
@@ -151,9 +151,9 @@ func AddtoJuniorSeniorHours(hours uint8) {
 // RemoveJuniorSeniorHours : Subtracts hours from juniorSeniorHours
 // Author: Arturo Caballero
 // Edited by: Jared Wood on 4/27/2017 4:56 PM
-// Hours need to be within 1 and 4
+// Hours need to be within 1 and 5
 func RemoveJuniorSeniorHours(hours uint8) {
-	if (hours > 0) && (hours <= 4) {
+	if (hours > 0) && (hours <= 5) {
 		if hours <= juniorSeniorHours {
 			juniorSeniorHours = juniorSeniorHours - hours
 		} else {
