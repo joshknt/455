@@ -61,7 +61,7 @@ func loadPage(title string) (*page, error) {
 	return &page{Title: title, Body: body}, nil
 }
 
-//defaultViewHandler : Serves the default page
+//defaultViewHandler : Serves the default page and resets degree status
 //Author: Josh Kent
 //Tested By: Josh Kent
 func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
@@ -339,6 +339,117 @@ func deleteCourse(w http.ResponseWriter, r *http.Request) {
 }
 
 //=====================================================================================
+//Course Validation API
+
+//validateGPA : Handler to validate GPA
+//Author: Josh Kent
+//JSON: Sends a boolean value
+func validateGPA(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.ValidateGPA())
+}
+
+//addToQualityPoints : Handler that will increment quality points
+//Author: Josh Kent
+func addToQualityPoints(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//removeQualityPoints : Handler that will decrement quality points
+//Author: Josh Kent
+func removeQualityPoints(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//getGPA : Handler that will update and return the current GPA
+//Author: Josh Kent
+//JSON: Sends GPA
+func getGPA(w http.ResponseWriter, r *http.Request) {
+	//Update GPA first
+	courses.UpdateGPA()
+
+	//Send updated GPA to front-end
+	json.NewEncoder(w).Encode(courses.GetGPA())
+}
+
+//validateTotalHours : Handler that will validate total hours
+//Author: Josh Kent
+//JSON: Sends a boolean value
+func validateTotalHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.ValidateTotalHours())
+}
+
+//addToTotalHours : Handler that will add to total hours
+//Author: Josh Kent
+func addToTotalHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//removeTotalHours : Hadler that will decrement total hours
+//Author: Josh Kent
+func removeTotalHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//getTotalHours : Handler that gets the total credit hours
+//Author: Josh Kent
+//JSON: Sends an integer
+func getTotalHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.GetTotalHours())
+}
+
+//validateSeniorCollegeHours : Handler that validates the number of senior college hours
+//Author: Josh Kent
+//JSON: Sends a boolean value
+func validateSeniorCollegeHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.ValidateSeniorCollegeHours())
+}
+
+//addToSeniorCollegeHours : Handler that increments senior college hours
+//Author: Josh Kent
+func addToSeniorCollegeHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//removeSeniorCollgeHours : Handler that decrements senior college hours
+//Author: Josh Kent
+func removeSeniorCollgeHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//getSeniorCollegeHours : Handler that return the senior college hours
+//Author: Josh Kent
+//JSON: Sends an integer
+func getSeniorCollegeHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.GetSeniorCollegeHours())
+}
+
+//validateJuniorSeniorHours : Handler that validates the number of junior/senior hours
+//Author: Josh Kent
+//JSON: Sends a boolean value
+func validateJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.ValidateJuniorSeniorHours())
+}
+
+//addToJuniorSeniorHours : Handler that increments junior/senior hours
+//Author: Josh Kent
+func addToJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//removeJuniorSeniorHours : Handler that decrements junior/senior hours
+//Author: Josh Kent
+func removeJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+
+}
+
+//getJunirSeniorHours : Handler that returns the junior/senior hours
+//Author: Josh Kent
+//JSON: Sends an integer
+func getJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(courses.GetJuniorSeniorHours())
+}
+
+//=====================================================================================
 //=====================================================================================
 
 //main : Main driver for the web server
@@ -355,10 +466,12 @@ func main() {
 	router.HandleFunc("/admincreate", adminCreateHandler).Methods("GET")
 	router.HandleFunc("/adminview", adminViewHandler).Methods("GET")
 
-	//RESTful API
 	//Login and logout handling
 	router.HandleFunc("/login", login).Methods("POST")
 	router.HandleFunc("/logout", logout).Methods("POST")
+
+	//=====================================================================
+	//RESTful API
 
 	//API for accounts
 	router.HandleFunc("/createuser", createUser).Methods("POST")
@@ -369,6 +482,24 @@ func main() {
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("POST")
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+
+	//API for degree validation
+	router.HandleFunc("/validategpa", validateGPA).Methods("GET")
+	router.HandleFunc("/addtoqualitypoints", addToQualityPoints).Methods("POST")
+	router.HandleFunc("/removequalitypoints", removeQualityPoints).Methods("POST")
+	router.HandleFunc("/getgpa", getGPA).Methods("GET")
+	router.HandleFunc("/validatetotalhours", validateTotalHours).Methods("GET")
+	router.HandleFunc("/addtototalhours", addToTotalHours).Methods("POST")
+	router.HandleFunc("/removetotalhours", removeTotalHours).Methods("POST")
+	router.HandleFunc("/gettotalhours", getTotalHours).Methods("GET")
+	router.HandleFunc("/validateseniorcollegehours", validateSeniorCollegeHours).Methods("GET")
+	router.HandleFunc("/addtoseniorcollegehours", addToSeniorCollegeHours).Methods("POST")
+	router.HandleFunc("/removeseniorcollegehours", removeSeniorCollgeHours).Methods("POST")
+	router.HandleFunc("/getseniorcollegehours", getSeniorCollegeHours).Methods("GET")
+	router.HandleFunc("/validatejuniorseniorhours", validateJuniorSeniorHours).Methods("GET")
+	router.HandleFunc("/addtojuniorseniorhours", addToJuniorSeniorHours).Methods("POST")
+	router.HandleFunc("/removejuniorseniorhours", removeJuniorSeniorHours).Methods("POST")
+	router.HandleFunc("/getjuniorseniorhours", getJuniorSeniorHours).Methods("GET")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
