@@ -32,7 +32,7 @@ HTTP Request Parameter List:
 	grade, hours
 	
 /removequalitypoints: POST
-	gread, hours
+	grade, hours
 	
 /updategpa: POST
 

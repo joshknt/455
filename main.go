@@ -193,60 +193,76 @@ func logout(w http.ResponseWriter, r *http.Request) {
 //Author: Josh Kent
 //Tested By: Josh Kent
 func createUser(w http.ResponseWriter, r *http.Request) {
-	//Parse the POST request and get new user details
-	r.ParseForm()
-	idAr := r.Form["id"]
-	userNameAr := r.Form["username"]
-	passwordAr := r.Form["password"]
-	departmentAr := r.Form["department"]
-	firstNameAr := r.Form["firstname"]
-	lastNameAr := r.Form["lastname"]
-	emailAr := r.Form["email"]
-	superuserAr := r.Form["superuser"]
-
-	//Store the new user into temporary member
-	member.Id = idAr[0]
-	member.Username = userNameAr[0]
-	member.Password = passwordAr[0]
-	member.Department = departmentAr[0]
-	member.FirstName = firstNameAr[0]
-	member.LastName = lastNameAr[0]
-	member.Email = emailAr[0]
-	//Check superuser status (argument is in string form [string != bool])
-	if superuserAr[0] == "true" {
-		member.Superuser = true
+	//If the user is not authorized, redirect to home page
+	if access == false {
+		http.Redirect(w, r, "/", 302)
 	} else {
-		member.Superuser = false
-	}
+		//Parse the POST request and get new user details
+		r.ParseForm()
+		idAr := r.Form["id"]
+		userNameAr := r.Form["username"]
+		passwordAr := r.Form["password"]
+		departmentAr := r.Form["department"]
+		firstNameAr := r.Form["firstname"]
+		lastNameAr := r.Form["lastname"]
+		emailAr := r.Form["email"]
+		superuserAr := r.Form["superuser"]
 
-	//Create the new user
-	accounts.CreateNewUser(member)
+		//Store the new user into temporary member
+		member.Id = idAr[0]
+		member.Username = userNameAr[0]
+		member.Password = passwordAr[0]
+		member.Department = departmentAr[0]
+		member.FirstName = firstNameAr[0]
+		member.LastName = lastNameAr[0]
+		member.Email = emailAr[0]
+		//Check superuser status (argument is in string form [string != bool])
+		if superuserAr[0] == "true" {
+			member.Superuser = true
+		} else {
+			member.Superuser = false
+		}
+
+		//Create the new user
+		accounts.CreateNewUser(member)
+	}
 }
 
 //getUser : Handles the request and will write the specified user to front end
 //Author: Josh Kent
+//JSON: Send a user's information
 //Tested By: Josh Kent
 func getUser(w http.ResponseWriter, r *http.Request) {
-	//Get parameters from post request and set it to default user
-	userName := r.URL.Query()["username"]
-	member.Username = userName[0]
+	//If the user is not authorized, redirect to home page
+	if access == false {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		//Get parameters from post request and set it to default user
+		userName := r.URL.Query()["username"]
+		member.Username = userName[0]
 
-	//Load user account details
-	accounts.LoadUser(&member)
+		//Load user account details
+		accounts.LoadUser(&member)
 
-	//Create JSON encoder and write it to the response writer
-	json.NewEncoder(w).Encode(member)
+		//Create JSON encoder and write it to the response writer
+		json.NewEncoder(w).Encode(member)
+	}
 }
 
 //deleteUser : Handler that will delete a specified user from the database
 //Author: Josh Kent
 func deleteUser(w http.ResponseWriter, r *http.Request) {
-	//Parse the form and get the username to delete
-	r.ParseForm()
-	userToDelete := r.Form["username"]
+	//If the user is not authorized, redirect to home page
+	if access == false {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		//Parse the form and get the username to delete
+		r.ParseForm()
+		userToDelete := r.Form["username"]
 
-	//Delete the user
-	accounts.DeleteUser(userToDelete[0])
+		//Delete the user
+		accounts.DeleteUser(userToDelete[0])
+	}
 }
 
 //=====================================================================================
@@ -289,53 +305,63 @@ func getCourses(w http.ResponseWriter, r *http.Request) {
 //Author: Josh Kent
 //Tested By: Josh Kent
 func createCourse(w http.ResponseWriter, r *http.Request) {
-	//Parse POST request and get parameters
-	r.ParseForm()
-	choice := r.Form["choice"]
-	degree := r.Form["degrees"]
-	hourAr := r.Form["hours"]
-	departmentAr := r.Form["department"]
-	nameAr := r.Form["name"]
-
-	//Define the correct table
-	if choice[0] == "major" {
-		degree[0] = degree[0] + "_major"
+	//If the user is not authorized, redirect to home page
+	if access == false {
+		http.Redirect(w, r, "/", 302)
 	} else {
-		degree[0] = degree[0] + "_minor"
+		//Parse POST request and get parameters
+		r.ParseForm()
+		choice := r.Form["choice"]
+		degree := r.Form["degrees"]
+		hourAr := r.Form["hours"]
+		departmentAr := r.Form["department"]
+		nameAr := r.Form["name"]
+
+		//Define the correct table
+		if choice[0] == "major" {
+			degree[0] = degree[0] + "_major"
+		} else {
+			degree[0] = degree[0] + "_minor"
+		}
+
+		//Convert string[] to int and store the otherh params into the temp course struct
+		tempCourse.Hours, _ = strconv.Atoi(hourAr[0])
+		tempCourse.DepartmentID = departmentAr[0]
+		tempCourse.Name = nameAr[0]
+
+		//Create the course in the appropriate table
+		courses.InsertClassToDB(degree[0], tempCourse)
 	}
-
-	//Convert string[] to int and store the otherh params into the temp course struct
-	tempCourse.Hours, _ = strconv.Atoi(hourAr[0])
-	tempCourse.DepartmentID = departmentAr[0]
-	tempCourse.Name = nameAr[0]
-
-	//Create the course in the appropriate table
-	courses.InsertClassToDB(degree[0], tempCourse)
 }
 
 //deleteCourse : Handler that will delete a course in the specific table
 //Author: Josh Kent
 //Tested By: Josh Kent
 func deleteCourse(w http.ResponseWriter, r *http.Request) {
-	//Parse POST request and get parameters
-	r.ParseForm()
-	courseDep := r.Form["department"]
-	courseName := r.Form["name"]
-	choice := r.Form["choice"]
-	degree := r.Form["degrees"]
-
-	//Define the correct table
-	if choice[0] == "major" {
-		degree[0] = degree[0] + "_major"
+	//If the user is not authorized, redirect to home page
+	if access == false {
+		http.Redirect(w, r, "/", 302)
 	} else {
-		degree[0] = degree[0] + "_minor"
+		//Parse POST request and get parameters
+		r.ParseForm()
+		courseDep := r.Form["department"]
+		courseName := r.Form["name"]
+		choice := r.Form["choice"]
+		degree := r.Form["degrees"]
+
+		//Define the correct table
+		if choice[0] == "major" {
+			degree[0] = degree[0] + "_major"
+		} else {
+			degree[0] = degree[0] + "_minor"
+		}
+
+		//Set appropriate temp course data to send to delete course function
+		tempCourse.DepartmentID = courseDep[0]
+		tempCourse.Name = courseName[0]
+
+		courses.DeleteClassFromDB(degree[0], tempCourse)
 	}
-
-	//Set appropriate temp course data to send to delete course function
-	tempCourse.DepartmentID = courseDep[0]
-	tempCourse.Name = courseName[0]
-
-	courses.DeleteClassFromDB(degree[0], tempCourse)
 }
 
 //=====================================================================================
@@ -353,7 +379,7 @@ func validateGPA(w http.ResponseWriter, r *http.Request) {
 //JSON: Sends GPA
 func getGPA(w http.ResponseWriter, r *http.Request) {
 	//Update GPA first
-	courses.UpdateGPA()
+	//courses.UpdateGPA()
 
 	//Send updated GPA to front-end
 	json.NewEncoder(w).Encode(courses.GetGPA())
@@ -362,13 +388,33 @@ func getGPA(w http.ResponseWriter, r *http.Request) {
 //addToQualityPoints : Handler that will increment quality points
 //Author: Josh Kent
 func addToQualityPoints(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	gradeAr := r.Form["grade"]
+	hoursAR := r.Form["hours"]
 
+	//Convert strings to integers
+	grade, _ := strconv.Atoi(gradeAr[0])
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.AddtoQualityPoints(float32(grade), float32(hours))
 }
 
 //removeQualityPoints : Handler that will decrement quality points
 //Author: Josh Kent
 func removeQualityPoints(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	gradeAr := r.Form["grade"]
+	hoursAR := r.Form["hours"]
 
+	//Convert strings to integers
+	grade, _ := strconv.Atoi(gradeAr[0])
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.RemoveQualityPoints(float32(grade), float32(hours))
 }
 
 //validateTotalHours : Handler that will validate total hours
@@ -381,13 +427,29 @@ func validateTotalHours(w http.ResponseWriter, r *http.Request) {
 //addToTotalHours : Handler that will add to total hours
 //Author: Josh Kent
 func addToTotalHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.AddtoTotalHours(uint8(hours))
 }
 
 //removeTotalHours : Hadler that will decrement total hours
 //Author: Josh Kent
 func removeTotalHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.RemoveTotalHours(uint8(hours))
 }
 
 //getTotalHours : Handler that gets the total credit hours
@@ -407,13 +469,29 @@ func validateSeniorCollegeHours(w http.ResponseWriter, r *http.Request) {
 //addToSeniorCollegeHours : Handler that increments senior college hours
 //Author: Josh Kent
 func addToSeniorCollegeHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.AddtoSeniorCollegeHours(uint8(hours))
 }
 
 //removeSeniorCollgeHours : Handler that decrements senior college hours
 //Author: Josh Kent
 func removeSeniorCollgeHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.RemoveSeniorCollegeHours(uint8(hours))
 }
 
 //getSeniorCollegeHours : Handler that return the senior college hours
@@ -433,13 +511,29 @@ func validateJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
 //addToJuniorSeniorHours : Handler that increments junior/senior hours
 //Author: Josh Kent
 func addToJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.AddtoJuniorSeniorHours(uint8(hours))
 }
 
 //removeJuniorSeniorHours : Handler that decrements junior/senior hours
 //Author: Josh Kent
 func removeJuniorSeniorHours(w http.ResponseWriter, r *http.Request) {
+	//Parse form for parameters
+	r.ParseForm()
+	hoursAR := r.Form["hours"]
 
+	//Convert string to integers
+	hours, _ := strconv.Atoi(hoursAR[0])
+
+	//Call function
+	courses.RemoveJuniorSeniorHours(uint8(hours))
 }
 
 //getJunirSeniorHours : Handler that returns the junior/senior hours
@@ -491,7 +585,7 @@ func main() {
 	router.HandleFunc("/removequalitypoints", removeQualityPoints).Methods("POST")
 
 	router.HandleFunc("/validatetotalhours", validateTotalHours).Methods("GET")
-	router.HandleFunc("/addtototalhours", addToTotalHours).Methods("POST")
+	//"AddToTotalHours" is automatically called within courses.AddToQualityPoints()
 	router.HandleFunc("/removetotalhours", removeTotalHours).Methods("POST")
 	router.HandleFunc("/gettotalhours", getTotalHours).Methods("GET")
 
