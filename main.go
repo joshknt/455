@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"html/template"
+	//"io"
 	"io/ioutil"
 	"net/http"
 	//"strings"
@@ -35,16 +36,6 @@ func init() {
 	courses.PopulateClassArray("general_area2", &areaTwoAr)
 	courses.PopulateClassArray("general_area3", &areaThreeAr)
 	courses.PopulateClassArray("general_area4", &areaFourAr)
-
-	//member.Id = "999"
-	// member.Username = "jhunt"
-	// member.Password = "suckit666?"
-	// member.Department = "hi"
-	// member.FirstName = "Joe"
-	// member.LastName = "Hunt"
-	// member.Email = "jhunt@uah.edu"
-	// member.Superuser = false
-	// accounts.CreateNewUser(member)
 }
 
 //=====================================================================================
@@ -95,6 +86,36 @@ func adminViewHandler(w http.ResponseWriter, r *http.Request) {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
 		t, _ := template.ParseFiles("WebPages\\IndexAdmin\\indexAdmin.html")
+		t.Execute(w, p)
+	}
+}
+
+//adminModifyHandler : Serves the admin page for modifying templates
+//Author: Josh Kent
+//Tested By: Josh Kent
+func adminModifyHandler(w http.ResponseWriter, r *http.Request) {
+	//Check for access to protected handlers
+	if access == false {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		title := r.URL.Path[len("/"):]
+		p, _ := loadPage(title)
+		t, _ := template.ParseFiles("WebPages\\AdminModify\\AdminModify.html")
+		t.Execute(w, p)
+	}
+}
+
+//adminCreateHandler : Serves the admin page for creating templates
+//Author: Josh Kent
+//Tested By: Josh Kent
+func adminCreateHandler(w http.ResponseWriter, r *http.Request) {
+	//Check for access to protected handlers
+	if access == false {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		title := r.URL.Path[len("/"):]
+		p, _ := loadPage(title)
+		t, _ := template.ParseFiles("WebPages\\AdminCreate\\AdminCreate.html")
 		t.Execute(w, p)
 	}
 }
@@ -318,6 +339,10 @@ func createPDF() {
 	}
 }
 
+func printpdf(w http.ResponseWriter, r *http.Request) {
+
+}
+
 //=====================================================================================
 //=====================================================================================
 
@@ -330,6 +355,8 @@ func main() {
 	//File handlers
 	router.HandleFunc("/", defaultViewHandler).Methods("GET")
 	router.HandleFunc("/admin", adminViewHandler).Methods("GET")
+	router.HandleFunc("/adminmodify", adminModifyHandler).Methods("GET")
+	router.HandleFunc("/admincreate", adminCreateHandler).Methods("GET")
 
 	//RESTful API
 	//Login and logout handling
@@ -345,6 +372,9 @@ func main() {
 	router.HandleFunc("/createcourse", createCourse).Methods("POST")
 	router.HandleFunc("/loadcourses", getCourses).Methods("GET")
 	router.HandleFunc("/deletecourse", deleteCourse).Methods("DELETE")
+
+	//Download PDF
+	router.HandleFunc("/printpdf", printpdf).Methods("GET")
 
 	//Setup a webserver on port 9090 and redirect traffic to the router.
 	//This is a blocking function. Any code below this will not execute.
