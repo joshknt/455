@@ -18,5 +18,47 @@ HTTP Request Parameter List:
 /deleteuser: DELETE
 	username
 	
+/validategpa: GET 
+
+/addtoqualitypoints: POST
+	grade, hours
+	
+/removequalitypoints: POST
+	gread, hours
+	
+/updategpa: POST
+
+/getgpa: GET
+
+/validatetotalhours: GET
+	
+/addtototalhours: POST
+	hours
+
+/removetotalhours: POST
+	hours
+	
+/gettotalhours: GET
+
+/validateseniorcollegehours: GET
+
+/addtoseniorcollegehours: POST
+	hours
+	
+/removeseniorcollegehours: POST
+	hours
+	
+/getseniorcollegehours: GET
+
+/validatejuniorseniorhours: GET
+
+/addtojuniorseniorhours: POST
+	hours
+	
+/removejuniorseniorhours: POST
+	hours
+	
+/getjuniorseniorhours: GET
+	
 
 	

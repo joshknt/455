@@ -64,6 +64,8 @@ func LoadUser(member *User) bool {
 //Return: A boolean value determing whether the user is valid
 //Tested By: Josh Kent
 func IsValidUser(member User, pass string) bool {
+	//Compare encryption byte values
+	//Will return "nil" if hash values match
 	err := bcrypt.CompareHashAndPassword([]byte(member.Password), []byte(pass))
 	if err == nil {
 		return true
@@ -148,6 +150,8 @@ func validatePassword(pass string) bool {
 //Author: Josh Kent
 //Argument: u - a user struct
 //Return: A boolean value determing if the user was created or not
+//Encryption: Package bcrypt implements Provos and Mazières's bcrypt adaptive hashing algorithm.
+//				See http://www.usenix.org/event/usenix99/provos/provos.pdf
 //Tested By: Josh Kent
 func CreateNewUser(u User) bool {
 	if validatePassword(u.Password) && !validateUsername(u.Username) {
