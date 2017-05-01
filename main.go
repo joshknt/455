@@ -379,6 +379,7 @@ func validateGPA(w http.ResponseWriter, r *http.Request) {
 //JSON: Sends GPA
 func getGPA(w http.ResponseWriter, r *http.Request) {
 	//Update GPA first
+	//NOTE: This should be called to update GPA, however when called, getGPA returns nothing
 	//courses.UpdateGPA()
 
 	//Send updated GPA to front-end
@@ -585,7 +586,7 @@ func main() {
 	router.HandleFunc("/removequalitypoints", removeQualityPoints).Methods("POST")
 
 	router.HandleFunc("/validatetotalhours", validateTotalHours).Methods("GET")
-	//"AddToTotalHours" is automatically called within courses.AddToQualityPoints()
+	router.HandleFunc("/addtototalhours", addToTotalHours).Methods("POST")
 	router.HandleFunc("/removetotalhours", removeTotalHours).Methods("POST")
 	router.HandleFunc("/gettotalhours", getTotalHours).Methods("GET")
 
