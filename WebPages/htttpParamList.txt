@@ -1,5 +1,13 @@
 HTTP Request Parameter List:
 
+/ : GET
+
+/adminmodify: GET
+
+/admincreate: GET
+
+/adminview: GET
+
 /loadcourses: GET
 	choice, degrees
 	

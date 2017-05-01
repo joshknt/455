@@ -75,10 +75,10 @@ func defaultViewHandler(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, p)
 }
 
-//adminViewHandler : Serves the admin page
+//adminIndexHandler : Serves the admin page
 //Author: Josh Kent
 //Tested By: Josh Kent
-func adminViewHandler(w http.ResponseWriter, r *http.Request) {
+func adminIndexHandler(w http.ResponseWriter, r *http.Request) {
 	//Check for access to protected handlers
 	if access == false {
 		http.Redirect(w, r, "/", 302)
@@ -116,6 +116,21 @@ func adminCreateHandler(w http.ResponseWriter, r *http.Request) {
 		title := r.URL.Path[len("/"):]
 		p, _ := loadPage(title)
 		t, _ := template.ParseFiles("WebPages\\AdminCreate\\AdminCreate.html")
+		t.Execute(w, p)
+	}
+}
+
+//adminViewHandler : Serves the admin page for viewing templates
+//Author: Josh Kent
+//Tested By: Josh Kent
+func adminViewHandler(w http.ResponseWriter, r *http.Request) {
+	//Check for access to protected handlers
+	if access == false {
+		http.Redirect(w, r, "/", 302)
+	} else {
+		title := r.URL.Path[len("/"):]
+		p, _ := loadPage(title)
+		t, _ := template.ParseFiles("WebPages\\AdminView\\AdminView.html")
 		t.Execute(w, p)
 	}
 }
@@ -335,9 +350,10 @@ func main() {
 
 	//File handlers
 	router.HandleFunc("/", defaultViewHandler).Methods("GET")
-	router.HandleFunc("/admin", adminViewHandler).Methods("GET")
+	router.HandleFunc("/admin", adminIndexHandler).Methods("GET")
 	router.HandleFunc("/adminmodify", adminModifyHandler).Methods("GET")
 	router.HandleFunc("/admincreate", adminCreateHandler).Methods("GET")
+	router.HandleFunc("/adminview", adminViewHandler).Methods("GET")
 
 	//RESTful API
 	//Login and logout handling
