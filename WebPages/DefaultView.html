@@ -12,31 +12,79 @@
 			}
 		}
 
-  var httpRequest;
-  document.getElementById("test").addEventListener('click', makeRequest);
+  function loadCourses() {
+   var  httpRequest = new XMLHttpRequest();
 
-  function makeRequest() {
-    httpRequest = new XMLHttpRequest();
-  }
-    // if (!httpRequest) {
-    //   alert('Giving up :( Cannot create an XMLHTTP instance');
-    //   return false;
-    // }
-    httpRequest.onreadystatechange = alertContents;
-    httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs&submit=ADVISE');
   
+    httpRequest.onreadystatechange = function(){
 
-  function alertContents() {
-    if (httpRequest.readyState == 4) {
-      if (httpRequest.status == 200) 
-	  	if(httpRequest.responseText != null{
-        var response = JSON.parse(httpRequest.responseText);
-      } else {
-        alert('There was a problem with the request.');
-      }
-    }
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+
+			var one = "";
+			var two = "";
+			var three = "";
+			var four = "";
+			var major = "";
+
+		document.getElementById('courses').style.visibility = "visible";
+		for(var i = 0; i < 4; i++){
+			if(i === 0){
+				one +=  '<h4><u> Area I</u></h4>'
+			}
+			one +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	one += myObj[i].name;
+			one += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaOne').innerHTML = one;
+
+		for(var i = 4; i < 34; i++){
+			if(i === 4){
+				two +=  '<h4><u> Area II</u></h4>'
+			}
+			two +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	two += myObj[i].name;
+			two += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaTwo').innerHTML = two;
+
+		for(var i = 34; i < 53; i++){
+			if(i === 34){
+				three +=  '<h4><u> Area III</u></h4>'
+			}
+			three +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	three += myObj[i].name;
+			three += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaThree').innerHTML = three;
+
+		for(var i = 53; i < 66; i++){
+			if(i === 53){
+				four +=  '<h4><u> Area IV</u></h4>'
+			}
+			four +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	four += myObj[i].name;
+			four += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFour').innerHTML = four;
+
+		for(var i = 66; i < 98; i++){
+			if(i === 66){
+				major +=  '<h4><u> Major Courses</u></h4>'
+			}
+			major +=  '<input type = checkbox>' + myObj[i].departmentid;
+		  	major += myObj[i].name;
+			major += ' [' + myObj[i].hours + ']' + '<br>';
+		}
+		document.getElementById('areaFive').innerHTML = major;
+	}
+};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
   }
-  httpRequest.send(null);
+
 	</script>
 	
 </head>
@@ -51,12 +99,15 @@
 	}
 	#adviseForm{
 		background-color: #46166B;
+		position:absolute;
+		margin-left: 10px;
 		color: #FFFFFF;
 		width: 250;
 		font-family: sans-serif;
 		padding-top: 10px; 
 		padding-bottom: 10px; 
 		padding-left: 10px;
+		border-radius: 20px;
 	}
 	a{
 		font-family: sans-serif;
@@ -81,7 +132,54 @@
 		visibility: hidden; 
 		color: #FFFFFF;
 		}
+
+	#courses{
+		visibility: hidden;
+		margin:0;
+		margin-left: 30%; 
+		margin-right: 30%;
+		margin-bottom: 30px;
+		background: #FFFFFF;
+		font-family: sans-serif;
+		text-transform: uppercase;
+		position:absolute;
+		height: 1000px; 
+		width:750px
+	}
 	
+		#areaOne{
+		position:relative;
+		left: 50px;
+		top: 50px;
+	}	
+
+		#areaTwo{
+		position:relative;
+		left: 50px;
+		top: 50px;
+	}	
+	#areaThree{
+		position:relative;
+		left: 225px;
+		bottom: 772px;
+
+	}	
+	#areaFour{
+		position:relative;
+		left: 400px;
+		bottom:1225px;
+	}
+	#areaFive{
+		position:relative;
+		left: 550px;
+		bottom: 1553px;
+	}
+	button{
+		background: #DB9F11;
+		color: #FFFFFF;
+		border-radius: 8px;
+	}
+
 	</style>
 	<body>
 		<h1>Welcome to ADVISE!</h1>
@@ -102,12 +200,12 @@
             <option value = "ma"> Mathematics </option>
         </select>
         
-        <input name = "test" type = "submit" value = "ADVISE" >
+        <button type = "button" onclick= "loadCourses()" >ADVISE</button>
         </form>
 
         <p>Upload your transcript: </p>
         <input type = "file" name = "transcript" />
-        <input type = "submit" value = "Upload" /><br></br>
+        <br><button type = "button" id = "upload" />UPLOAD<br>
 	</div>
 	
 	<div id="popupbox"> 
@@ -126,6 +224,14 @@
 		</div> 
 		
 		<p><a href="javascript:login('show');">Login as Administrator</a></p>
+
+		<div id = courses>
+			<form id = "areaOne"></form>
+			<form id = "areaTwo"></form>
+			<form id = "areaThree"></form>
+			<form id = "areaFour"></form>
+			<form id = "areaFive"></form>
+		</div>
         	
 
 	</body>
