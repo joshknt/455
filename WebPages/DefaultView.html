@@ -4,25 +4,27 @@
 		
 	<script language="JavaScript" type="text/javascript">
 		
-		function login(showhide){
-		if(showhide == "show"){
-        document.getElementById('popupbox').style.visibility="visible";
-			}else if(showhide == "hide"){
-    		document.getElementById('popupbox').style.visibility="hidden"; 
-			}
+	function login(showhide)
+	{
+		if(showhide == "show")
+		{
+			document.getElementById('popupbox').style.visibility="visible";
 		}
-
+		else if(showhide == "hide")
+		{
+    		document.getElementById('popupbox').style.visibility="hidden"; 
+		}
+	}
+// ---------------------------------------------------------------------------------
   function loadCourses() {
    var  httpRequest = new XMLHttpRequest();
-
   
     httpRequest.onreadystatechange = function(){
 
-		if(this.readyState == 4 &&this.status == 200){
+		if(this.readyState == 4 && this.status == 200){
 			//document.getElementById("courses").innerHTML = this.responseText;
 			myObj = JSON.parse(this.responseText);
 			
-
 			var one = "";
 			var two = "";
 			var three = "";
@@ -81,9 +83,10 @@
 		document.getElementById('areaFive').innerHTML = major;
 	}
 };
-		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
-		httpRequest.send();
+	httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+	httpRequest.send();
   }
+
 
 	</script>
 	
@@ -138,7 +141,7 @@
 		margin:0;
 		margin-left: 30%; 
 		margin-right: 30%;
-		margin-bottom: 30px;
+		margin-bottom: 10px;
 		background: #FFFFFF;
 		font-family: sans-serif;
 		text-transform: uppercase;
@@ -152,7 +155,6 @@
 		left: 50px;
 		top: 50px;
 	}	
-
 		#areaTwo{
 		position:relative;
 		left: 50px;
@@ -185,7 +187,7 @@
 		<h1>Welcome to ADVISE!</h1>
 		
 		<div id = adviseForm>
-		<form action = "/loadcourses" method = "put">
+		<form action = "/loadcourses" method = "get">
 		<input type = "radio" name="choice" value = "major"
 		    checked = "checked"/> Major <br>
         <input type = "radio" name="choice" value = "minor"/> Minor<br>
@@ -232,7 +234,6 @@
 			<form id = "areaFour"></form>
 			<form id = "areaFive"></form>
 		</div>
-        	
-
+		
 	</body>
 </html>
