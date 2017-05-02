@@ -11,6 +11,7 @@
 	{
 		if(showhide == "show")
 		{
+			document.getElementById('courses').style.visibility = "hidden";
 			document.getElementById('popupbox').style.visibility="visible";
 		}
 		else if(showhide == "hide")
@@ -24,7 +25,6 @@
 
   function loadCourses(c, d) 
   {
-	  //var url = new URL("http://localhost:9090//loadcourses?choice="+c+"&degrees="+d);
 	  var  httpRequest = new XMLHttpRequest();
 	  httpRequest.onreadystatechange = function(){
 		  
@@ -40,6 +40,9 @@
 			  
 			  document.getElementById('courses').style.visibility = "visible";
 			  
+			  if(c.value == "major")
+			  {
+
 			  for(var i = 0; i < 4; i++)
 			  {
 				  if(i === 0)
@@ -100,6 +103,20 @@
 			}
 					document.getElementById('areaFive').innerHTML = major;
 		}
+		 else if (c.value == "minor"){
+			 for(var i = 0; i < myObj.lenth; i++)
+			  {
+				  if(i === 0)
+				  {
+					  one +=  '<h4><u>Minor Courses</u></h4>'
+				  }
+				  	  one +=  '<input type = checkbox>' + myObj[i].departmentid;
+					  one += myObj[i].name;
+					  one += ' [' + myObj[i].hours + ']' + '<br>';
+			  }
+				  document.getElementById('areaOne').innerHTML = one;
+		 }
+	}
 	};
 		httpRequest.open('GET', "/loadcourses?choice="+c.value+"&degrees="+d.value, true);
 		httpRequest.send();
