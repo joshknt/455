@@ -3,6 +3,12 @@
     <head>
 <style type = "text/css">    
 body {background-color:#DB9F11;}
+header{
+	background: white;
+	margin:0,0,10,0;
+	padding: 0,0,0,0;
+	border 0;
+}
 .left-div {
     background-color:#46166B;
     color: #FFFFFF; 
@@ -12,27 +18,37 @@ body {background-color:#DB9F11;}
     padding-left:10px;
     padding-top: 10px;
     font-family: sans-serif;
+    border-radius: 20px;
     }
 .right-div {
-            margin-left: 150 px;
-            background-color: #DB9F11;           
+            position: absolute;
+            top: 10%;
+            left: 27%;
+            background-color: #DB9F11;         
            }
+
 h1 {color:#46166B;
    text-align:center; 
    font-family: serif;
    }
+h3{
+	text-align: center;
+}
 .button1 {background-color:#DB9F11;
         color:white;
         border-radius:8px;
         }
 .button2 {
-    background-color:#5F6062;
+    background-color:#46166B;
     color:white;
-    border-radius: 6px;
-    position: absolute;
-    top:0;
+    border-radius: 8px;
+    position: header;
     right: 0;
-    }
+    float: right;
+    width: 85px;
+    height: 35px;
+    display: inline;
+}
 .button3 {    
     background-color:#5F6062;
     color:white;
@@ -70,59 +86,164 @@ input {
     <title> First Page Administrator </title>
     </head>
 
-<!--style="background-image:url(lionlogo.jpg)"-->
-    <!--add functionality for welcome "maths"-->
-<body>
-    <h1>Modify</h1>
+<script language="Javascript">
+
+function createButton()
+{
+    document.Form1.action = "/admincreate"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function modifyButton()
+{
+    document.Form1.action = "/adminmodify"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function viewButton()
+{
+    document.Form1.action = "/adminview"
+    document.Form1.target = "_self";    // Open in a same window
+
+    document.Form1.submit();             // Submit the page
+
+    return true;
+}
+
+function loadCourses() {
+   var  httpRequest = new XMLHttpRequest();
+
+  
+    httpRequest.onreadystatechange = function(){
+
+		if(this.readyState == 4 &&this.status == 200){
+			//document.getElementById("courses").innerHTML = this.responseText;
+			myObj = JSON.parse(this.responseText);
+			
+
+			var one = "";
+			var two = "";
+			var three = "";
+			var four = "";
+			var major = "";
+
+		document.getElementById('courses').style.visibility = "visible";
+		for(var i = 0; i < 4; i++){
+			if(i === 0){
+				one +=  '<h4><u> Area I</u></h4>'
+			}
+			one +=  '<input type = "text">' + myObj[i].departmentid;
+		  	one += myObj[i].name;
+			one += ' (' + myObj[i].hours + ')' + '<br>';
+		}
+		document.getElementById('areaOne').innerHTML = one;
+
+		for(var i = 4; i < 34; i++){
+			if(i === 4){
+				two +=  '<h4><u> Area II</u></h4>'
+			}
+			two +=  '<input type = "text">' + myObj[i].departmentid;
+		  	two += myObj[i].name;
+			two += ' (' + myObj[i].hours + ')' + '<br>';
+		}
+		document.getElementById('areaTwo').innerHTML = two;
+
+		for(var i = 34; i < 53; i++){
+			if(i === 34){
+				three +=  '<h4><u> Area III</u></h4>'
+			}
+			three +=  '<input type = "text">' + myObj[i].departmentid;
+		  	three += myObj[i].name;
+			three += ' (' + myObj[i].hours + ')' + '<br>';
+		}
+		document.getElementById('areaThree').innerHTML = three;
+
+		for(var i = 53; i < 66; i++){
+			if(i === 53){
+				four +=  '<h4><u> Area IV</u></h4>'
+			}
+			four +=  '<input type = "text">' + myObj[i].departmentid;
+		  	four += myObj[i].name;
+			four += ' (' + myObj[i].hours + ')' + '<br>';
+		}
+		document.getElementById('areaFour').innerHTML = four;
+
+		for(var i = 66; i < 98; i++){
+			if(i === 66){
+				major +=  '<h4><u> Major Courses</u></h4>'
+			}
+			major +=  '<input type = "text">' + myObj[i].departmentid;
+		  	major += myObj[i].name;
+			major += ' (' + myObj[i].hours + ')' + '<br>';
+		}
+		document.getElementById('areaFive').innerHTML = major;
+	}
+};
+		httpRequest.open('GET', '/loadcourses?choice=major&degrees=cs', true);
+		httpRequest.send();
+  }
+
+</script>
+
+<!--================================================================================-->
+<header>
+			<h2> <img src="advise.png" alt="logo" aligh="left" style = "width: 250px " float: "right"</img>
 <form action="/logout" method="post">
-    <b><right><button class="button button2" type="submit">
-        Log out</button></right></b></form>
+<b><right><button class="button button2" type="submit">
+Log out</button></right></b></form>
+	        </h2>
+		</header>
+<body>
+    <h1>Welcome!</h1>
 <div class="left-div">
-<form action="/loadcourses" method="put">
-  <input type="radio" name="degree" value="major">
+<form name ="Form1" method="get">
+  <input type="radio" name="choice" value="major"/>
   Major<br>
-  <input type="radio" name="degree" value="minor">
+  <input type="radio" name="choice" value="minor">
   Minor<br>
 <p>
 select the degree <br> 
 <select>
     <option value="" style="display:none;"></option>
-    <option value = "CH"> Chemistry </option>
-    <option value = "CIS"> Computer Info Systems </option>
-    <option value = "CS"> Computer Science</option>
-    <option value = "HI"> History </option>
-    <option value = "MA"> Mathematics </option>    
+    <option value = "ch"> Chemistry </option>
+    <option value = "cis"> Computer Info Systems </option>
+    <option value = "cs"> Computer Science</option>
+    <option value = "hi"> History </option>
+    <option value = "ma"> Mathematics </option>    
 </select>
 </p>
-</form>
+
 <p>
-<button class = "button button1" type = "submit" onclick="myFunction1()">
+<button class = "button button1" type = "submit" onclick=" return createButton();">
     CREATE
 </button>
-    <script>
-function myFunction1() {
-    window.open("AdminCreate.html", "_self", false);
-}
-    </script>
-<button class = "button button1" type = "submit" onclick="myFunction2()">
+
+<button class = "button button1" type = "button" onclick="modifyButton()">
     MODIFY
 </button>
-    <script>
-function myFunction2() {
-    window.open("AdminModify.html", "_self", false);
-}
-    </script>
-<button class = "button button1" type = "submit" onclick="myFunction3()">
+
+<button class = "button button1" type = "button" onclick="viewButton()">
     VIEW
 </button>
-    <script>
-function myFunction3() {
-    window.open("AdminView.html", "_self", false);
-}
-    </script>
 </p>
 </div>
-
+</form>
+</div>
+<div class="right-div" id = courses>
+			<form id = "areaOne"></form>
+			<form id = "areaTwo"></form>
+			<form id = "areaThree"></form>
+			<form id = "areaFour"></form>
+			<form id = "areaFive"></form>
+		</div>
 </body>
 
 </html>
