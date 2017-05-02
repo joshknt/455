@@ -2,6 +2,8 @@ HTTP Request Parameter List:
 
 / : GET
 
+/admin : GET
+
 /adminmodify: GET
 
 /admincreate: GET
