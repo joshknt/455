@@ -1,100 +1,89 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> First Page Administrator </title>
-    
-    <style type = "text/css">
+    <title> First Page Administrator </title>
+    </head>
+    <style>
     body {background-color:#DB9F11;}
-    header{
-        background: white;
-        margin:0,0,10,0;
-        padding: 0,0,0,0;
-        border: 0;
+div {background-color:#46166B;
+    color: #FFFFFF; 
+    width:215px;
+    height:155px;
+    padding-bottom:10px; 
+    padding-left:10px;
+    padding-top: 10px;
+    font-family: sans-serif;
     }
-    .left-div {
-        background-color:#46166B;
-        color: #FFFFFF; 
-        width:215px;
-        height:155px;
-        padding-bottom:10px; 
-        padding-left:10px;
-        padding-top: 10px;
-        font-family: sans-serif;
-        border-radius: 20px;
-        }
-    .right-div {
-                position: absolute;
-                top: 10%;
-                left: 27%;
-                background-color: #DB9F11; 
-                visibility: hidden;          
-            }
-    h1 {color:#46166B;
-    text-align:center; 
-    font-family: serif;
+h1 {color:#46166B;
+   text-align:center; 
+   font-family: serif;
+   }
+.button1 {
+    background-color:#DB9F11; 
+    color:white;
+    border-radius:8px;
     }
-    h3{
-        text-align: center;
+.button2 {
+    background-color:#5F6062;
+    color:white;
+    border-radius: 6px;
+    position: absolute;
+    top:0;
+    right: 0;
     }
-    .button1 {
-        background-color:#DB9F11; 
-        color:white;
-        border-radius:8px;
-        }
-    .button2 {
-        background-color:#5F6062;
-        color:white;
-        border-radius: 6px;
-        position: absolute;
-        top:0;
-        right: 0;
-        }
-
     </style>
 
-
-<!--================================================================================-->
-<header>
-			<h2> <img src="advise.png" alt="logo" align="left" style = "width: 250px " float: "right"</img>
-<form action="/logout" method="post">
-<b><right><button class="button button2" type="submit">
-Log out</button></right></b></form>
-	        </h2>
-		</header>
 <body>
     <h1>Welcome!</h1>
-<div class="left-div">
-<form name ="Form1" method="get">
-  <input type="radio" name="choice" value="major"/>
+    <form action="/logout" method="post">
+    <b><right><button class="button button2" type="submit">
+        Log out</button></right></b></form>
+<div>
+<form action="/loadcourses" method="put">
+  <input type="radio" name="degree" value="major">
   Major<br>
-  <input type="radio" name="choice" value="minor">
+  <input type="radio" name="degree" value="minor">
   Minor<br>
 <p>
 select the degree <br> 
 <select>
     <option value="" style="display:none;"></option>
-    <option value = "ch"> Chemistry </option>
-    <option value = "cis"> Computer Info Systems </option>
-    <option value = "cs"> Computer Science</option>
-    <option value = "hi"> History </option>
-    <option value = "ma"> Mathematics </option>    
+    <option value = "CH"> Chemistry </option>
+    <option value = "CIS"> Computer Info Systems </option>
+    <option value = "CS"> Computer Science</option>
+    <option value = "HI"> History </option>
+    <option value = "MA"> Mathematics </option>    
 </select>
 </p>
-
+</form>
 <p>
-<button class = "button button1" type = "submit" onclick=" return createButton();">
+<button class = "button button1" type = "submit" onclick="myFunction1()">
     CREATE
 </button>
-
-<button class = "button button1" type = "button" onclick="modifyButton()">
+    <script>
+function myFunction1() {
+    window.open("AdminCreate.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction2()">
     MODIFY
 </button>
-
-<button class = "button button1" type = "button" onclick="viewButton()">
+    <script>
+function myFunction2() {
+    window.open("AdminModify.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction3()">
     VIEW
 </button>
+    <script>
+function myFunction3() {
+    window.open("AdminView.html", "_self", false);
+}
+    </script>
 </p>
-</div>
-</form> 
+</div> 
+    
 </body>
+
 </html>
