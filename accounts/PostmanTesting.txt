@@ -1,0 +1,220 @@
+//All of the following test cases can be entered into a program like Chrome Postman
+//Copy paste the link and choose the corresponding verb
+//Replace "localhost:9090" with the current websites name and continue with the parameters
+
+//--------------------------Begin Test Case loadcourses 1----------------------
+//This will test to make sure the API is working correctly
+//Expected input: loadcourses?degrees=cs&choice=major
+//Expected output: A Json object with all major courses and areas 1-4
+localhost:9090/loadcourses?degrees=cs&choice=major : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loadcourses 2----------------------
+//This will test to make sure the API is working correctly
+//Expected input: loadcourses?degrees=cs&choice=minor
+//Expected output: A Json object with only minor courses, no area 1-4
+localhost:9090/loadcourses?degrees=cs&choice=minor : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loadcourses 3----------------------
+//This will test to make sure the API is working correctly
+//Expected input: loadcourses?degrees=cis&choice=major
+//Expected output: A Json object with all major courses and areas 1-4
+localhost:9090/loadcourses?degrees=cis&choice=major : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loadcourses 4----------------------
+//This will test to make sure the API is working correctly
+//Expected input: loadcourses?degrees=cis&choice=minor
+//Expected output: A Json object with only minor courses, no area 1-4
+localhost:9090/loadcourses?degrees=cis&choice=minor : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loadcourses 5----------------------
+//This will test to make sure the API is working correctly
+//Expected input: loadcourses?degrees=dummy&choice=major
+//Expected output: Error, no response
+localhost:9090/loadcourses?degrees=dummy&choice=major : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createcourses 1--------------------
+//This will test add a new item to an existing table
+//Expected input: choice=major degrees=cs hours=3 department=triggered name=101
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=major&degrees=cs&hours=3&department=triggered&name=101 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createcourses 2--------------------
+//This will test add a new item to an existing table
+//Expected input: choice=minor degrees=cs hours=3 department=triggered name=201
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=minor&degrees=cs&hours=3&department=triggered&name=201 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createcourses 3--------------------
+//This will test add a new item to an existing table
+//Expected input: choice=major degrees=cis hours=3 department=triggered name=101
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=major&degrees=cis&hours=3&department=triggered&name=101 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createcourses 4--------------------
+//This will test add a new item to an existing table
+//Expected input: choice=minor degrees=cis hours=3 department=triggered name=201
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=minor&degrees=cis&hours=3&department=triggered&name=201 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createcourses 5--------------------
+//This will test add a new item to an existing table
+//Expected input: choice=minor degrees=man hours=3 department=triggered name=201
+//Expected output: Error, no response due to degree not existing
+localhost:9090/createcourse?choice=minor&degrees=man&hours=3&department=triggered&name=101 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deletecourses 1--------------------
+//This test will delete an item in an existing table
+//Expected input: choice=major degrees=cs department=triggered name=101
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=major&degrees=cs&hours=3&department=triggered&name=101 : POST
+localhost:9090/deletecourse?choice=major&degrees=cs&department=triggered&name=101 : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deletecourses 2--------------------
+//This test will delete an item in an existing table
+//Expected input: choice=minor degrees=cs department=triggered name=201
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=minor&degrees=cs&hours=3&department=triggered&name=101 : POST
+localhost:9090/deletecourse?choice=minor&degrees=cs&department=triggered&name=201 : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deletecourses 3--------------------
+//This test will delete an item in an existing table
+//Expected input: choice=major degrees=cis department=triggered name=101
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=major&degrees=cis&hours=3&department=triggered&name=101 : POST
+localhost:9090/deletecourse?choice=major&degrees=cis&department=triggered&name=101 : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deletecourses 4--------------------
+//This test will delete an item in an existing table
+//Expected input: choice=minor degrees=cis department=triggered name=201
+//Expected output: No visual, but a database change will occur
+localhost:9090/createcourse?choice=minor&degrees=cis&hours=3&department=triggered&name=101 : POST
+localhost:9090/deletecourse?choice=minor&degrees=cis&department=triggered&name=201 : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deletecourses 5--------------------
+//This test will delete an item in an existing table
+//Expected input: choice=minor degrees=cis department=triggered name=501
+//Expected output: No visual and the database won't change
+localhost:9090/createcourse?choice=minor&degrees=cis&hours=3&department=triggered&name=101 : POST
+localhost:9090/deletecourse?choice=minor&degrees=cis&department=triggered&name=501 : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loaduser 1--------------------
+//This test will load an admin's information
+//Expected input: username=john
+//Expected output: A Json object with the users information
+localhost:9090/loaduser?username=john : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case loaduser 2--------------------
+//This test will load an admin's information
+//Expected input: username=paola
+//Expected output: Error, no response due to no name existing
+localhost:9090/loaduser?username=paola : GET
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createuser 1--------------------
+//This test will create a new admin
+//Expected input: id=2501 username=paola password=QAZwsx1. department=cs firstname=paola
+//				  lastname=jared email=psanchez@una.edu superuser=false
+//Expected output: No visual, but database changed
+localhost:9090/createuser?username=paola&password=QAZwsx1.&department=cs&firstname=paola&lastname=jared&email=psanchez@una.edu&superuser=false&id=2501 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createuser 2--------------------
+//This test will create a new admin
+//Expected input: id=2 username=john password=QAZwsx1. department=cs firstname=paola
+//				  lastname=jared email=psanchez@una.edu superuser=false
+//Expected output: No visual and database should not change due to existing username
+localhost:9090/createuser?username=john&password=QAZwsx1.&department=cs&firstname=paola&lastname=jared&email=psanchez@una.edu&superuser=false&id=3 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createuser 3-----------------------
+//This test will create a new admin
+//Expected input: id=3 username=jared password=1234 department=cs firstname=jared
+//				  lastname=paola email=jwood2@una.edu superuser=false
+//Expected output: No visual and database should not change due to password requirements not being met
+localhost:9090/createuser?username=jared&password=1234&department=cs&firstname=jared&lastname=paola&email=jwood2@una.edu&superuser=false&id=3 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case createuser 4-----------------------
+//This test will create a new admin
+//Expected input: id=1 username=paola2 password=QAZwsx1. department=cs firstname=paola
+//				  lastname=jared email=psanchez@una.edu superuser=false
+//Expected output: No visual and database should not change due to already existing id
+localhost:9090/createuser?username=paola2&password=QAZwsx1.&department=guc&firstname=jared&lastname=paola&email=jwood2@una.edu&superuser=false&id=1 : POST
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deleteuser 1-----------------------
+//This test will delete an admin
+//Expected input: username=paola
+//Expected output: No visual, but database should delete the username paola
+localhost:9090/createuser?username=paola&password=QAZwsx1.&department=guc&firstname=jared&lastname=paola&email=jwood2@una.edu&superuser=false&id=2500 : POST
+localhost:9090/deleteuser?username=paola : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
+
+//--------------------------Begin Test Case deleteuser 2-----------------------
+//This test will delete an admin
+//Expected input: username=paola
+//Expected output: No visual and database should not change since it doesn't exist
+localhost:9090/deleteuser?username=paola : DELETE
+//Pass Log:
+//	4/29/2017 10:22 AM Passed
+//---------------------------End Test Case-------------------------------------
