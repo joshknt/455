@@ -4,14 +4,7 @@
     <title> View Page Administrator </title>
     <style type = "text/css">    
 body {background-color:#DB9F11;}
-header{
-	background: white;
-	margin:0,0,10,0;
-	padding: 0,0,0,0;
-	border 0;
-}
-.left-div {
-    background-color:#46166B;
+div {background-color:#46166B;
     color: #FFFFFF; 
     width:215px;
     height:155px;
@@ -19,37 +12,23 @@ header{
     padding-left:10px;
     padding-top: 10px;
     font-family: sans-serif;
-    border-radius: 20px;
     }
-.right-div {
-            position: absolute;
-            top: 10%;
-            left: 27%;
-            background-color: #DB9F11; 
-            visibility: hidden;          
-           }
 h1 {color:#46166B;
    text-align:center; 
    font-family: serif;
    }
-h3{
-	text-align: center;
-}
 .button1 {background-color:#DB9F11;
         color:white;
         border-radius:8px;
         }
 .button2 {
-    background-color:#46166B;
+    background-color:#5F6062;
     color:white;
-    border-radius: 8px;
-    position: header;
+    border-radius: 6px;
+    position: absolute;
+    top:0;
     right: 0;
-    float: right;
-    width: 85px;
-    height: 35px;
-    display: inline;
-}
+    }
     </style>
     <script language="JavaScript" type="text/javascript">
 function loadCourses() {
@@ -90,56 +69,20 @@ function loadCourses() {
 		httpRequest.send();
   }
     </script>
+    </head>
 <!--
 ========================================================================================================================
 -->
-<script language="Javascript">
-
-function createButton()
-{
-    document.Form1.action = "/admincreate"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-function modifyButton()
-{
-    document.Form1.action = "/adminmodify"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-function viewButton()
-{
-    document.Form1.action = "/adminview"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-</script>
-    </head>
-<!--================================================================================-->
-<header>
-			<h2> <img src="advise.png" alt="logo" aligh="left" style = "width: 250px " float: "right"</img>
-<form action="/logout" method="post">
-<b><right><button class="button button2" type="submit">
-Log out</button></right></b></form>
-	        </h2>
-		</header>
-<body>
-    <h1>Welcome!</h1>
+    
+<body> <!--style="background-image:url(lionlogo.jpg)"-->
+    <!--add functionality for welcome "maths"-->
+    <h1><center>View</center></h1>
+        <form action="/logout" method="post">
+    <b><right><button class="button button2" type="submit">
+        Log out</button></right></b></form>
 <div class="left-div">
-<form name ="Form1" method="get">
-  <input type="radio" name="choice" value="major"/>
+<form action="/loadcourses" method="put">
+  <input type="radio" name="choice" value="major" checked="checked"/>
   Major<br>
   <input type="radio" name="choice" value="minor">
   Minor<br>
@@ -154,22 +97,34 @@ select the degree <br>
     <option value = "ma"> Mathematics </option>    
 </select>
 </p>
-
 <p>
-<button class = "button button1" type = "submit" onclick=" return createButton();">
+<button class = "button button1" type = "submit" onclick="myFunction1()">
     CREATE
 </button>
-
-<button class = "button button1" type = "button" onclick="modifyButton()">
+    <script>
+function myFunction1() {
+    window.open("AdminCreate.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction2()">
     MODIFY
 </button>
-
-<button class = "button button1" type = "button" onclick="viewButton()">
+    <script>
+function myFunction2() {
+    window.open("AdminModify.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "button" onclick="loadCourses()">
     VIEW
 </button>
+    <script>
+function myFunction3() {
+    window.open("AdminView.html", "_self", false);
+}
+    </script>
 </p>
-</div>
 </form>
+</div>
     
 </body>
 

@@ -10,12 +10,6 @@
     <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
         <style type = "text/css">    
 body {background-color:#DB9F11;}
-header{
-	background: white;
-	margin:0,0,10,0;
-	padding: 0,0,0,0;
-	border 0;
-}
 .left-div {
     background-color:#46166B;
     color: #FFFFFF; 
@@ -25,36 +19,29 @@ header{
     padding-left:10px;
     padding-top: 10px;
     font-family: sans-serif;
-    border-radius: 20px;
     }
 .right-div {
             position: absolute;
             top: 10%;
             left: 27%;
-            background-color: #DB9F11;           
+            background-color: #46166B;           
            }
 h1 {color:#46166B;
    text-align:center; 
    font-family: serif;
    }
-h3{
-	text-align: center;
-}
 .button1 {background-color:#DB9F11;
         color:white;
         border-radius:8px;
         }
 .button2 {
-    background-color:#46166B;
+    background-color:#5F6062;
     color:white;
-    border-radius: 8px;
-    position: header;
+    border-radius: 6px;
+    position: absolute;
+    top:0;
     right: 0;
-    float: right;
-    width: 85px;
-    height: 35px;
-    display: inline;
-}
+    }
 .button3 {    
     background-color:#5F6062;
     color:white;
@@ -81,19 +68,12 @@ table, th, td {
             color:#DB9F11;
             background-color:#46166B;
             }
-        .caption1 {
+        caption {
             text-align: center;
             margin-top: 5px;
             font-size: 135%;
             font-weight: bold;
-            color:#46166B;
-            }
-        .caption2 {
-            text-align: left;
-            margin-top: 5px;
-            font-size: 70%;
-            font-weight: bold;
-            color:#46166B;
+            color:#DB9F11;
             }
 input {
     background-color:white; 
@@ -102,8 +82,7 @@ input {
 a {
     text-decoration: none;
     color:#5F6062;
-} 
-
+}  
     </style>
  <!--=============================================================================================================-->  
 <script>
@@ -113,7 +92,7 @@ $(function myFunction1() {
         var i = $('#p_scents1 p').size() + 1;
         
         $('#addScnt1').live('click', function() {
-                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt_1' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -145,7 +124,7 @@ $(function myFunction2() {
         var i = $('#p_scents2 p').size() + 1;
         
         $('#addScnt2').live('click', function() {
-                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt_2' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt2">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -177,7 +156,7 @@ $(function myFunction3() {
         var i = $('#p_scents3 p').size() + 1;
         
         $('#addScnt3').live('click', function() {
-                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt3">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt_3' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -208,7 +187,7 @@ $(function myFunction4() {
         var i = $('#p_scents4 p').size() + 1;
         
         $('#addScnt4').live('click', function() {
-                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt4">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt_4' + i +'" value="" placeholder="ex: EN 111" /></label> <a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -240,7 +219,7 @@ $(function myFunction5() {
         var i = $('#p_scents5 p').size() + 1;
         
         $('#addScnt5').live('click', function() {
-                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt5">&#10006;</a></p>').appendTo(scntDiv);
+                $('<p><label for="p_scnts5"><input type="text" id="p_scnt5" size = "16" name="p_scnt_5' + i +'" value="" placeholder="ex: EN 111" /></label><a href="#" id="remScnt1">&#10006;</a></p>').appendTo(scntDiv);
                 i++;
                 return false;
         });
@@ -266,91 +245,22 @@ $('#p_scnt5').on('keyup', function(e) {
         $('#p_scnt5').css('background-color', '#ffff00');
     }
 });
-
-// ----- Function to send courses to server ----
-/* $(function sendCourse() {
-  $('input[name="p_scnt"]').click(sendCourse() {
-    var data = {
-        degrees: $('#cs').val(),
-        name: $('#password').val(),
-        hours: $('#password').val(),
-    };
-    $.post(/createcourse, data, sendCourse(data) {
-       console.log(data);
-    });
-  });
-}); */
-
-// ----- Function to delete courses -----
-/* $scope.delete = function(object) {
-    $http({
-        url: 'domain/resource',
-        method: 'DELETE',
-        data: {
-            id: object.id
-        },
-        headers: {
-            "Content-Type": "application/json;charset=utf-8"
-        }
-    }).then(function(res) {
-        console.log(res.data);
-    }, function(error) {
-        console.log(error);
-    });
-}; */
-
 </script>
-<script language="Javascript">
 
-function createButton()
-{
-    document.Form1.action = "/admincreate"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-function modifyButton()
-{
-    document.Form1.action = "/adminmodify"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-function viewButton()
-{
-    document.Form1.action = "/adminview"
-    document.Form1.target = "_self";    // Open in a same window
-
-    document.Form1.submit();             // Submit the page
-
-    return true;
-}
-
-</script>
    </head>   
 <!--
 ========================================================================================================================
---> 
-<header>
-			<h2> <img src="advise.png" alt="logo" aligh="left" style = "width: 250px " float: "right"</img>
-<form action="/logout" method="post">
-<b><right><button class="button button2" type="submit">
-Log out</button></right></b></form>
-	        </h2>
-		</header>   
+-->    
 <body> 
-    
+    <h1><center>Create</center></h1>
+<form action="/logout" method="post">
+    <b><right><button class="button button4" type="submit">
+        Log out</button></right></b></form>
+
 <form action="/createcourse" method="post">
 <div class="right-div">
 <table align="center">
-    <caption class="caption1">CURRICULUM REQUIREMENTS</caption><br><caption class = "caption2">
-    [Enter] key to save courses</caption><br><p>
+    <caption><b>CURRICULUM REQUIREMENTS</b></caption><br><br><p>
     <tr>
         <th align="center">AREA I<br> Written Composition<br>(6 hrs)</th>
         <th align="center">AREA II<br> Humanities & Fine Arts<br>(11 hrs)</th>
@@ -363,7 +273,7 @@ Log out</button></right></b></form>
     <td> 
 <div id="p_scents1">
         <label for="p_scnts1"><input type="text" id="p_scnt1" size = "16" name="p_scnt1" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt1">&#10006; </a>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
 <a class="button button3" href="#" id="addScnt1">Add Course</a>
     </td>
@@ -371,7 +281,7 @@ Log out</button></right></b></form>
      <td>  
 <div id="p_scents2">
         <label for="p_scnts2"><input type="text" id="p_scnt2" size = "16" name="p_scnt2" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt2">&#10006;</a>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
 <a class="button button3" href="#" id="addScnt2">Add Course</a>
     </td>
@@ -379,7 +289,7 @@ Log out</button></right></b></form>
      <td>  
 <div id="p_scents3">
         <label for="p_scnts3"><input type="text" id="p_scnt3" size = "16" name="p_scnt3" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt3">&#10006;</a>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
 <a class= "button button3" href="#" id="addScnt3">+Add Course</a>
     </td>
@@ -387,7 +297,7 @@ Log out</button></right></b></form>
      <td>  
 <div id="p_scents4">
         <label for="p_scnts4"><input type="text" id="p_scnt4" size = "16" name="p_scnt4" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt4">&#10006;</a>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
 <a class= "button button3" href="#" id="addScnt4">+Add Course</a>
     </td>
@@ -395,19 +305,18 @@ Log out</button></right></b></form>
      <td>  
 <div id="p_scents5">
         <label for="p_scnts5"><input type="text" id="p_scnt5" size = "15" name="p_scnt5" value="" placeholder="ex: EN 111" /></label>
-<a href="#" id="remScnt5">&#10006;</a>
+<a href="#" id="remScnt1">&#10006;</a>
 </div>
 <a class="button button3" href="#" id="addScnt5">+Add Course</a>
     </td>    
 </table>
-</div></form>
 <!--=========================================================================================================================-->
-
+</div>
 <div class="left-div">
-<form name ="Form1" method="get">
-  <input type="radio" name="choice" value="major"/>
+<form action="/loadcourses" method="get">
+  <input type="radio" name="degree" value="major">
   Major<br>
-  <input type="radio" name="choice" value="minor"/>
+  <input type="radio" name="degree" value="minor">
   Minor<br>
 <p>
 select the degree <br> 
@@ -420,25 +329,37 @@ select the degree <br>
     <option value = "ma"> Mathematics </option>    
 </select>
 </p>
-
+</form>
 <p>
-<button class = "button button1" type = "submit" onclick=" return createButton();">
+<button class = "button button1" type = "submit" onclick="myFunction1()">
     CREATE
 </button>
-
-<button class = "button button1" type = "button" onclick="modifyButton()">
+    <script>
+function myFunction1() {
+    window.open("AdminCreate.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction2()">
     MODIFY
 </button>
-
-<button class = "button button1" type = "button" onclick="viewButton()">
+    <script>
+function myFunction2() {
+    window.open("AdminModify.html", "_self", false);
+}
+    </script>
+<button class = "button button1" type = "submit" onclick="myFunction3()">
     VIEW
 </button>
+    <script>
+function myFunction3() {
+    window.open("AdminView.html", "_self", false);
+}
+    </script>
 </p>
 </div>
-</form>
   
 <button class="button button1" >Save</button>
-<!-- <script>
+<script>
 function printData()
 {
    var divToPrint=document.getElementById("printTable");
@@ -451,7 +372,7 @@ function printData()
 $('button').on('click',function(){
 printData();
 })
-</script> -->
+</script>
 <button class="button button1" onclick="printData()">Print</button>
 </body>
 
